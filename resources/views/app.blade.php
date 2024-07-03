@@ -6,7 +6,7 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="icon" href="{{asset('images/Jimac.png')}}" type="image/x-icon">
+        <link rel="icon" href="{{asset('images/Logo.png')}}" type="image/x-icon">
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 

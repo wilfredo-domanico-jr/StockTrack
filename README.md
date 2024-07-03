@@ -1,9 +1,9 @@
 # Stock Track ( Your trusted Inventory Partner )
 
 An advanced single-page application designed to streamline and simplify the inventory management process. This system provides robust features for tracking and managing inventory items, ensuring efficient and effective control over stock levels, orders, and shipments.
-
-![Stock Track](public/images/Logo.png)
-
+<div align="center">
+    <img src="public/images/Logo.png" alt="Stock Track" width="400">
+</div>
 ## Created Using
 
 This project is built using the following technologies:
