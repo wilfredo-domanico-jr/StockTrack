@@ -1,8 +1,8 @@
 <script setup>
-import JimacLogo from '../../images/logo/Jimac.png';
+import Logo from '../../images/logo/Logo.png';
 
 </script>
 
 <template>
-    <img :src="JimacLogo" alt="logo">
+    <img :src="Logo" alt="logo">
 </template>

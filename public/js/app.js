@@ -20607,7 +20607,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _images_logo_Jimac_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../images/logo/Jimac.png */ "./resources/images/logo/Jimac.png");
+/* harmony import */ var _images_logo_Logo_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../images/logo/Logo.png */ "./resources/images/logo/Logo.png");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'ApplicationLogo',
@@ -20615,8 +20615,8 @@ __webpack_require__.r(__webpack_exports__);
     var __expose = _ref.expose;
     __expose();
     var __returned__ = {
-      get JimacLogo() {
-        return _images_logo_Jimac_png__WEBPACK_IMPORTED_MODULE_0__["default"];
+      get Logo() {
+        return _images_logo_Logo_png__WEBPACK_IMPORTED_MODULE_0__["default"];
       }
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
@@ -25763,7 +25763,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = ["src"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
-    src: $setup.JimacLogo,
+    src: $setup.Logo,
     alt: "logo"
   }, null, 8 /* PROPS */, _hoisted_1);
 }
@@ -33889,10 +33889,10 @@ module.exports = URIError;
 
 /***/ }),
 
-/***/ "./resources/images/logo/Jimac.png":
-/*!*****************************************!*\
-  !*** ./resources/images/logo/Jimac.png ***!
-  \*****************************************/
+/***/ "./resources/images/logo/Logo.png":
+/*!****************************************!*\
+  !*** ./resources/images/logo/Logo.png ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -33900,7 +33900,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/Jimac.png?363f37519af31af24c3f855c0a8adea2");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/Logo.png?363f37519af31af24c3f855c0a8adea2");
 
 /***/ }),
 
