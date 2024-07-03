@@ -1,0 +1,49 @@
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#{{ $items->ASSET_ID }}">
+    <i class="far fa-edit"></i>
+</button>
+
+
+<div class="modal fade" id="{{ $items->ASSET_ID }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        
+
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold text-success">CREATE NEW CATALOG ITEM</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Asset ID</span>
+                    <input type="text" class="form-control text-center" placeholder="Enter Asset ID" required>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Asset Name</span>
+                    <input type="text" class="form-control text-center" placeholder="Select Asset ID First" readonly>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Asset Subtype</span>
+                    <input type="text" class="form-control text-center" placeholder="Select Asset ID First" readonly>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Product Category</span>
+                    <input type="text" class="form-control text-center" placeholder="Select Asset ID First" readonly>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Manufacturer</span>
+                    <input type="text" class="form-control text-center" placeholder="Select Asset ID First" readonly>
+                </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Item</button>
+        </div>
+
+      </div>
+    </div>
+</div>

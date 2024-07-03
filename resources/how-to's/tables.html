@@ -1,0 +1,25 @@
+
+
+
+
+<table class="table table-hover mt-3 table-border table-border table-responsive text-center">
+    <thead class="thead-bg">
+      <tr>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+    </tbody>
+  </table>
+
+
+  <div class="d-flex justify-content-end align-items-end">
+    @if($inventory !== null && count($inventory) > 0)
+
+    {{$inventory->links()}}
+
+    @endif
+  </div>

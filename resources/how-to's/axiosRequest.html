@@ -1,0 +1,46 @@
+<span class="p-1 fw-bold d-flex justify-content-between align-item-center">
+    <label>TRANSFERED LOCATION ID </label>
+    <input id="transfered_location_id" name="transfered_location_id" type="text" required>
+</span>
+
+
+<span class="p-1 fw-bold d-flex justify-content-between align-item-center">
+    <label>TRANSFERED LOCATION </label>
+
+    <input type="text" name="transfered_location" id="transfered_location" class="form-input" readonly required>
+
+</span>
+
+<script>
+    //GET TRANSFER LOCATION BASED ON ID
+    $('input[name="transfered_location_id"]').on('change', () => {
+
+        displaySearchingPrompt();
+
+        axios.post('apihere', {
+                ACCESS_TOKEN: "dXh8WY2TsQsBBVd8WQvF2nsYL1_YLdolvzLUJRScV0wNTKdN7yRTFNxczUJmhCNQXk_4fpCEgM5K8KMWwdOweRQWGNoPG_XKQyio",
+                locationID: $('#transfered_location_id').val()
+            })
+            .then((response) => {
+                $('#transfered_location').val(response.data.LOCATION);
+                if (response.data.err_message) {
+                    hideSearchingPrompt()
+                    displayError(response.data.err_message);
+
+                } else {
+                    hideSearchingPrompt()
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                if (err.response.data.err_message) {
+                    hideSearchingPrompt()
+                    displayError(err.response.data.err_message);
+                } else {
+
+                    hideSearchingPrompt()
+                }
+            });
+    });
+
+</script>
