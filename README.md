@@ -1,84 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Stock Track ( Your trusted Inventory Partner )
 
+An advanced single-page application designed to streamline and simplify the inventory management process. This system provides robust features for tracking and managing inventory items, ensuring efficient and effective control over stock levels, orders, and shipments.
 
-h1 Title ng Project
-paragraph description
+![Stock Track](public/images/Logo.png)
 
+## Created Using
 
-Created Using
+This project is built using the following technologies:
 
-with image
+- **Laravel**: A PHP framework for web artisans.
+- **Inertia.js**: A modern approach to building single-page applications.
+- **Vue.js**: A progressive JavaScript framework for building user interfaces.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
 
+## Who's the Developer
 
+Developed by Wilfredo Domanico Jr. I am passionate about creating efficient and user-friendly web applications. If you have any questions or would like to discuss potential collaborations, feel free to reach out.
 
+## System Requirements
 
-h3Whos the developer
+To run this project, you will need:
 
+- PHP >= 8.4
+- Composer
+- Node.js >= v14.x
+- npm or Yarn
+- MySQL or any compatible database system
 
-h3System Requirements
+## How to Install
 
+Follow these steps to get the project up and running on your local machine:
 
-h3How to install step by step
+1. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/wilfredo-domanico-jr/inventory-management-system.git
+    cd inventory-management-system
+    ```
 
+2. **Install Dependencies**:
+    - **Backend Dependencies**:
+        ```bash
+        composer install
+        ```
+    - **Frontend Dependencies**:
+        ```bash
+        npm install
+        # or if you're using Yarn
+        yarn install
+        ```
 
-h3My socials if they want to work with me
+3. **Set Up Environment Variables**:
+    - Copy the `.env.example` file to `.env` and fill in your database and application details.
+    ```bash
+    cp .env.example .env
+    ```
 
+4. **Generate Application Key**:
+    ```bash
+    php artisan key:generate
+    ```
 
+5. **Run Database Migrations**:
+    ```bash
+    php artisan migrate
+    ```
 
+6. **Compile Assets**:
+    ```bash
+    npm run dev
+    # or if you're using Yarn
+    yarn dev
+    ```
 
+7. **Start the Application**:
+    ```bash
+    php artisan serve
+    ```
 
-## About Laravel
+    Open your browser and navigate to `http://localhost:8000`.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## My Socials
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+If you are interested in collaborating or have any questions, you can reach out to me through the following platforms:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **GitHub**: [https://github.com/wilfredo-domanico-jr](https://github.com/wilfredo-domanico-jr)
+- **LinkedIn**: [https://www.linkedin.com/in/wilfredo-domanico-jr-8a1841233/](https://www.linkedin.com/in/wilfredo-domanico-jr-8a1841233/)
+- **Email**: wilfredo.domanico.jr@gmail.com
 
-## Learning Laravel
+Feel free to connect with me and explore potential opportunities for collaboration!
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Thank you for checking out my project! Your feedback and contributions are highly appreciated.
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

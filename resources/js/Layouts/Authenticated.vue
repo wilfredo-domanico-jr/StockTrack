@@ -28,9 +28,7 @@ const authority = page.props.value.autorization;
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('Home.index')">
-                                    <ApplicationLogo class="block h-9 w-auto" />
-                                </Link>
+                                    <ApplicationLogo class="block h-16 w-24 " />
                             </div>
 
                             <!-- Navigation Links -->
