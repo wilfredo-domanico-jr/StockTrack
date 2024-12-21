@@ -7,6 +7,8 @@ import SelectInput from "@/Components/Select.vue";
 import { Inertia } from "@inertiajs/inertia";
 import Label from '@/Components/Label.vue';
 import FlashMessage from '@/Components/FlashMessage.vue';
+import PageHeader from "@/Components/PageHeader.vue";
+
 
 const props = defineProps({
   roles: Object,
@@ -32,10 +34,10 @@ watch(roleID, (newValue) => {
     <Head title="Admin - Role Access" />
 
     <BreezeAuthenticatedLayout>
+       
+
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-               Admin ( Role Access )
-            </h2>
+            <PageHeader label="Admin ( Role Access )" />
         </template>
     <AdminSubNav />
         <div class="pb-12">

@@ -6,7 +6,7 @@ import BreezeLabel from "@/Components/Label.vue";
 import SelectInput from "@/Components/Select.vue";
 import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
 import FlashMessage from '@/Components/FlashMessage.vue';
-
+import PageHeader from "@/Components/PageHeader.vue";
 
 const suppliertTypes = [
   { id: 1, TYPE: "INTERNAL" },
@@ -42,11 +42,11 @@ const submit = () => {
 
   <BreezeAuthenticatedLayout>
 
+  
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Supplier ( Supplier List - Create )
-      </h2>
-    </template>
+            <PageHeader label="Supplier ( Supplier List - Create )" />
+        </template>
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

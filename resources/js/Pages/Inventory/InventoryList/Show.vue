@@ -5,6 +5,7 @@ import { Head } from "@inertiajs/inertia-vue3";
 import TextInput from "@/Components/Input.vue";
 import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import InventorySubNav from "@/Pages/Inventory/InventorySubNav.vue";
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
     inventoryData: Object,
@@ -53,11 +54,8 @@ const fourthRow = ref([
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Inventory ( Inventory List - View )
-            </h2>
+            <PageHeader label="Inventory ( Inventory List - View )" />
         </template>
-
         <InventorySubNav />
 
         <div class="pb-12">

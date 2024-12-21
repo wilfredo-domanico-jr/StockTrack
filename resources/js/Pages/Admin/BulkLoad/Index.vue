@@ -6,7 +6,7 @@ import AdminSubNav from "@/Pages/Admin/AdminSubNav.vue";
 import FlashMessage from '@/Components/FlashMessage.vue';
 import AuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
-
+import PageHeader from "@/Components/PageHeader.vue";
 
 
 // Tabs Data
@@ -136,11 +136,11 @@ function submit(route){
   <Head title="Admin" />
 
   <AuthenticatedLayout>
+    
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Admin ( Bulk Load )
-      </h2>
-    </template>
+            <PageHeader label="Admin ( Bulk Load )" />
+        </template>
     <AdminSubNav />
     <div class="pb-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -6,6 +6,7 @@ import Input from '@/Components/Input.vue';
 import Label from '@/Components/Label.vue';
 import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
 import FlashMessage from '@/Components/FlashMessage.vue';
+import PageHeader from "@/Components/PageHeader.vue";
 
 const form = useForm({
     locationID: '',
@@ -26,11 +27,11 @@ const submit = () => {
   <Head title="Admin - Location Management" />
 
   <AuthenticatedLayout>
+ 
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Admin ( Location Management - Create )
-      </h2>
-    </template>
+            <PageHeader label="Admin ( Location Management - Create )" />
+        </template>
 
     <AdminSubNav />
 

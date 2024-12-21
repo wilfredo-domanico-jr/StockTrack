@@ -7,6 +7,7 @@ import BreezeLabel from '@/Components/Label.vue';
 import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import FlashMessage from '@/Components/FlashMessage.vue';
+import PageHeader from "@/Components/PageHeader.vue";
 
 const form = useForm({
     category: '',
@@ -24,10 +25,10 @@ const submit = () => {
   <Head title="Product Catalog" />
 
   <BreezeAuthenticatedLayout>
+
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Product Catalog ( Asset Category Setting - Create )
-      </h2>
+      <PageHeader label=" Product Catalog ( Asset Category Setting - Create )" />
     </template>
 
     <ProductCatalogSubNav />

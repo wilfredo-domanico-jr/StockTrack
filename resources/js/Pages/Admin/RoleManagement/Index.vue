@@ -10,6 +10,7 @@ import CreateButtonLink from "@/Components/Buttons/CreateButtonLink.vue";
 import EditButtonLink from "@/Components/Buttons/EditButtonLink.vue";
 import DeleteButtonLink from "@/Components/Buttons/DeleteButtonLink.vue";
 import FlashMessage from '@/Components/FlashMessage.vue';
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
   roles: Object,
@@ -44,10 +45,10 @@ const authority = page.props.value.autorization;
     <Head title="Admin - Role Management" />
 
     <BreezeAuthenticatedLayout>
+      
+
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-               Admin ( Role Management - Role List )
-            </h2>
+            <PageHeader label="Admin ( Role Management - Role List )" />
         </template>
     <AdminSubNav />
         <div class="py-12">

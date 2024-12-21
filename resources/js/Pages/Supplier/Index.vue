@@ -10,7 +10,7 @@ import CreateButtonLink from "@/Components/Buttons/CreateButtonLink.vue";
 import EditButtonLink from "@/Components/Buttons/EditButtonLink.vue";
 import DeleteButtonLink from "@/Components/Buttons/DeleteButtonLink.vue";
 import FlashMessage from '@/Components/FlashMessage.vue';
-
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
   suppliers: Object,
@@ -45,10 +45,9 @@ const authority = page.props.value.autorization;
     <Head title="Supplier" />
 
     <BreezeAuthenticatedLayout>
+        
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-               Supplier ( Supplier List )
-            </h2>
+            <PageHeader label="Supplier ( Supplier List )" />
         </template>
 
         <div class="py-12">

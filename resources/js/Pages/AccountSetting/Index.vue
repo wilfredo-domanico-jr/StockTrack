@@ -8,12 +8,14 @@ import FlashMessage from "@/Components/FlashMessage.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { ref, reactive, getCurrentInstance } from "vue";
 import { Inertia } from "@inertiajs/inertia";
+
+import PageHeader from "@/Components/PageHeader.vue";
 defineProps({
   userData: Object,
 });
 
 const instance = getCurrentInstance();
-const userData = instance.props.userData;
+const userData = instance.props.userData; 
 
 let form = reactive({
   firstName: userData.FIRST_NAME,
@@ -30,11 +32,11 @@ let form = reactive({
   <Head title="Account Setting" />
 
   <BreezeAuthenticatedLayout>
+
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Account Setting
-      </h2>
-    </template>
+            <PageHeader label="Account Setting" />
+        </template>
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -5,7 +5,7 @@ import AdminSubNav from "@/Pages/Admin/AdminSubNav.vue";
 import Input from "@/Components/Input.vue";
 import Label from "@/Components/Label.vue";
 import { getCurrentInstance } from 'vue';
-
+import PageHeader from "@/Components/PageHeader.vue";
 defineProps({
   userData: Object,
 });
@@ -32,10 +32,9 @@ const form = useForm({
     <Head title="Admin - User Management" />
 
     <BreezeAuthenticatedLayout>
+       
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-               Admin ( User Management - Edit User )
-            </h2>
+            <PageHeader label="Admin ( User Management - Edit User )" />
         </template>
     <AdminSubNav />
         <div class="py-12">

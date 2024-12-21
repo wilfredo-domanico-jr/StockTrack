@@ -5,6 +5,7 @@ import ProductCatalogSubNav from "@/Pages/ProductCatalog/ProductCatalogSubNav.vu
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
   category: Object,
@@ -27,11 +28,12 @@ const submit = () => {
   <Head title="Product Catalog" />
 
   <BreezeAuthenticatedLayout>
+   
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Product Catalog ( Asset Category Setting - Edit )
-      </h2>
+      <PageHeader label="Product Catalog ( Asset Category Setting - Edit )" />
     </template>
+
 
     <ProductCatalogSubNav />
 

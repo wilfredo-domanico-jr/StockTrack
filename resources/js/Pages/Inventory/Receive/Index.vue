@@ -10,7 +10,7 @@ import AuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import InventorySubNav from '@/Pages/Inventory/InventorySubNav.vue';
 import CreateButtonLink from "@/Components/Buttons/CreateButtonLink.vue";
 import ViewButtonLink from "@/Components/Buttons/ViewButtonLink.vue";
-
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
   receive: Object,
@@ -48,11 +48,10 @@ const authority = page.props.value.autorization;
     <Head title="Inventory" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Inventory ( Receive )
-            </h2>
+      <template #header>
+            <PageHeader label="Inventory ( Receive )" />
         </template>
+
 
         <InventorySubNav />
 

@@ -1,5 +1,6 @@
 <script setup>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import PageHeader from "@/Components/PageHeader.vue";
 import ApexCharts from "apexcharts";
 import { Head } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, defineProps } from "vue";
@@ -119,7 +120,7 @@ onMounted(() => {
 
   <BreezeAuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Home</h2>
+      <PageHeader label="Home" />
     </template>
 
     <div class="py-12">

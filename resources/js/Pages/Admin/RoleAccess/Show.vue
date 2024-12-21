@@ -12,6 +12,8 @@ import { getCurrentInstance } from "vue";
 import SelectInput from "@/Components/Select.vue";
 import FlashMessage from '@/Components/FlashMessage.vue';
 import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
+import PageHeader from "@/Components/PageHeader.vue";
+
 
 const props = defineProps({
   roleDetail: Object,
@@ -76,11 +78,10 @@ const form = useForm({
   <Head title="Admin - Role Access" />
 
   <AuthenticatedLayout>
+    
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Admin ( Role Access )
-      </h2>
-    </template>
+            <PageHeader label="Admin ( Role Access )" />
+        </template>
 
     <AdminSubNav />
 

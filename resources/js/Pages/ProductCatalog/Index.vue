@@ -3,6 +3,7 @@ import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, usePage } from "@inertiajs/inertia-vue3";
 import { defineProps, reactive, ref, watch } from "vue";
 import BreezeNavLink from "@/Components/NavLink.vue";
+import PageHeader from "@/Components/PageHeader.vue";
 import ProductCatalogSubNav from "@/Pages/ProductCatalog/ProductCatalogSubNav.vue";
 import Pagination from "@/Components/Pagination.vue";
 import SearchFilter from "@/Components/SearchFilter.vue";
@@ -48,11 +49,11 @@ const authority = page.props.value.autorization;
   <Head title="Product Catalog" />
 
   <BreezeAuthenticatedLayout>
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Product Catalog ( Product List )
-      </h2>
+      <PageHeader label="Product Catalog ( Product List )" />
     </template>
+
     <ProductCatalogSubNav />
 
     <div class="pb-12">

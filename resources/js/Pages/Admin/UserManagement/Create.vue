@@ -7,7 +7,7 @@ import Label from "@/Components/Label.vue";
 import SelectInput from "@/Components/Select.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import FlashMessage from '@/Components/FlashMessage.vue';
-
+import PageHeader from "@/Components/PageHeader.vue";
 defineProps({
   locations: Array,
 });
@@ -37,10 +37,10 @@ const submit = () => {
     <Head title="Admin - User Management" />
 
     <AuthenticatedLayout>
+        
+
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-               Admin ( User Management - Create User )
-            </h2>
+            <PageHeader label="Admin ( User Management - Create User )" />
         </template>
     <AdminSubNav />
         <div class="py-12">

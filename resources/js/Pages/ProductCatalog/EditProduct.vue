@@ -8,7 +8,7 @@ import SelectInput from "@/Components/Select.vue";
 import { Head, usePage, Link } from "@inertiajs/inertia-vue3";
 import { ref, reactive, getCurrentInstance } from 'vue';
 import { Inertia } from "@inertiajs/inertia";
-
+import PageHeader from "@/Components/PageHeader.vue";
 
 defineProps({
   productDetail: Object,
@@ -95,11 +95,11 @@ const submit = () => {
   <Head title="Product Catalog" />
 
   <AuthenticatedLayout>
+    
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Product Catalog ( Asset Category Setting - Edit )
-      </h2>
+      <PageHeader label=" Product Catalog ( Asset Category Setting - Edit )" />
     </template>
+
 
     <ProductCatalogSubNav />
 

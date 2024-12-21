@@ -6,7 +6,7 @@ import Input from '@/Components/Input.vue';
 import Label from '@/Components/Label.vue';
 import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
 import { getCurrentInstance } from 'vue';
-
+import PageHeader from "@/Components/PageHeader.vue";
 
 
 const props = defineProps({
@@ -32,11 +32,12 @@ const submit = () => {
   <Head title="Admin - Role Management" />
 
   <AuthenticatedLayout>
+   
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-              Admin ( Role Management - Edit )
-      </h2>
-    </template>
+            <PageHeader label="Admin ( Role Management - Edit )" />
+        </template>
+
 
     <AdminSubNav />
 

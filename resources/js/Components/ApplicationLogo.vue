@@ -1,5 +1,5 @@
 <script setup>
-import Logo from '../../images/logo/Logo.png';
+import Logo from '/images/StockTrackLogo.png';
 
 </script>
 

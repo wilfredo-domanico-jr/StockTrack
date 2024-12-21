@@ -11,7 +11,7 @@ import AuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import InventorySubNav from '@/Pages/Inventory/InventorySubNav.vue';
 import CreateButtonLink from "@/Components/Buttons/CreateButtonLink.vue";
 import ViewButtonLink from "@/Components/Buttons/ViewButtonLink.vue";
-
+import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
   assetTransfers: Object,
@@ -49,10 +49,10 @@ const authority = page.props.value.autorization;
     <Head title="Asset Transfer" />
 
     <AuthenticatedLayout>
+        
+
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Inventory ( Asset Transfer )
-            </h2>
+            <PageHeader label="Inventory ( Asset Transfer )" />
         </template>
 
         <InventorySubNav />

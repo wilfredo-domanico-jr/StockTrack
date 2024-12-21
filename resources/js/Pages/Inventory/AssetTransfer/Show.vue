@@ -8,6 +8,8 @@ import AuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import InventorySubNav from '@/Pages/Inventory/InventorySubNav.vue';
 import Input from "@/Components/Input.vue";
 import Label from "@/Components/Label.vue";
+import PageHeader from "@/Components/PageHeader.vue";
+
 
 defineProps({
   assetTransfer: Object
@@ -20,11 +22,12 @@ defineProps({
     <Head title="Asset Transfer" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Inventory ( Asset Transfer )
-            </h2>
+
+      
+      <template #header>
+            <PageHeader label="Inventory ( Asset Transfer - Show )" />
         </template>
+
 
         <InventorySubNav />
 

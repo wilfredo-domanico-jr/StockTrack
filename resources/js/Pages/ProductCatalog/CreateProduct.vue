@@ -8,7 +8,7 @@ import SelectInput from "@/Components/Select.vue";
 import { Head, useForm, usePage, Link } from "@inertiajs/inertia-vue3";
 import FlashMessage from '@/Components/FlashMessage.vue';
 import ImageUpload from '@/Components/ImageUpload.vue';
-
+import PageHeader from "@/Components/PageHeader.vue";
 
 
 defineProps({
@@ -79,11 +79,11 @@ const submit = () => {
 
   <AuthenticatedLayout>
 
+
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Product Catalog ( Product List - Create )
-      </h2>
+      <PageHeader label="Product Catalog ( Product List - Create )" />
     </template>
+
 
     <ProductCatalogSubNav />
 

@@ -10,6 +10,8 @@ import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import Input from "@/Components/Input.vue";
 import Label from "@/Components/Label.vue";
 import SelectInput from "@/Components/Select.vue";
+import PageHeader from "@/Components/PageHeader.vue";
+
 
 const token = "w4SK5hO3uZvA6Fi3Bj4nfI36-7JRyf6FGqYFVtZcK03rrU5pRt-DuullFo5l2nlo6ZlvTb_a07wOAvpeWaoHzi";
 
@@ -131,10 +133,10 @@ const updateTotalRow = (event) => {
     <Head title="Asset Transfer" />
 
     <AuthenticatedLayout>
+       
+
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Inventory ( Asset Transfer - Create )
-            </h2>
+            <PageHeader label="Inventory ( Asset Transfer - Create )" />
         </template>
 
         <InventorySubNav />

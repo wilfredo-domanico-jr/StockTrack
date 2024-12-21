@@ -10,6 +10,7 @@ import Label from "@/Components/Label.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import { Inertia } from '@inertiajs/inertia';
 import FlashMessage from '@/Components/FlashMessage.vue';
+import PageHeader from "@/Components/PageHeader.vue";
 
 defineProps({
   assetTransfer: Object
@@ -30,12 +31,11 @@ const reject = (assetTransNo) => {
     <Head title="Receive" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Inventory ( Receive )
-            </h2>
-        </template>
+        
 
+        <template #header>
+            <PageHeader label="Inventory ( Receive - History - Show )" />
+        </template>
         <InventorySubNav />
 
         <div class="pb-12">
