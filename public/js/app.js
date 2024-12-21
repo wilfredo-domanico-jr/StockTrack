@@ -26625,7 +26625,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "px-2 py-4 flex justify-end"
@@ -26755,7 +26755,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -27009,7 +27009,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -27137,7 +27137,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -27234,7 +27234,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -27386,7 +27386,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -27540,7 +27540,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -27611,7 +27611,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -27912,7 +27912,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -27995,7 +27995,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -28147,7 +28147,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -28230,7 +28230,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -28418,7 +28418,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -28584,7 +28584,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -29349,7 +29349,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -29425,7 +29425,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -29652,7 +29652,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -29792,7 +29792,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -29949,7 +29949,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -30154,7 +30154,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -30300,7 +30300,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -30482,7 +30482,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -30610,7 +30610,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -30812,7 +30812,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -30957,7 +30957,7 @@ var _hoisted_3 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_4 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_5 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -31178,7 +31178,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -31326,7 +31326,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -31411,7 +31411,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -31818,7 +31818,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -31910,7 +31910,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -32324,13 +32324,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "pb-12"
+  "class": "mb-12"
 };
 var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -32553,7 +32553,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -32744,7 +32744,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
@@ -32896,7 +32896,7 @@ var _hoisted_2 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_3 = {
-  "class": "bg-white overflow-hidden shadow-sm sm:rounded-lg"
+  "class": "bg-white overflow-hidden shadow-lg sm:rounded-lg"
 };
 var _hoisted_4 = {
   "class": "p-6 bg-white border-b border-gray-200"
