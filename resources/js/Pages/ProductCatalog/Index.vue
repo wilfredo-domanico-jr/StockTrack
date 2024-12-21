@@ -77,7 +77,7 @@ const authority = page.props.value.autorization;
                     v-model="search"
                     type="text"
                     placeholder="Search...."
-                    class="mr-4 w-full max-w-md relative px-6 py-3 rounded focus:shadow-outline"
+                    class="mr-4 w-full max-w-md relative px-6 py-3 rounded focus:ring-teal-500"
                   />
                 </div>
 
@@ -89,7 +89,7 @@ const authority = page.props.value.autorization;
                 class="text-center w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400"
               >
                 <thead
-                  class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                  class="text-xs text-gray-700 uppercase bg-teal-300 dark:bg-gray-700 dark:text-gray-400"
                 >
                   <tr>
                     <th scope="col" class="px-6 py-3">Asset id</th>

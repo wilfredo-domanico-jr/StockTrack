@@ -58,7 +58,7 @@ watch(search, (value) => {
                                 class="w-full text-center text-sm rtl:text-right text-gray-500 dark:text-gray-400"
                             >
                                 <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                                    class="text-xs text-gray-700 uppercase bg-teal-300 dark:bg-gray-700 dark:text-gray-400"
                                 >
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
