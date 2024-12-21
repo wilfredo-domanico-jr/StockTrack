@@ -23482,19 +23482,19 @@ __webpack_require__.r(__webpack_exports__);
     var status = (0,vue__WEBPACK_IMPORTED_MODULE_4__.ref)([{
       count: props.receivedTransfer,
       label: "RECEIVED TRANSFER",
-      "class": 'bg-green-400 border border-gray-200'
+      "class": "bg-teal-400 border border-gray-200"
     }, {
       count: props.pendingToReceive,
       label: "PENDING TO RECEIVE",
-      "class": 'bg-blue-400 border border-gray-200'
+      "class": "bg-blue-400 border border-gray-200"
     }, {
       count: props.transferedAsset,
       label: "TRANSFERED ASSET",
-      "class": 'bg-violet-400 border border-gray-200'
+      "class": "bg-violet-400 border border-gray-200"
     }, {
       count: props.pendingTransfer,
       label: "PENDING TRANSFER",
-      "class": 'bg-red-400 border border-gray-200'
+      "class": "bg-red-400 border border-gray-200"
     }]);
     var lineChartOptions = {
       chart: {
@@ -23520,7 +23520,7 @@ __webpack_require__.r(__webpack_exports__);
       }],
       chart: {
         type: "bar",
-        height: '100%'
+        height: "100%"
       },
       plotOptions: {
         bar: {
@@ -23541,7 +23541,7 @@ __webpack_require__.r(__webpack_exports__);
       labels: locationName.value,
       chart: {
         type: "donut",
-        height: '100%'
+        height: "100%"
       },
       legend: {
         position: "bottom"
@@ -29361,7 +29361,7 @@ var _hoisted_6 = {
   "class": "mb-2 text-2xl font-semibold tracking-tight text-white"
 };
 var _hoisted_7 = {
-  "class": "mb-3 font-normal text-gray-600"
+  "class": "mb-3 text-gray-600 font-bold"
 };
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "grid grid-cols-4 gap-4 mb-4"
