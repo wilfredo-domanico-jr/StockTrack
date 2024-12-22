@@ -33,7 +33,7 @@ Follow these steps to get the project up and running on your local machine:
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/wilfredo-domanico-jr/inventory-management-system.git
+    git clone https://github.com/wilfredo-domanico-jr/StockTrack.git
     cd inventory-management-system
     ```
 
@@ -60,10 +60,8 @@ Follow these steps to get the project up and running on your local machine:
     php artisan key:generate
     ```
 
-5. **Run Database Migrations**:
-    ```bash
-    php artisan migrate
-    ```
+5. **Import Database**:
+    - Import the database included in the root directory named `stocktrackdb.sql`.
 
 6. **Compile Assets**:
     ```bash
