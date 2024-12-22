@@ -2,7 +2,7 @@
 
 An advanced single-page application designed to streamline and simplify the inventory management process. This system provides robust features for tracking and managing inventory items, ensuring efficient and effective control over stock levels, orders, and shipments.
 <div align="center">
-    <img src="public/images/Logo.png" alt="Stock Track" width="400">
+    <img src="public/images/StockTrackLogo.png" alt="Stock Track" width="400">
 </div>
 ## Created Using
 
