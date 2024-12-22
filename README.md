@@ -34,7 +34,7 @@ Follow these steps to get the project up and running on your local machine:
 1. **Clone the Repository**:
     ```bash
     git clone https://github.com/wilfredo-domanico-jr/StockTrack.git
-    cd inventory-management-system
+    cd StockTrack
     ```
 
 2. **Install Dependencies**:
