@@ -55,11 +55,9 @@ watch(search, (value) => {
 
                         <div class="relative overflow-x-auto">
                             <table
-                                class="w-full text-center text-sm rtl:text-right text-gray-500 dark:text-gray-400"
+                                class="w-full text-center text-sm rtl:text-right text-gray-500"
                             >
-                                <thead
-                                    class="text-xs text-gray-700 uppercase bg-teal-300 dark:bg-gray-700 dark:text-gray-400"
-                                >
+                                <thead class="text-xs text-gray-700 uppercase">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             View
@@ -101,7 +99,7 @@ watch(search, (value) => {
                                         <tr
                                             v-for="inventory in inventories.data"
                                             :key="inventory.id"
-                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                            class="bg-white border-b"
                                         >
                                             <td class="px-6 py-4">
                                                 <ViewButtonLink
@@ -120,7 +118,7 @@ watch(search, (value) => {
                                             </td>
                                             <th
                                                 scope="row"
-                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
                                                 {{ inventory.ASSET_ID }}
                                             </th>

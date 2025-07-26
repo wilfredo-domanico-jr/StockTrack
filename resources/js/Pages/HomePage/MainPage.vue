@@ -143,7 +143,8 @@ onMounted(() => {
         </template>
 
         <div class="py-12">
-            <div class="max-w-full mx-[8rem] sm:px-6 lg:px-8">
+            <!-- <div class="max-w-full mx-[8rem] sm:px-6 lg:px-8"> -->
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="grid grid-cols-4 gap-4 mb-4">
@@ -166,7 +167,7 @@ onMounted(() => {
 
                         <div class="grid grid-cols-4 gap-4 mb-4">
                             <div
-                                class="col-span-3 h-100 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                                class="col-span-3 h-100 p-6 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700"
                             >
                                 <div id="line-chart"></div>
                             </div>
@@ -174,13 +175,13 @@ onMounted(() => {
                             <div class="col-span-1">
                                 <div class="flex flex-col gap-4 h-full">
                                     <div
-                                        class="h-1/2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                                        class="h-1/2 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700"
                                     >
                                         <div id="bar-chart"></div>
                                     </div>
 
                                     <div
-                                        class="h-1/2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                                        class="h-1/2 bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700"
                                     >
                                         <div id="donut-chart"></div>
                                     </div>

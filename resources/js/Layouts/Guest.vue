@@ -49,7 +49,6 @@ const bgImage = computed(() => {
 <template>
     <div v-if="loading" class="flex items-center justify-center min-h-screen">
         <p class="text-gray-600">Loading...</p>
-        <!-- You can add a spinner here -->
     </div>
 
     <div
