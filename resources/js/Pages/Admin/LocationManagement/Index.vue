@@ -154,6 +154,16 @@ const authority = page.props.value.autorization;
                                                             }
                                                         )
                                                     "
+                                                    :class="{
+                                                        'opacity-50 pointer-events-none':
+                                                            [
+                                                                '000000',
+                                                                '000001',
+                                                                '000002',
+                                                            ].includes(
+                                                                location.LOCATION_ID
+                                                            ),
+                                                    }"
                                                 >
                                                     <i class="fas fa-edit"></i>
                                                 </EditButtonLink>
@@ -175,6 +185,16 @@ const authority = page.props.value.autorization;
                                                             }
                                                         )
                                                     "
+                                                    :class="{
+                                                        'opacity-50 pointer-events-none':
+                                                            [
+                                                                '000000',
+                                                                '000001',
+                                                                '000002',
+                                                            ].includes(
+                                                                location.LOCATION_ID
+                                                            ),
+                                                    }"
                                                 >
                                                     <i
                                                         class="fas fa-trash-alt"

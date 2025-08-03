@@ -47,6 +47,13 @@ class User extends Authenticatable
     public function location()
     {
 
-         return $this->belongsTo(Location::class, 'LOCATION_ID', 'LOCATION_ID');
+        return $this->belongsTo(Location::class, 'LOCATION_ID', 'LOCATION_ID');
+    }
+
+
+    public function role()
+    {
+
+        return $this->belongsTo(Roles::class, 'ROLE_ID', 'id');
     }
 }

@@ -174,6 +174,7 @@ const authority = page.props.value.autorization;
                                                             }
                                                         )
                                                     "
+                                                    class="opacity-50 pointer-events-none"
                                                 >
                                                     <i
                                                         class="fas fa-trash-alt"

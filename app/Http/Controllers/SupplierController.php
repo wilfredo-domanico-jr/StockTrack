@@ -47,6 +47,15 @@ class SupplierController extends Controller
     {
 
 
+        // Prevent adding more than five for demo-purpose
+        $totalSupplier = Supplier::where('DELETED', 0)->count();
+
+        if ($totalSupplier >= 5) {
+            return redirect()->back()->with('error', 'For demo purpose: Adding more than 5 supplier is not allowed. You can delete an existing supplier to add a new one.');
+        }
+        //
+
+
         if (Gate::allows('AuthorizeAction', ['SUPPLIER'])) {
             try {
                 // Begin transaction
@@ -84,6 +93,15 @@ class SupplierController extends Controller
     public function show($supplierID)
     {
 
+        // Prevent searching already delete
+        $supplier = Supplier::find($supplierID);
+
+        if (!$supplier || $supplier->DELETED == 1) {
+            abort(404); // Return 404 Not Found
+        }
+        //
+
+        //
         if (Gate::allows('AuthorizeAction', ['SUPPLIER'])) {
 
             $supplierData = Supplier::findOrFail($supplierID);

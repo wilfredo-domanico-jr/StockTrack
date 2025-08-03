@@ -59,6 +59,14 @@ class RoleAccessController extends Controller
     public function update(HttpRequest $request, $roleID)
     {
 
+
+
+        return redirect()->back()->with(
+            'error',
+            'For demo purpose: Modifying role access settings is not permitted.'
+        );
+
+
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
             RolePermission::where('ROLE_ID', $roleID)->update([
@@ -95,7 +103,6 @@ class RoleAccessController extends Controller
 
 
             return Redirect::route('Admin.RoleAccess.index')->with('success', "Role Access Updated Successfully.");
-
         } else {
             return Redirect::route('noAccess');
         }

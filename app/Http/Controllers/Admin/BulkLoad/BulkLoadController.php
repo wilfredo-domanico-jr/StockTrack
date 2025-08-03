@@ -10,18 +10,29 @@ use Illuminate\Support\Facades\Redirect;
 
 class BulkLoadController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
+
             $user = Auth::user();
-        return Inertia::render('Admin/BulkLoad/Index',[
-            'user' => $user,
-        ]);
+
+            // Check if user is admin or user
+
+            $role = 'user';
+
+            if ($user->ROLE_ID == 1) {
+                $role = 'admin';
+            }
+
+            // $isUserAdmin = $u
+            return Inertia::render('Admin/BulkLoad/Index', [
+                'user' => $user,
+                'role' => $role
+            ]);
         } else {
             return Redirect::route('noAccess');
         }
-
-
     }
 }

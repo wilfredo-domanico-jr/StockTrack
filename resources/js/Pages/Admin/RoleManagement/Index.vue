@@ -149,6 +149,7 @@ const authority = page.props.value.autorization;
                                                             { roleID: role.id }
                                                         )
                                                     "
+                                                    class="opacity-50 pointer-events-none"
                                                 >
                                                     <i class="fas fa-edit"></i>
                                                 </EditButtonLink>
@@ -165,6 +166,7 @@ const authority = page.props.value.autorization;
                                                             { roleID: role.id }
                                                         )
                                                     "
+                                                    class="opacity-50 pointer-events-none"
                                                 >
                                                     <i
                                                         class="fas fa-trash-alt"

@@ -48,11 +48,36 @@ class LocationManagementController extends Controller
     public function store(HttpRequest $request)
     {
 
+
+        return redirect()->back()->with('error', 'For demo purpose: Adding more location is not allowed. Please use the default location provided.');
+
+
+
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
+
+
+            // Check if Location ID already exist before and deleted
+
+            $isLocationIDExistingButDeleted = Location::where([
+                'LOCATION_ID' => $request->locationID,
+                'DELETED' => 1
+            ])->first();
+
+
+            if ($isLocationIDExistingButDeleted) {
+                return redirect()->back()->with(
+                    'error',
+                    "Location ID '{$request->locationID}' already exists (but marked as deleted before). Please choose different location id"
+                );
+            }
 
             //Check if location ID already exist
 
-            $isLocationIDExisting = Location::where('LOCATION_ID', $request->locationID)->first();
+            $isLocationIDExisting = Location::where([
+                'LOCATION_ID' => $request->locationID,
+                'DELETED' => 0
+            ])->first();
+
             if ($isLocationIDExisting) {
                 return Redirect::back()->with('error', "Location ID $request->locationID already exist.");
             }
@@ -76,6 +101,14 @@ class LocationManagementController extends Controller
     public function show($locationID)
     {
 
+
+        if ($locationID == "000000") {
+            return redirect()->back()->with(
+                'error',
+                "Editing 000000 - All Location is not allowed"
+            );
+        }
+
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
             $locationData = Location::findOrFail($locationID);
@@ -89,6 +122,12 @@ class LocationManagementController extends Controller
     public function update(HttpRequest $request, $locationID)
     {
 
+        if ($locationID == "000000") {
+            return redirect()->back()->with(
+                'error',
+                "Editing 000000 - All Location is not allowed"
+            );
+        }
 
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
@@ -126,6 +165,13 @@ class LocationManagementController extends Controller
     {
 
 
+
+        if ($locationID == "000000") {
+            return redirect()->back()->with(
+                'error',
+                "Deleting 000000 - All Location is unauthorized"
+            );
+        }
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
             $locationData = Location::findOrFail($locationID);

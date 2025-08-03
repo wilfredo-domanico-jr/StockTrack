@@ -16,6 +16,9 @@ class ImportLocationTemplateController extends Controller
 
     public function importLocation(HttpRequest $request)
     {
+
+
+
         // Check dito kung yung file is hindi empty
 
         ini_set('max_execution_time', 300);
@@ -64,6 +67,20 @@ class ImportLocationTemplateController extends Controller
         if (!empty($validationError)) {
             return Redirect::back()->with('error', $validationError);
         }
+
+        // Count total location. If hindi pa nag reach ng 5 compute the remaining.
+
+        $totalLocation = Location::where('DELETED', 0)->count();
+
+        if ($totalLocation >= 5) {
+            redirect()->back()->with('error', 'For demo purpose: Adding more than 5 location is not allowed. You can delete an existing location to add a new one.');
+        }
+
+        // dd($dataArray);
+        // return redirect()->back()->with(
+        //     'error',
+        //     'For demo purpose: Importing account is not permitted.'
+        // );
 
         $this->storeLocation($dataArray);
     }
@@ -126,7 +143,7 @@ class ImportLocationTemplateController extends Controller
             $locationData = [
                 'LOCATION_ID' => $value["LOCATION_ID"],
                 'LOCATION' => $value["LOCATION"],
-                'UPDATED_BY' => Auth::user()->FIRST_NAME.' '.Auth::user()->LAST_NAME,
+                'UPDATED_BY' => Auth::user()->FIRST_NAME . ' ' . Auth::user()->LAST_NAME,
             ];
 
 
@@ -147,6 +164,6 @@ class ImportLocationTemplateController extends Controller
         }
 
         return Redirect::route('Admin.BulkLoad.ImportTemplate.importLocation')
-        ->with('success', "Location Bulkload Successfull.");
+            ->with('success', "Location Bulkload Successfull.");
     }
 }

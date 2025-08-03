@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps, computed } from "vue";
+import { ref, defineProps } from "vue";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 import AdminSubNav from "@/Pages/Admin/AdminSubNav.vue";
 import FlashMessage from "@/Components/FlashMessage.vue";
@@ -7,11 +7,13 @@ import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import SubmitButton from "@/Components/Buttons/SubmitButton.vue";
 import PageHeader from "@/Components/PageHeader.vue";
 
+// Tabs Data
+
 const props = defineProps({
     role: String,
 });
 
-const allTabs = [
+const tabs = [
     {
         title: "User Bulkload",
         id: "user-bulkload-tab",
@@ -54,7 +56,8 @@ const allTabs = [
     },
 ];
 
-const allTabContents = [
+// Tab Content Data
+const tabContents = [
     {
         id: "user-bulkload",
         areaLabeledBy: "user-bulkload-tab",
@@ -102,29 +105,11 @@ const allTabContents = [
     },
 ];
 
-// ✅ Dynamically filter based on role
-const tabs = computed(() => {
-    if (props.role === "user") {
-        return allTabs.filter((tab) => tab.name === "inventory"); // only inventory for user
-    }
-    if (props.role === "admin") {
-        return allTabs.filter((tab) => tab.name !== "inventory"); // all except inventory for admin
-    }
-    return []; // fallback
-});
 
-const tabContents = computed(() => {
-    if (props.role === "user") {
-        return allTabContents.filter((content) => content.name === "inventory");
-    }
-    if (props.role === "admin") {
-        return allTabContents.filter((content) => content.name !== "inventory");
-    }
-    return [];
-});
 
-// Active Tab
-const activeTab = ref(tabs.value.length ? tabs.value[0].name : "");
+
+// Active Tab State
+const activeTab = ref("user");
 
 // Tab Selection Function
 function selectTab(tab) {
@@ -136,7 +121,11 @@ const form = useForm({
 });
 
 function submit(route) {
-    form.post(route);
+    form.post(route, {
+        onSuccess: () => {
+            // form.submittedFile = "";
+        },
+    });
 }
 </script>
 
@@ -163,6 +152,7 @@ function submit(route) {
                                     :key="index"
                                     class="me-2"
                                 >
+                                    <span>{{ tab.name }}</span>
                                     <button
                                         @click="selectTab(tab.name)"
                                         :class="{

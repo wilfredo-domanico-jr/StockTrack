@@ -18,6 +18,13 @@ class ImportUserTemplateController extends Controller
 
     public function importUser(HttpRequest $request)
     {
+
+
+        return redirect()->back()->with(
+            'error',
+            'For demo purpose: Adding more users is not allowed. Only an admin account and the 2 default user provided are permitted.'
+        );
+
         // Check dito kung yung file is hindi empty
 
         ini_set('max_execution_time', 300);
@@ -37,7 +44,6 @@ class ImportUserTemplateController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->with('error', 'Bulk load only accept xls,xlsx file.');
         }
-
 
         $dataArray = Excel::toArray([], $request->file('submittedFile'))[0];
 
@@ -66,6 +72,9 @@ class ImportUserTemplateController extends Controller
         if (!empty($validationError)) {
             return Redirect::back()->with('error', $validationError);
         }
+
+
+
 
         $this->storeUser($dataArray);
     }
@@ -223,6 +232,6 @@ class ImportUserTemplateController extends Controller
         }
 
         return Redirect::route('Admin.BulkLoad.ImportTemplate.importUser')
-        ->with('success', "User Bulkload Successfull.");
+            ->with('success', "User Bulkload Successfull.");
     }
 }

@@ -73,6 +73,17 @@ class ProductCatalogController extends Controller
     {
 
 
+        // Prevent adding more than one for demo-purpose
+        $totalProduct = Product::count();
+
+        if ($totalProduct >= 5) {
+            return redirect()->back()->with('error', 'For demo purpose: Adding more than 5 product is not allowed. You can delete an existing product to add a new one.');
+        }
+        //
+
+
+
+
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
             try {
@@ -212,15 +223,13 @@ class ProductCatalogController extends Controller
                     $image = $fileName;
 
 
-                     // Then Delete the old photo
+                    // Then Delete the old photo
 
-                     $oldFileName = public_path('images/productListPhotos') . '/' . $request->old_image;
+                    $oldFileName = public_path('images/productListPhotos') . '/' . $request->old_image;
 
-                     if (file_exists($oldFileName)) {
-                         unlink($oldFileName);
-                     }
-
-
+                    if (file_exists($oldFileName)) {
+                        unlink($oldFileName);
+                    }
                 } else {
                     //Get Database product
                     $image = $request->old_image;
@@ -321,6 +330,14 @@ class ProductCatalogController extends Controller
 
     public function storeAssetCategory()
     {
+
+        // Prevent adding more than five for demo-purpose
+        $totalAssetCategory = AssetCategory::count();
+
+        if ($totalAssetCategory >= 5) {
+            return redirect()->back()->with('error', 'For demo purpose: Adding more than 5 asset category is not allowed. You can delete an existing asset category to add a new one.');
+        }
+        //
 
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {

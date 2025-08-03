@@ -8,6 +8,7 @@ use App\Models\Location;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Roles;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Gate;
@@ -42,10 +43,15 @@ class UserManagementController extends Controller
     {
 
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
+            $locations = Location::where('DELETED', 0)->where('LOCATION_ID', '!=', '000000')->get();
 
 
-            $locations = Location::where('DELETED', 0)->get();
-            return Inertia::render('Admin/UserManagement/Create', ['locations' => $locations]);
+
+            $roles = Roles::where('DELETED', 0)
+                ->where('id', '!=', 1)
+                ->get();
+
+            return Inertia::render('Admin/UserManagement/Create', ['locations' => $locations, 'roles' => $roles]);
         } else {
             return Redirect::route('noAccess');
         }
@@ -55,6 +61,12 @@ class UserManagementController extends Controller
     {
 
 
+
+        return redirect()->back()->with(
+            'error',
+            'For demo purpose: Adding more users is not allowed. Only an admin account and the 2 default user provided are permitted.'
+        );
+        
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
 
@@ -78,8 +90,12 @@ class UserManagementController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->initialPassword),
                     'LOCATION_ID' => $request->location,
+                    'ROLE_ID' => $request->role,
                     'ACC_STATUS' => "INACTIVE"
                 ]);
+
+
+
 
                 // Commit transaction
                 DB::commit();
@@ -105,7 +121,7 @@ class UserManagementController extends Controller
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
 
-            $userData = User::with('location')->where('USER_ID', $userID)->first();
+            $userData = User::with(['location', 'role'])->where('USER_ID', $userID)->first();
 
             if (!$userData) {
                 abort(404, 'User Not Found');
@@ -121,6 +137,17 @@ class UserManagementController extends Controller
 
     public function destroy($userID)
     {
+        if (
+            $userID == "0000000" ||
+            $userID == "0000001" ||
+            $userID == "0000002"
+        ) {
+            return redirect()->back()->with(
+                'error',
+                'For demo purpose: Deleting the admin account or the default user account is not permitted.'
+            );
+        }
+
 
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
             User::where('USER_ID', $userID)->update(['DELETED' => 1]);

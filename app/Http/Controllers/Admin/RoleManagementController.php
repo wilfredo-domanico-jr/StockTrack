@@ -36,6 +36,12 @@ class RoleManagementController extends Controller
 
     public function create()
     {
+
+
+
+
+
+
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
             return Inertia::render('Admin/RoleManagement/Create');
@@ -47,6 +53,12 @@ class RoleManagementController extends Controller
     public function store(HttpRequest $request)
     {
 
+
+
+        return redirect()->back()->with(
+            'error',
+            'For demo purpose: Adding new role is not allowed. Only the default Admin and User roles are permitted.'
+        );
 
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
@@ -82,6 +94,12 @@ class RoleManagementController extends Controller
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
             // Insert the location
 
+            return redirect()->back()->with(
+                'error',
+                "For demo purpose: Updating the default role is not allowed"
+            );
+
+
             Roles::where('id', $roleID)->update([
                 'ROLE' => $request->roleName,
                 'UPDATED_BY' => Auth::user()->FIRST_NAME . ' ' . Auth::user()->LAST_NAME,
@@ -100,14 +118,20 @@ class RoleManagementController extends Controller
     {
 
 
+
+
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
             $roleData = Roles::findOrFail($roleID);
 
+            return redirect()->back()->with(
+                'error',
+                "For demo purpose: Deleting default role `{$roleData->ROLE}` is not allowed"
+            );
+
             $roleData->delete();
 
             return Redirect::route('Admin.RoleManagement.index')->with('success', 'Role Deleted Successfully.');
-
         } else {
             return Redirect::route('noAccess');
         }
