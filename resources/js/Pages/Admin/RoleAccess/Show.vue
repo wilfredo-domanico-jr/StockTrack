@@ -65,11 +65,6 @@ const form = useForm({
     addRole: roleAccess.ADD_ROLE === 1,
     editRole: roleAccess.EDIT_ROLE === 1,
     deleteRole: roleAccess.DELETE_ROLE === 1,
-    bulkloadUser: roleAccess.BULKLOAD_USER === 1,
-    bulkloadInventory: roleAccess.BULKLOAD_INVENTORY === 1,
-    bulkloadProduct: roleAccess.BULKLOAD_PRODUCT === 1,
-    bulkloadSupplier: roleAccess.BULKLOAD_SUPPLIER === 1,
-    bulkloadLocation: roleAccess.BULKLOAD_LOCATION === 1,
     manageRoleAccess: roleAccess.MANAGE_ROLE_ACCESS === 1,
 });
 </script>
@@ -246,26 +241,7 @@ const form = useForm({
                                         v-model="form.deleteRole"
                                         label="Delete Role"
                                     />
-                                    <Checkbox
-                                        v-model="form.bulkloadUser"
-                                        label="Bulkload User"
-                                    />
-                                    <Checkbox
-                                        v-model="form.bulkloadInventory"
-                                        label="Bulkload Inventory"
-                                    />
-                                    <Checkbox
-                                        v-model="form.bulkloadProduct"
-                                        label="Bulkload Product"
-                                    />
-                                    <Checkbox
-                                        v-model="form.bulkloadSupplier"
-                                        label="Bulkload Supplier"
-                                    />
-                                    <Checkbox
-                                        v-model="form.bulkloadLocation"
-                                        label="Bulkload Location"
-                                    />
+                                   
                                     <Checkbox
                                         v-model="form.manageRoleAccess"
                                         label="Manage Role Access"

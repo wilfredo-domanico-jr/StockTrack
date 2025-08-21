@@ -93,11 +93,6 @@ class RoleAccessController extends Controller
                 'ADD_ROLE' => $request->addRole,
                 'EDIT_ROLE' => $request->editRole,
                 'DELETE_ROLE' => $request->deleteRole,
-                'BULKLOAD_USER' => $request->bulkloadUser,
-                'BULKLOAD_INVENTORY' => $request->bulkloadInventory,
-                'BULKLOAD_PRODUCT' => $request->bulkloadProduct,
-                'BULKLOAD_SUPPLIER' => $request->bulkloadSupplier,
-                'BULKLOAD_LOCATION' => $request->bulkloadLocation,
                 'MANAGE_ROLE_ACCESS' => $request->manageRoleAccess,
             ]);
 

@@ -39,11 +39,6 @@ class RolePermission extends Model
         'ADD_ROLE',
         'EDIT_ROLE',
         'DELETE_ROLE',
-        'BULKLOAD_USER',
-        'BULKLOAD_INVENTORY',
-        'BULKLOAD_PRODUCT',
-        'BULKLOAD_SUPPLIER',
-        'BULKLOAD_LOCATION',
         'MANAGE_ROLE_ACCESS',
 
     ];

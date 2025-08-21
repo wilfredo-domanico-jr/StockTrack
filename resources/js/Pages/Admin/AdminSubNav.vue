@@ -4,6 +4,7 @@ import { usePage } from "@inertiajs/inertia-vue3";
 import { computed } from "vue";
 
 const page = usePage();
+const authUser = computed(() => page.props.value.auth.user);
 </script>
 
 <template>
@@ -12,19 +13,13 @@ const page = usePage();
             <div class="py-6">
                 <div class="flex">
                     <!-- Navigation Links -->
+
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <BreezeNavLink
                             :href="route('Admin.UserManagement.index')"
                             :active="route().current('Admin.UserManagement.*')"
                         >
                             User Management
-                        </BreezeNavLink>
-
-                        <BreezeNavLink
-                            :href="route('Admin.BulkLoad.index')"
-                            :active="route().current('Admin.BulkLoad.*')"
-                        >
-                            Bulk Load
                         </BreezeNavLink>
 
                         <BreezeNavLink

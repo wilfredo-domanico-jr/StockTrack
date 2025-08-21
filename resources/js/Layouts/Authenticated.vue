@@ -13,37 +13,10 @@ const page = usePage();
 const authUser = computed(() => page.props.value.auth.user);
 
 const authority = page.props.value.autorization;
-
-// const imagesToPreload = ["/images/StockTrackLogo.png"];
-
-// const loading = ref(true); // Track loading state
-
-// onMounted(async () => {
-//     // Preload images first
-//     await preloadImages(imagesToPreload);
-//     loading.value = false; // All images loaded
-// });
-
-// // Preload function
-// const preloadImages = (urls) => {
-//     return Promise.all(
-//         urls.map(
-//             (url) =>
-//                 new Promise((resolve) => {
-//                     const img = new Image();
-//                     img.src = url;
-//                     img.onload = resolve;
-//                     img.onerror = resolve; // Continue even if one fails
-//                 })
-//         )
-//     );
-// };
 </script>
 
 <template>
-    <!-- <div v-if="loading" class="flex items-center justify-center min-h-screen">
-        <p class="text-gray-600">Loading...</p>
-    </div> -->
+   
 
     <div>
         <div class="min-h-screen bg-gray-100">

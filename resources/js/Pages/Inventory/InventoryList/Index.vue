@@ -83,9 +83,6 @@ watch(search, (value) => {
                                         <th scope="col" class="px-6 py-3">
                                             Serial No.
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Date Created
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -140,9 +137,6 @@ watch(search, (value) => {
                                             </td>
                                             <td class="px-6 py-4">
                                                 {{ inventory.SERIAL_NO }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ inventory.DATE_CREATED }}
                                             </td>
                                         </tr>
                                     </template>

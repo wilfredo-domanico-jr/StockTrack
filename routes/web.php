@@ -11,16 +11,9 @@ use App\Http\Controllers\Inventory\ReceiveController;
 use App\Http\Controllers\Inventory\InventoryController;
 use App\Http\Controllers\Admin\RoleManagementController;
 use App\Http\Controllers\Admin\UserManagementController;
-use App\Http\Controllers\Admin\BulkLoad\BulkLoadController;
 use App\Http\Controllers\Inventory\AssetTransferController;
 use App\Http\Controllers\Admin\LocationManagementController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\BulkLoad\ExportTemplateController;
-use App\Http\Controllers\Admin\BulkLoad\ImportUserTemplateController;
-use App\Http\Controllers\Admin\BulkLoad\ImportProductTemplateController;
-use App\Http\Controllers\Admin\BulkLoad\ImportLocationTemplateController;
-use App\Http\Controllers\Admin\BulkLoad\ImportSupplierTemplateController;
-use App\Http\Controllers\Admin\BulkLoad\ImportInventoryTemplateController;
 
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
 Route::get('/noAccess', [PageController::class, 'noAccess'])->name('noAccess');
@@ -106,28 +99,6 @@ Route::name('Admin.')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/usermanagement/destroy/{userID}', [UserManagementController::class, 'destroy'])->name('destroy');
     });
 
-    Route::name('BulkLoad.')->group(function () {
-        Route::get('/admin/bulkload/index', [BulkLoadController::class, 'index'])->name('index');
-
-
-        Route::name('ExportTemplate.')->group(function(){
-            Route::get('/admin/bulkload/download/userTemplate',[ExportTemplateController::class, 'userTemplate'])->name('userTemplate');
-            Route::get('/admin/bulkload/download/productTemplate',[ExportTemplateController::class, 'productTemplate'])->name('productTemplate');
-            Route::get('/admin/bulkload/download/inventoryTemplate',[ExportTemplateController::class, 'inventoryTemplate'])->name('inventoryTemplate');
-            Route::get('/admin/bulkload/download/supplierTemplate',[ExportTemplateController::class, 'supplierTemplate'])->name('supplierTemplate');
-            Route::get('/admin/bulkload/download/locationTemplate',[ExportTemplateController::class, 'locationTemplate'])->name('locationTemplate');
-        });
-
-
-        Route::name('ImportTemplate.')->group(function(){
-            Route::post('/admin/bulkload/upload/userImport',[ImportUserTemplateController::class, 'importUser'])->name('importUser');
-            Route::post('/admin/bulkload/upload/productImport',[ImportProductTemplateController::class, 'importProduct'])->name('importProduct');
-            Route::post('/admin/bulkload/upload/inventoryImport',[ImportInventoryTemplateController::class, 'importInventory'])->name('importInventory');
-            Route::post('/admin/bulkload/upload/supplierImport',[ImportSupplierTemplateController::class, 'importSupplier'])->name('importSupplier');
-            Route::post('/admin/bulkload/upload/locationImport',[ImportLocationTemplateController::class, 'importLocation'])->name('importLocation');
-        });
-
-    });
 
     Route::name('LocationManagement.')->group(function () {
         Route::get('/admin/locationmanagement/index', [LocationManagementController::class, 'index'])->name('index');

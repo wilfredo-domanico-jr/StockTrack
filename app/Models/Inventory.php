@@ -9,12 +9,11 @@ class Inventory extends Model
 {
     use HasFactory;
 
-    protected $table ="inventory";
+    protected $table = "inventory";
     protected $primaryKey = 'INVENTORY_ID';
     public $timestamps = true;
     protected $keyType = 'string';
     protected $fillable = [
-        'INVENTORY_ID',
         'ASSET_ID',
         'ASSET_NAME',
         'ASSET_TAG',
@@ -51,7 +50,7 @@ class Inventory extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class,'ASSET_ID', 'ASSET_ID');
+        return $this->belongsTo(Product::class, 'ASSET_ID', 'ASSET_ID');
     }
 
 
