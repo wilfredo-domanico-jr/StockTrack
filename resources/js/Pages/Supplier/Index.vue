@@ -93,17 +93,14 @@ const authority = page.props.value.autorization;
                                         </th>
                                         <th
                                             scope="col"
-                                            v-show="authority.EDIT_SUPPLIER"
-                                            class="px-6 py-3"
+                                            colspan="2"
+                                            v-show="
+                                                authority.EDIT_SUPPLIER ||
+                                                authority.DELETE_SUPPLIER
+                                            "
+                                            class="px-6 py-3 whitespace-nowrap w-32"
                                         >
-                                            Edit
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            v-show="authority.DELETE_SUPPLIER"
-                                            class="px-6 py-3"
-                                        >
-                                            Delete
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
@@ -134,7 +131,7 @@ const authority = page.props.value.autorization;
                                             </td>
 
                                             <td
-                                                class="px-6 py-4"
+                                                class="whitespace-nowrap w-16"
                                                 v-show="authority.EDIT_SUPPLIER"
                                             >
                                                 <EditButtonLink
@@ -145,11 +142,14 @@ const authority = page.props.value.autorization;
                                                         })
                                                     "
                                                 >
-                                                    <i class="fas fa-edit"></i>
+                                                    <i
+                                                        class="fas fa-edit mr-2"
+                                                    ></i>
+                                                    <span>Edit</span>
                                                 </EditButtonLink>
                                             </td>
                                             <td
-                                                class="px-6 py-4"
+                                                class="whitespace-nowrap w-16"
                                                 v-show="
                                                     authority.DELETE_SUPPLIER
                                                 "
@@ -166,8 +166,9 @@ const authority = page.props.value.autorization;
                                                     "
                                                 >
                                                     <i
-                                                        class="fas fa-trash-alt"
+                                                        class="fas fa-trash-alt mr-2"
                                                     ></i>
+                                                    <span>Delete</span>
                                                 </DeleteButtonLink>
                                             </td>
                                         </tr>

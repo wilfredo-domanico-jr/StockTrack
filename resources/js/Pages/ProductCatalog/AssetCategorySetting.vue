@@ -93,28 +93,18 @@ const authority = page.props.value.autorization;
                                 <thead class="text-xs text-gray-700 uppercase">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
-                                            Category id
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Category Name
+                                            Category
                                         </th>
                                         <th
                                             scope="col"
+                                            colspan="2"
                                             v-show="
-                                                authority.EDIT_ASSET_CATEGORY
-                                            "
-                                            class="px-6 py-3"
-                                        >
-                                            Edit
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            v-show="
+                                                authority.EDIT_ASSET_CATEGORY ||
                                                 authority.DELETE_ASSET_CATEGORY
                                             "
-                                            class="px-6 py-3"
+                                            class="px-6 py-3 whitespace-nowrap w-32"
                                         >
-                                            Delete
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
@@ -134,17 +124,14 @@ const authority = page.props.value.autorization;
                                                 scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
-                                                {{ category.id }}
-                                            </th>
-                                            <td class="px-6 py-4">
                                                 {{ category.CATEGORY_NAME }}
-                                            </td>
+                                            </th>
 
                                             <td
-                                                class="px-6 py-4"
                                                 v-show="
                                                     authority.EDIT_ASSET_CATEGORY
                                                 "
+                                                class="px-2 py-2 whitespace-nowrap w-16"
                                             >
                                                 <EditButtonLink
                                                     :href="
@@ -157,15 +144,18 @@ const authority = page.props.value.autorization;
                                                         )
                                                     "
                                                 >
-                                                    <i class="fas fa-edit"></i>
+                                                    <i
+                                                        class="fas fa-edit mr-2"
+                                                    ></i>
+                                                    <span>Edit</span>
                                                 </EditButtonLink>
                                             </td>
 
                                             <td
-                                                class="px-6 py-4"
                                                 v-show="
                                                     authority.DELETE_ASSET_CATEGORY
                                                 "
+                                                class="px-2 py-2 whitespace-nowrap w-16"
                                             >
                                                 <DeleteButtonLink
                                                     :href="
@@ -179,15 +169,16 @@ const authority = page.props.value.autorization;
                                                     "
                                                 >
                                                     <i
-                                                        class="fas fa-trash-alt"
+                                                        class="fas fa-trash-alt mr-2"
                                                     ></i>
+                                                    <span>Delete</span>
                                                 </DeleteButtonLink>
                                             </td>
                                         </tr>
                                     </template>
                                     <template v-else>
                                         <tr
-                                            class="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                            class="text-center bg-white border-b"
                                         >
                                             <td colspan="4" class="px-6 py-4">
                                                 No Data Found

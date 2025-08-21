@@ -95,27 +95,21 @@ const authority = page.props.value.autorization;
                                             Asset Name
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Asset Subtype
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Product Category
+                                            Supplier
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Status
                                         </th>
                                         <th
-                                            v-show="authority.EDIT_PRODUCT"
+                                            colspan="2"
+                                            v-show="
+                                                authority.EDIT_PRODUCT ||
+                                                authority.DELETE_PRODUCT
+                                            "
                                             scope="col"
                                             class="px-6 py-3"
                                         >
-                                            Edit
-                                        </th>
-                                        <th
-                                            v-show="authority.DELETE_PRODUCT"
-                                            scope="col"
-                                            class="px-6 py-3"
-                                        >
-                                            Delete
+                                            Actions
                                         </th>
                                     </tr>
                                 </thead>
@@ -147,18 +141,12 @@ const authority = page.props.value.autorization;
                                                 {{ product.ASSET_NAME }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ product.ASSET_SUB_TYPE }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ product.PRODUCT_CATEGORY }}
+                                                {{ product.SUPP_NAME }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 {{ product.STATUS }}
                                             </td>
-                                            <td
-                                                class="px-6 py-4"
-                                                v-show="authority.EDIT_PRODUCT"
-                                            >
+                                            <td v-show="authority.EDIT_PRODUCT">
                                                 <EditButtonLink
                                                     :href="
                                                         route(
@@ -170,11 +158,13 @@ const authority = page.props.value.autorization;
                                                         )
                                                     "
                                                 >
-                                                    <i class="fas fa-edit"></i>
+                                                    <i
+                                                        class="fas fa-edit mr-2"
+                                                    ></i>
+                                                    <span>Edit</span>
                                                 </EditButtonLink>
                                             </td>
                                             <td
-                                                class="px-6 py-4"
                                                 v-show="
                                                     authority.DELETE_PRODUCT
                                                 "
@@ -191,8 +181,9 @@ const authority = page.props.value.autorization;
                                                     "
                                                 >
                                                     <i
-                                                        class="fas fa-trash-alt"
+                                                        class="fas fa-trash-alt mr-2"
                                                     ></i>
+                                                    <span>Delete</span>
                                                 </DeleteButtonLink>
                                             </td>
                                         </tr>

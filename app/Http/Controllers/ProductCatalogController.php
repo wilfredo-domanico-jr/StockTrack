@@ -23,22 +23,21 @@ class ProductCatalogController extends Controller
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
             $products = Product::leftJoin('asset_category', 'product_list.ASSET_CATEGORY', '=', 'asset_category.id')
+                ->leftJoin('supplier', 'product_list.VENDOR_ID', '=', 'supplier.SUPPLIER_ID')
                 ->select(
                     'product_list.INDEX_ID',
                     'product_list.ASSET_ID',
                     'product_list.ASSET_NAME',
-                    'product_list.ASSET_SUB_TYPE',
-                    'product_list.PRODUCT_CATEGORY',
                     'product_list.STATUS',
-                    'asset_category.CATEGORY_NAME'
+                    'asset_category.CATEGORY_NAME',
+                    'supplier.SUPP_NAME'
                 )->where('product_list.DELETED', 0)
                 ->when(Request::input('search'), function ($query, $search) {
                     $query->where('product_list.ASSET_ID', 'like', "%{$search}%")
                         ->orWhere('product_list.ASSET_NAME', 'like', "%{$search}%")
-                        ->orWhere('product_list.ASSET_SUB_TYPE', 'like', "%{$search}%")
-                        ->orWhere('product_list.PRODUCT_CATEGORY', 'like', "%{$search}%")
                         ->orWhere('product_list.STATUS', 'like', "%{$search}%")
-                        ->orWhere('asset_category.CATEGORY_NAME', 'like', "%{$search}%");
+                        ->orWhere('asset_category.CATEGORY_NAME', 'like', "%{$search}%")
+                        ->orWhere('supplier.SUPP_NAME', 'like', "%{$search}%");
                 })
                 ->paginate(10)->withQueryString();
 
@@ -124,16 +123,12 @@ class ProductCatalogController extends Controller
                 Product::insert([
                     'ASSET_ID' => $assetId,
                     'ASSET_NAME' => $request->assetName,
-                    'ASSET_SUB_TYPE' => $request->assetSubType,
-                    'PRODUCT_CATEGORY' => $request->productCategory,
                     'ASSET_CATEGORY' => $request->assetCategory,
                     'EQUIPMENT_MODEL' => $request->equipmentModel,
                     'MANUFACTURER' => $request->manufacturer,
                     'COLOR' => $request->color,
                     'WEIGHT' => $request->weight,
                     'DIMENSION' => $request->dimension,
-                    'COST' => $request->cost,
-                    'WARRANTY_TERMS' => $request->warrantyTerms,
                     'USEFUL_LIFE' => $request->usefulLife,
                     'ASSET_CONDITION' => $request->assetCondition,
                     'FROM_DATE' => date('Y-m-d'),
@@ -239,16 +234,12 @@ class ProductCatalogController extends Controller
                 Product::where('ASSET_ID', $assetId)
                     ->update([
                         'ASSET_NAME' => $request->assetName,
-                        'ASSET_SUB_TYPE' => $request->assetSubType,
-                        'PRODUCT_CATEGORY' => $request->productCategory,
                         'ASSET_CATEGORY' => $request->assetCategory,
                         'EQUIPMENT_MODEL' => $request->equipmentModel,
                         'MANUFACTURER' => $request->manufacturer,
                         'COLOR' => $request->color,
                         'WEIGHT' => $request->weight,
                         'DIMENSION' => $request->dimension,
-                        'COST' => $request->cost,
-                        'WARRANTY_TERMS' => $request->warrantyTerms,
                         'USEFUL_LIFE' => $request->usefulLife,
                         'ASSET_CONDITION' => $request->assetCondition,
                         'STATUS' => $request->status,
@@ -331,13 +322,10 @@ class ProductCatalogController extends Controller
     public function storeAssetCategory()
     {
 
-        // Prevent adding more than five for demo-purpose
-        $totalAssetCategory = AssetCategory::count();
+        // Prevention For Demo Purposes
+        return redirect()->back()->with('error', 'For demo purposes, Add, Edit, and Delete functions of Asset Categories are disabled.');
 
-        if ($totalAssetCategory >= 5) {
-            return redirect()->back()->with('error', 'For demo purpose: Adding more than 5 asset category is not allowed. You can delete an existing asset category to add a new one.');
-        }
-        //
+
 
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
@@ -367,6 +355,8 @@ class ProductCatalogController extends Controller
     public function updateAssetCategory($categoryId)
     {
 
+        return Redirect::route('ProductCatalog.assetCategorySetting')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Asset Categories are disabled.');
+
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
             AssetCategory::where('id', $categoryId)->update(['CATEGORY_NAME' => Request::input('category')]);
@@ -379,6 +369,8 @@ class ProductCatalogController extends Controller
 
     public function deleteAssetCategory($categoryId)
     {
+
+        return Redirect::route('ProductCatalog.assetCategorySetting')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Asset Categories are disabled.');
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 

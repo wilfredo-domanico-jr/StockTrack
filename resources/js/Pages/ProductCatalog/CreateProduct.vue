@@ -15,15 +15,6 @@ defineProps({
     suppliers: Array,
 });
 
-const subtypes = [
-    { id: 1, SUBTYPE_NAME: "Computer Desktop PC" },
-    { id: 2, SUBTYPE_NAME: "Laptop" },
-    { id: 3, SUBTYPE_NAME: "POS Terminal" },
-    { id: 4, SUBTYPE_NAME: "Server" },
-    { id: 5, SUBTYPE_NAME: "Handy Terminal" },
-    { id: 6, SUBTYPE_NAME: "Equipment Parts" },
-];
-
 const statusList = [
     { id: 1, STATUS: "In-Stock" },
     { id: 2, STATUS: "Out of Stock" },
@@ -33,24 +24,14 @@ const statusList = [
     { id: 6, STATUS: "Obsolete" },
 ];
 
-const productCategories = [
-    { id: 1, PRODUCT_CATEGORY: "Hardware" },
-    { id: 2, PRODUCT_CATEGORY: "Software" },
-    { id: 3, PRODUCT_CATEGORY: "Consumables" },
-    { id: 4, PRODUCT_CATEGORY: "Bundle" },
-];
-
 const form = useForm({
     assetName: "",
-    assetSubType: "",
-    productCategory: "",
     assetCategory: "",
     equipmentModel: "",
     manufacturer: "",
     color: "",
     weight: "",
     dimension: "",
-    cost: "",
     warrantyTerms: "",
     usefulLife: "",
     assetCondition: "",
@@ -117,244 +98,163 @@ const submit = () => {
                                     </span>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div>
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Asset Name"
-                                            important="true"
-                                        />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.assetName"
-                                            required
-                                            autofocus
-                                        />
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Asset Category"
-                                            important="true"
-                                        />
-
-                                        <SelectInput
-                                            v-model="form.assetCategory"
-                                            required
-                                        >
-                                            <option value="" selected disabled>
-                                                Select Category
-                                            </option>
-                                            <option
-                                                v-for="category in categories"
-                                                :key="category.id"
-                                                :value="category.id"
-                                            >
-                                                {{ category.CATEGORY_NAME }}
-                                            </option>
-                                        </SelectInput>
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label value="Color" />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.color"
-                                        />
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label value="Cost" />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.cost"
-                                        />
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Asset Condition"
-                                            important="true"
-                                        />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.assetCondition"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Asset Subtype"
-                                            important="true"
-                                        />
-                                        <SelectInput
-                                            v-model="form.assetSubType"
-                                            required
-                                        >
-                                            <option value="" selected disabled>
-                                                Select Subtype
-                                            </option>
-                                            <option
-                                                v-for="subtype in subtypes"
-                                                :key="subtype.id"
-                                                :value="subtype.SUBTYPE_NAME"
-                                            >
-                                                {{ subtype.SUBTYPE_NAME }}
-                                            </option>
-                                        </SelectInput>
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Equipment Model"
-                                            important="true"
-                                        />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.equipmentModel"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label value="Weight" />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.weight"
-                                        />
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Warranty Terms"
-                                            important="true"
-                                        />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.warrantyTerms"
-                                            required
-                                        />
-                                    </div>
-                                    <div class="mb-5">
-                                        <Label
-                                            for="category"
-                                            value="Status"
-                                            important="true"
-                                        />
-                                        <SelectInput
-                                            v-model="form.status"
-                                            required
-                                        >
-                                            <option value="" selected disabled>
-                                                Select Status
-                                            </option>
-                                            <option
-                                                v-for="status in statusList"
-                                                :key="status.id"
-                                                :value="status.STATUS"
-                                            >
-                                                {{ status.STATUS }}
-                                            </option>
-                                        </SelectInput>
-                                    </div>
+                            <div class="grid grid-cols-4 gap-4 mb-2">
+                                <div class="mb-2">
+                                    <Label
+                                        value="Asset Name"
+                                        important="true"
+                                    />
+                                    <Input
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.assetName"
+                                        required
+                                        autofocus
+                                    />
                                 </div>
 
-                                <div>
-                                    <div class="mb-5">
-                                        <Label
-                                            for="category"
-                                            value="Product Category"
-                                            important="true"
-                                        />
-                                        <SelectInput
-                                            v-model="form.productCategory"
-                                            required
+                                <div class="mb-2">
+                                    <Label
+                                        value="Asset Category"
+                                        important="true"
+                                    />
+
+                                    <SelectInput
+                                        v-model="form.assetCategory"
+                                        required
+                                    >
+                                        <option value="" selected disabled>
+                                            Select Category
+                                        </option>
+                                        <option
+                                            v-for="category in categories"
+                                            :key="category.id"
+                                            :value="category.id"
                                         >
-                                            <option value="" selected disabled>
-                                                Select Product Category
-                                            </option>
-                                            <option
-                                                v-for="productCategory in productCategories"
-                                                :key="productCategory.id"
-                                                :value="
-                                                    productCategory.PRODUCT_CATEGORY
-                                                "
-                                            >
-                                                {{
-                                                    productCategory.PRODUCT_CATEGORY
-                                                }}
-                                            </option>
-                                        </SelectInput>
-                                    </div>
+                                            {{ category.CATEGORY_NAME }}
+                                        </option>
+                                    </SelectInput>
+                                </div>
 
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Manufacturer"
-                                            important="true"
-                                        />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.manufacturer"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Dimension('L''W'H) IN CBM"
-                                        />
-                                        <Input
-                                            type="text"
-                                            class="mt-1 block w-full"
-                                            v-model="form.dimension"
-                                        />
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Useful Life (Mos)"
-                                            important="true"
-                                        />
-                                        <Input
-                                            type="number"
-                                            min="0"
-                                            class="mt-1 block w-full"
-                                            v-model="form.usefulLife"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <Label
-                                            value="Vendor / Supplier"
-                                            important="true"
-                                        />
-                                        <SelectInput
-                                            v-model="form.vendor"
-                                            required
+                                <div class="mb-2">
+                                    <Label
+                                        value="Vendor / Supplier"
+                                        important="true"
+                                    />
+                                    <SelectInput v-model="form.vendor" required>
+                                        <option value="" selected disabled>
+                                            Select Supplier
+                                        </option>
+                                        <option
+                                            v-for="supplier in suppliers"
+                                            :key="supplier.SUPPLIER_ID"
+                                            :value="supplier.SUPPLIER_ID"
                                         >
-                                            <option value="" selected disabled>
-                                                Select Supplier
-                                            </option>
-                                            <option
-                                                v-for="supplier in suppliers"
-                                                :key="supplier.SUPPLIER_ID"
-                                                :value="supplier.SUPPLIER_ID"
-                                            >
-                                                {{ supplier.SUPP_NAME }}
-                                            </option>
-                                        </SelectInput>
-                                    </div>
+                                            {{ supplier.SUPP_NAME }}
+                                        </option>
+                                    </SelectInput>
+                                </div>
+
+                                <div class="mb-2">
+                                    <Label
+                                        for="category"
+                                        value="Status"
+                                        important="true"
+                                    />
+                                    <SelectInput v-model="form.status" required>
+                                        <option value="" selected disabled>
+                                            Select Status
+                                        </option>
+                                        <option
+                                            v-for="status in statusList"
+                                            :key="status.id"
+                                            :value="status.STATUS"
+                                        >
+                                            {{ status.STATUS }}
+                                        </option>
+                                    </SelectInput>
+                                </div>
+
+                                <div class="mb-2">
+                                    <Label
+                                        value="Equipment Model"
+                                        important="true"
+                                    />
+                                    <Input
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.equipmentModel"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="mb-2">
+                                    <Label
+                                        value="Manufacturer"
+                                        important="true"
+                                    />
+                                    <Input
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.manufacturer"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="mb-2">
+                                    <Label
+                                        value="Useful Life (Mos)"
+                                        important="true"
+                                    />
+                                    <Input
+                                        type="number"
+                                        min="0"
+                                        class="mt-1 block w-full"
+                                        v-model="form.usefulLife"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="mb-2">
+                                    <Label
+                                        value="Asset Condition"
+                                        important="true"
+                                    />
+                                    <Input
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.assetCondition"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-4 mb-2">
+                                <div class="mb-2">
+                                    <Label value="Dimension('L''W'H) IN CBM" />
+                                    <Input
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.dimension"
+                                    />
+                                </div>
+
+                                <div class="mb-2">
+                                    <Label value="Color" />
+                                    <Input
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.color"
+                                    />
+                                </div>
+
+                                <div class="mb-2">
+                                    <Label value="Weight" />
+                                    <Input
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.weight"
+                                    />
                                 </div>
                             </div>
 

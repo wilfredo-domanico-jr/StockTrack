@@ -9,11 +9,10 @@ import FlashMessage from "@/Components/FlashMessage.vue";
 import PageHeader from "@/Components/PageHeader.vue";
 
 const suppliertTypes = [
-    { id: 1, TYPE: "INTERNAL" },
-    { id: 2, TYPE: "VENDOR" },
-    { id: 3, TYPE: "PROVIDER-MAINTENANCE" },
-    { id: 4, TYPE: "SERVICE PROVIDER-THIRD PARTY LOGISTICS" },
-    { id: 5, TYPE: "SERVICE PROVIDER-WAREHOUSE" },
+    { id: 1, TYPE: "Distributor" },
+    { id: 2, TYPE: "Reseller" },
+    { id: 3, TYPE: "Wholesaler" },
+    { id: 4, TYPE: "Manufacturer" },
 ];
 
 const form = useForm({

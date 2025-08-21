@@ -47,13 +47,8 @@ class SupplierController extends Controller
     {
 
 
-        // Prevent adding more than five for demo-purpose
-        $totalSupplier = Supplier::where('DELETED', 0)->count();
-
-        if ($totalSupplier >= 5) {
-            return redirect()->back()->with('error', 'For demo purpose: Adding more than 5 supplier is not allowed. You can delete an existing supplier to add a new one.');
-        }
-        //
+        // Prevent modification for demo purpose
+        return redirect()->back()->with('error', 'For demo purposes, Add, Edit, and Delete functions of Suppliers are disabled.');
 
 
         if (Gate::allows('AuthorizeAction', ['SUPPLIER'])) {
@@ -115,6 +110,8 @@ class SupplierController extends Controller
     public function update(HttpRequest $request, $supplierID)
     {
 
+        // Prevent modification for demo purpose
+        return Redirect::route('Supplier.index')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Suppliers are disabled.');
 
         if (Gate::allows('AuthorizeAction', ['SUPPLIER'])) {
 
@@ -165,6 +162,9 @@ class SupplierController extends Controller
     public function destroy($supplierID)
     {
 
+
+        // Prevent modification for demo purpose
+        return Redirect::route('Supplier.index')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Suppliers are disabled.');
 
 
         if (Gate::allows('AuthorizeAction', ['SUPPLIER'])) {
