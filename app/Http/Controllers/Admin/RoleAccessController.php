@@ -63,7 +63,7 @@ class RoleAccessController extends Controller
 
         return redirect()->back()->with(
             'error',
-            'For demo purpose: Modifying role access settings is not permitted.'
+            'For demo purpose: Modifying role access settings is disabled.'
         );
 
 

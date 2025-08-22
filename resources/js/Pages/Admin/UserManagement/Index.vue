@@ -84,7 +84,7 @@ const authority = page.props.value.autorization;
                             <table
                                 class="text-center w-full text-sm rtl:text-right text-gray-500"
                             >
-                                <thead class="text-xs text-gray-700">
+                                <thead class="text-xs text-gray-700 uppercase">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             View
@@ -109,7 +109,7 @@ const authority = page.props.value.autorization;
                                             v-show="authority.DELETE_USER"
                                             class="px-6 py-3"
                                         >
-                                            Delete
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
@@ -158,7 +158,25 @@ const authority = page.props.value.autorization;
                                                 {{ user.email }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ user.ACC_STATUS }}
+                                                <span
+                                                    class="px-3 py-1 text-xs font-semibold rounded-full"
+                                                    :class="{
+                                                        'bg-green-100 text-green-800':
+                                                            user.ACC_STATUS ===
+                                                            'Active',
+                                                        'bg-red-100 text-red-800':
+                                                            user.ACC_STATUS ===
+                                                            'Inactive',
+                                                        'bg-yellow-100 text-yellow-800':
+                                                            user.ACC_STATUS ===
+                                                            'Pending',
+                                                        'bg-gray-100 text-gray-800':
+                                                            user.ACC_STATUS ===
+                                                            'Suspended',
+                                                    }"
+                                                >
+                                                    {{ user.ACC_STATUS }}
+                                                </span>
                                             </td>
 
                                             <td
@@ -177,8 +195,9 @@ const authority = page.props.value.autorization;
                                                     class="opacity-50 pointer-events-none"
                                                 >
                                                     <i
-                                                        class="fas fa-trash-alt"
+                                                        class="fas fa-trash-alt mr-2"
                                                     ></i>
+                                                    <span>Delete</span>
                                                 </DeleteButtonLink>
                                             </td>
                                         </tr>

@@ -96,18 +96,15 @@ const authority = page.props.value.autorization;
                                             Updated by
                                         </th>
                                         <th
-                                            v-show="authority.EDIT_ROLE"
+                                            v-show="
+                                                authority.EDIT_ROLE ||
+                                                authority.DELETE_ROLE
+                                            "
                                             scope="col"
-                                            class="px-6 py-3"
+                                            colspan="2"
+                                            class="px-6 py-3 whitespace-nowrap w-32"
                                         >
-                                            Edit
-                                        </th>
-                                        <th
-                                            v-show="authority.DELETE_ROLE"
-                                            scope="col"
-                                            class="px-6 py-3"
-                                        >
-                                            Delete
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
@@ -139,7 +136,7 @@ const authority = page.props.value.autorization;
                                             </td>
 
                                             <td
-                                                class="px-6 py-4"
+                                                class="px-2 py-2 whitespace-nowrap w-16"
                                                 v-show="authority.EDIT_ROLE"
                                             >
                                                 <EditButtonLink
@@ -151,12 +148,15 @@ const authority = page.props.value.autorization;
                                                     "
                                                     class="opacity-50 pointer-events-none"
                                                 >
-                                                    <i class="fas fa-edit"></i>
+                                                    <i
+                                                        class="fas fa-edit mr-2"
+                                                    ></i>
+                                                    <span>Edit</span>
                                                 </EditButtonLink>
                                             </td>
 
                                             <td
-                                                class="px-6 py-4"
+                                                class="px-2 py-2 whitespace-nowrap w-16"
                                                 v-show="authority.DELETE_ROLE"
                                             >
                                                 <DeleteButtonLink
@@ -169,8 +169,9 @@ const authority = page.props.value.autorization;
                                                     class="opacity-50 pointer-events-none"
                                                 >
                                                     <i
-                                                        class="fas fa-trash-alt"
+                                                        class="fas fa-trash-alt mr-2"
                                                     ></i>
+                                                    <span>Delete</span>
                                                 </DeleteButtonLink>
                                             </td>
                                         </tr>

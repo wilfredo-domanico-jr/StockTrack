@@ -73,14 +73,7 @@ class ProductCatalogController extends Controller
 
 
         // Prevent adding more than one for demo-purpose
-        $totalProduct = Product::count();
-
-        if ($totalProduct >= 5) {
-            return redirect()->back()->with('error', 'For demo purpose: Adding more than 5 product is not allowed. You can delete an existing product to add a new one.');
-        }
-        //
-
-
+        return redirect()->back()->with('error', 'For demo purposes, Add, Edit, and Delete functions of Products are disabled.');
 
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
@@ -180,7 +173,7 @@ class ProductCatalogController extends Controller
     public function updateProduct(HttpRequest $request, $assetId)
     {
 
-
+        return Redirect::route('ProductCatalog.index')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Products are disabled.');
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
             Product::findOrFail($assetId);
@@ -270,6 +263,7 @@ class ProductCatalogController extends Controller
     public function deleteProduct($assetId)
     {
 
+        return Redirect::route('ProductCatalog.index')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Products are disabled.');
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
             // Retrieve the product by ASSET_ID or fail

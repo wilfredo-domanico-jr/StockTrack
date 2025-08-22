@@ -49,7 +49,7 @@ class LocationManagementController extends Controller
     {
 
 
-        return redirect()->back()->with('error', 'For demo purpose: Adding more location is not allowed. Please use the default location provided.');
+        return redirect()->back()->with('error', 'For demo purpose: Add, Edit and Delete of location is disabled. Please use the default location provided.');
 
 
 

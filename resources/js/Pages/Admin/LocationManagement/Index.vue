@@ -96,18 +96,15 @@ const authority = page.props.value.autorization;
                                             Updated by
                                         </th>
                                         <th
-                                            v-show="authority.EDIT_LOCATION"
+                                            v-show="
+                                                authority.EDIT_LOCATION ||
+                                                authority.DELETE_LOCATION
+                                            "
                                             scope="col"
-                                            class="px-6 py-3"
+                                            colspan="2"
+                                            class="px-6 py-3 whitespace-nowrap w-32"
                                         >
-                                            Edit
-                                        </th>
-                                        <th
-                                            v-show="authority.DELETE_LOCATION"
-                                            scope="col"
-                                            class="px-6 py-3"
-                                        >
-                                            Delete
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>
@@ -141,8 +138,8 @@ const authority = page.props.value.autorization;
                                             </td>
 
                                             <td
-                                                class="px-6 py-4"
                                                 v-show="authority.EDIT_LOCATION"
+                                                class="px-2 py-2 whitespace-nowrap w-16"
                                             >
                                                 <EditButtonLink
                                                     :href="
@@ -165,15 +162,18 @@ const authority = page.props.value.autorization;
                                                             ),
                                                     }"
                                                 >
-                                                    <i class="fas fa-edit"></i>
+                                                    <i
+                                                        class="fas fa-edit mr-2"
+                                                    ></i>
+                                                    <span>Edit</span>
                                                 </EditButtonLink>
                                             </td>
 
                                             <td
-                                                class="px-6 py-4"
                                                 v-show="
                                                     authority.DELETE_LOCATION
                                                 "
+                                                class="px-2 py-2 whitespace-nowrap w-16"
                                             >
                                                 <DeleteButtonLink
                                                     :href="
@@ -197,8 +197,9 @@ const authority = page.props.value.autorization;
                                                     }"
                                                 >
                                                     <i
-                                                        class="fas fa-trash-alt"
+                                                        class="fas fa-trash-alt mr-2"
                                                     ></i>
+                                                    <span>Delete</span>
                                                 </DeleteButtonLink>
                                             </td>
                                         </tr>

@@ -64,9 +64,9 @@ class UserManagementController extends Controller
 
         return redirect()->back()->with(
             'error',
-            'For demo purpose: Adding more users is not allowed. Only an admin account and the 2 default user provided are permitted.'
+            'For demo purpose: Adding more users is disabled. Only an admin account and the 2 default user provided are permitted.'
         );
-        
+
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
 
 

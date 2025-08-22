@@ -57,7 +57,7 @@ class RoleManagementController extends Controller
 
         return redirect()->back()->with(
             'error',
-            'For demo purpose: Adding new role is not allowed. Only the default Admin and User roles are permitted.'
+            'For demo purpose: Add, Edit and Delete of roles is disabled. Only the default Admin and User roles are permitted.'
         );
 
         if (Gate::allows('AuthorizeAction', ['ADMIN'])) {
