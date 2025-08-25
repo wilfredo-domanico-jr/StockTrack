@@ -46,12 +46,12 @@ const form = useForm({
     addProduct: roleAccess.ADD_PRODUCT === 1,
     editProduct: roleAccess.EDIT_PRODUCT === 1,
     deleteProduct: roleAccess.DELETE_PRODUCT === 1,
-    addAssetCategory: roleAccess.ADD_ASSET_CATEGORY === 1,
-    editAssetCategory: roleAccess.EDIT_ASSET_CATEGORY === 1,
-    deleteAssetCategory: roleAccess.DELETE_ASSET_CATEGORY === 1,
+    addProductCategory: roleAccess.ADD_PRODUCT_CATEGORY === 1,
+    editProductCategory: roleAccess.EDIT_PRODUCT_CATEGORY === 1,
+    deleteProductCategory: roleAccess.DELETE_PRODUCT_CATEGORY === 1,
     inventory: roleAccess.INVENTORY === 1,
-    createAssetTransfer: roleAccess.CREATE_ASSET_TRANSFER === 1,
-    receiveAssetTransfer: roleAccess.RECEIVE_ASSET_TRANSFER === 1,
+    createProductTransfer: roleAccess.CREATE_PRODUCT_TRANSFER === 1,
+    receiveProductTransfer: roleAccess.RECEIVE_PRODUCT_TRANSFER === 1,
     supplier: roleAccess.SUPPLIER === 1,
     addSupplier: roleAccess.ADD_SUPPLIER === 1,
     editSupplier: roleAccess.EDIT_SUPPLIER === 1,
@@ -157,16 +157,16 @@ const form = useForm({
                                         label="Delete Product"
                                     />
                                     <Checkbox
-                                        v-model="form.addAssetCategory"
-                                        label="Add Asset Category"
+                                        v-model="form.addProductCategory"
+                                        label="Add Product Category"
                                     />
                                     <Checkbox
-                                        v-model="form.editAssetCategory"
-                                        label="Edit Asset Category"
+                                        v-model="form.editProductCategory"
+                                        label="Edit Product Category"
                                     />
                                     <Checkbox
-                                        v-model="form.deleteAssetCategory"
-                                        label="Delete Asset Category"
+                                        v-model="form.deleteProductCategory"
+                                        label="Delete Product Category"
                                     />
                                 </ListContainer>
 
@@ -176,12 +176,12 @@ const form = useForm({
                                         label="Inventory"
                                     />
                                     <Checkbox
-                                        v-model="form.createAssetTransfer"
-                                        label="Create Asset Transfer"
+                                        v-model="form.createProductTransfer"
+                                        label="Create Product Transfer"
                                     />
                                     <Checkbox
-                                        v-model="form.receiveAssetTransfer"
-                                        label="Receive Asset Transfer"
+                                        v-model="form.receiveProductTransfer"
+                                        label="Receive Product Transfer"
                                     />
                                 </ListContainer>
 
@@ -241,7 +241,7 @@ const form = useForm({
                                         v-model="form.deleteRole"
                                         label="Delete Role"
                                     />
-                                   
+
                                     <Checkbox
                                         v-model="form.manageRoleAccess"
                                         label="Manage Role Access"

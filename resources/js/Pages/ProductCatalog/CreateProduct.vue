@@ -25,8 +25,8 @@ const statusList = [
 ];
 
 const form = useForm({
-    assetName: "",
-    assetCategory: "",
+    productName: "",
+    productCategory: "",
     equipmentModel: "",
     manufacturer: "",
     color: "",
@@ -34,7 +34,7 @@ const form = useForm({
     dimension: "",
     warrantyTerms: "",
     usefulLife: "",
-    assetCondition: "",
+    condition: "",
     status: "",
     vendor: "",
     description: "",
@@ -101,13 +101,13 @@ const submit = () => {
                             <div class="grid grid-cols-4 gap-4 mb-2">
                                 <div class="mb-2">
                                     <Label
-                                        value="Asset Name"
+                                        value="Product Name"
                                         important="true"
                                     />
                                     <Input
                                         type="text"
                                         class="mt-1 block w-full"
-                                        v-model="form.assetName"
+                                        v-model="form.productName"
                                         required
                                         autofocus
                                     />
@@ -115,12 +115,12 @@ const submit = () => {
 
                                 <div class="mb-2">
                                     <Label
-                                        value="Asset Category"
+                                        value="Product Category"
                                         important="true"
                                     />
 
                                     <SelectInput
-                                        v-model="form.assetCategory"
+                                        v-model="form.productCategory"
                                         required
                                     >
                                         <option value="" selected disabled>
@@ -217,13 +217,13 @@ const submit = () => {
 
                                 <div class="mb-2">
                                     <Label
-                                        value="Asset Condition"
+                                        value="Condition"
                                         important="true"
                                     />
                                     <Input
                                         type="text"
                                         class="mt-1 block w-full"
-                                        v-model="form.assetCondition"
+                                        v-model="form.condition"
                                         required
                                     />
                                 </div>
@@ -261,7 +261,7 @@ const submit = () => {
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="col-span-2">
                                     <div class="mb-5">
-                                        <Label value="Asset Description" />
+                                        <Label value="Product Description" />
 
                                         <textarea
                                             v-model="form.description"

@@ -31,7 +31,7 @@ let search = ref(props.filters.search);
 
 watch(search, (value) => {
     Inertia.get(
-        "/productCatalog/assetCategorySetting",
+        "/productCatalog/productCategorySetting",
         { search: value },
         { preserveState: true }
     );
@@ -47,7 +47,7 @@ const authority = page.props.value.autorization;
 
     <BreezeAuthenticatedLayout>
         <template #header>
-            <PageHeader label=" Product Catalog ( Asset Category Setting )" />
+            <PageHeader label=" Product Catalog ( Product Category Setting )" />
         </template>
 
         <ProductCatalogSubNav />
@@ -67,7 +67,9 @@ const authority = page.props.value.autorization;
                             <CreateButtonLink
                                 v-show="authority.ADD_ASSET_CATEGORY"
                                 :href="
-                                    route('ProductCatalog.createAssetCategory')
+                                    route(
+                                        'ProductCatalog.createProductCategory'
+                                    )
                                 "
                             >
                                 <div class="flex items-center gap-2">
@@ -136,7 +138,7 @@ const authority = page.props.value.autorization;
                                                 <EditButtonLink
                                                     :href="
                                                         route(
-                                                            'ProductCatalog.editAssetCategory',
+                                                            'ProductCatalog.editProductCategory',
                                                             {
                                                                 categoryId:
                                                                     category.id,
@@ -160,7 +162,7 @@ const authority = page.props.value.autorization;
                                                 <DeleteButtonLink
                                                     :href="
                                                         route(
-                                                            'ProductCatalog.deleteAssetCategory',
+                                                            'ProductCatalog.deleteProductCategory',
                                                             {
                                                                 categoryId:
                                                                     category.id,

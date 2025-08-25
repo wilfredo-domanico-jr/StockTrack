@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Supplier;
-use App\Models\AssetCategory;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Gate;
@@ -22,21 +22,21 @@ class ProductCatalogController extends Controller
     {
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
-            $products = Product::leftJoin('asset_category', 'product_list.ASSET_CATEGORY', '=', 'asset_category.id')
+            $products = Product::leftJoin('product_category', 'product_list.PRODUCT_CATEGORY', '=', 'product_category.id')
                 ->leftJoin('supplier', 'product_list.VENDOR_ID', '=', 'supplier.SUPPLIER_ID')
                 ->select(
                     'product_list.INDEX_ID',
-                    'product_list.ASSET_ID',
-                    'product_list.ASSET_NAME',
+                    'product_list.PRODUCT_ID',
+                    'product_list.PRODUCT_NAME',
                     'product_list.STATUS',
-                    'asset_category.CATEGORY_NAME',
+                    'product_category.CATEGORY_NAME',
                     'supplier.SUPP_NAME'
                 )->where('product_list.DELETED', 0)
                 ->when(Request::input('search'), function ($query, $search) {
-                    $query->where('product_list.ASSET_ID', 'like', "%{$search}%")
-                        ->orWhere('product_list.ASSET_NAME', 'like', "%{$search}%")
+                    $query->where('product_list.PRODUCT_ID', 'like', "%{$search}%")
+                        ->orWhere('product_list.PRODUCT_NAME', 'like', "%{$search}%")
                         ->orWhere('product_list.STATUS', 'like', "%{$search}%")
-                        ->orWhere('asset_category.CATEGORY_NAME', 'like', "%{$search}%")
+                        ->orWhere('product_category.CATEGORY_NAME', 'like', "%{$search}%")
                         ->orWhere('supplier.SUPP_NAME', 'like', "%{$search}%");
                 })
                 ->paginate(10)->withQueryString();
@@ -56,7 +56,7 @@ class ProductCatalogController extends Controller
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            $categories = AssetCategory::all();
+            $categories = ProductCategory::all();
             $suppliers = (new Supplier())->getAll();
 
             return Inertia::render('ProductCatalog/CreateProduct', [
@@ -82,8 +82,8 @@ class ProductCatalogController extends Controller
                 // Begin transaction
                 DB::beginTransaction();
 
-                $nextAssetId = Product::max('INDEX_ID') + 1;
-                $assetId = 'AST-' . str_pad($nextAssetId, 5, '0', STR_PAD_LEFT);
+                $nextProductId = Product::max('INDEX_ID') + 1;
+                $productId = 'PROD-' . str_pad($nextProductId, 5, '0', STR_PAD_LEFT);
 
                 if ($request->hasFile('image')) {
 
@@ -104,7 +104,7 @@ class ProductCatalogController extends Controller
                         return Redirect::back()->with('error', 'The file size exceeds the maximum limit of 5MB.');
                     }
 
-                    $fileName = $assetId . '.' . $extension;
+                    $fileName = $productId . '.' . $extension;
 
                     $file->move(public_path('images/productListPhotos'), $fileName);
 
@@ -114,27 +114,27 @@ class ProductCatalogController extends Controller
                 }
 
                 Product::insert([
-                    'ASSET_ID' => $assetId,
-                    'ASSET_NAME' => $request->assetName,
-                    'ASSET_CATEGORY' => $request->assetCategory,
+                    'PRODUCT_ID' => $productId,
+                    'PRODUCT_NAME' => $request->productName,
+                    'PRODUCT_CATEGORY' => $request->productCategory,
                     'EQUIPMENT_MODEL' => $request->equipmentModel,
                     'MANUFACTURER' => $request->manufacturer,
                     'COLOR' => $request->color,
                     'WEIGHT' => $request->weight,
                     'DIMENSION' => $request->dimension,
                     'USEFUL_LIFE' => $request->usefulLife,
-                    'ASSET_CONDITION' => $request->assetCondition,
+                    'PRODUCT_CONDITION' => $request->condition,
                     'FROM_DATE' => date('Y-m-d'),
                     'STATUS' => $request->status,
                     'VENDOR_ID' => $request->vendor,
-                    'ASSET_DESCRIPTION' => $request->description,
+                    'PRODUCT_DESCRIPTION' => $request->description,
                     'LOGO' => $items_logo,
                 ]);
 
                 // Commit transaction
                 DB::commit();
 
-                return Redirect::route('ProductCatalog.index')->with('success', 'Asset Inserted Successfully.');
+                return Redirect::route('ProductCatalog.index')->with('success', 'Product Inserted Successfully.');
             } catch (\Exception $e) {
                 // Rollback transaction if an exception occurred
                 DB::rollBack();
@@ -148,15 +148,15 @@ class ProductCatalogController extends Controller
         }
     }
 
-    public function editProduct($assetId)
+    public function editProduct($productId)
     {
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            Product::findOrFail($assetId);
+            Product::findOrFail($productId);
 
-            $productDetail = (new Product)->find($assetId);
-            $categories = AssetCategory::all();
+            $productDetail = (new Product)->find($productId);
+            $categories = ProductCategory::all();
             $suppliers = (new Supplier())->getAll();
 
 
@@ -170,13 +170,13 @@ class ProductCatalogController extends Controller
         }
     }
 
-    public function updateProduct(HttpRequest $request, $assetId)
+    public function updateProduct(HttpRequest $request, $productId)
     {
 
         return Redirect::route('ProductCatalog.index')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Products are disabled.');
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            Product::findOrFail($assetId);
+            Product::findOrFail($productId);
 
 
             try {
@@ -204,7 +204,7 @@ class ProductCatalogController extends Controller
                         return Redirect::back()->with('error', 'The file size exceeds the maximum limit of 5MB.');
                     }
 
-                    $fileName = $assetId . date('YmdHis') . '.' . $extension;
+                    $fileName = $productId . date('YmdHis') . '.' . $extension;
 
                     $file->move(public_path('images/productListPhotos'), $fileName);
 
@@ -223,21 +223,20 @@ class ProductCatalogController extends Controller
                     $image = $request->old_image;
                 }
 
-
-                Product::where('ASSET_ID', $assetId)
+                Product::where('PRODUCT_ID', $productId)
                     ->update([
-                        'ASSET_NAME' => $request->assetName,
-                        'ASSET_CATEGORY' => $request->assetCategory,
+                        'PRODUCT_NAME' => $request->productName,
+                        'PRODUCT_CATEGORY' => $request->productCategory,
                         'EQUIPMENT_MODEL' => $request->equipmentModel,
                         'MANUFACTURER' => $request->manufacturer,
                         'COLOR' => $request->color,
                         'WEIGHT' => $request->weight,
                         'DIMENSION' => $request->dimension,
                         'USEFUL_LIFE' => $request->usefulLife,
-                        'ASSET_CONDITION' => $request->assetCondition,
+                        'PRODUCT_CONDITION' => $request->condition,
                         'STATUS' => $request->status,
                         'VENDOR_ID' => $request->vendor,
-                        'ASSET_DESCRIPTION' => $request->description,
+                        'PRODUCT_DESCRIPTION' => $request->description,
                         'LOGO' => $image,
                     ]);
 
@@ -245,7 +244,7 @@ class ProductCatalogController extends Controller
                 // Commit transaction
                 DB::commit();
 
-                return Redirect::route('ProductCatalog.index')->with('success', 'Asset Updated Successfully.');
+                return Redirect::route('ProductCatalog.index')->with('success', 'Product Updated Successfully.');
             } catch (\Exception $e) {
                 // Rollback transaction if an exception occurred
                 DB::rollBack();
@@ -260,38 +259,38 @@ class ProductCatalogController extends Controller
     }
 
 
-    public function deleteProduct($assetId)
+    public function deleteProduct($productId)
     {
 
         return Redirect::route('ProductCatalog.index')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Products are disabled.');
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            // Retrieve the product by ASSET_ID or fail
-            $product = Product::findOrFail($assetId);
+            // Retrieve the product by PRODUCT_ID or fail
+            $product = Product::findOrFail($productId);
 
             // Delete the product
             $product->update(['DELETED' => 1]);
 
-            return Redirect::route('ProductCatalog.index')->with('success', 'Asset Deleted Successfully.');
+            return Redirect::route('ProductCatalog.index')->with('success', 'Product Deleted Successfully.');
         } else {
             return Redirect::route('noAccess');
         }
     }
 
 
-    public function assetCategorySetting()
+    public function productCategorySetting()
     {
 
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            $categories = AssetCategory::when(Request::input('search'), function ($query, $search) {
+            $categories = ProductCategory::when(Request::input('search'), function ($query, $search) {
                 $query->where('CATEGORY_NAME', 'like', "%{$search}%")
                     ->orWhere('id', 'like', "%{$search}%");
             })
                 ->paginate(10)->withQueryString();
 
-            return Inertia::render('ProductCatalog/AssetCategorySetting', [
+            return Inertia::render('ProductCatalog/ProductCategorySetting', [
                 'categories' => $categories,
                 'filters' => Request::only(['search']),
             ]);
@@ -301,76 +300,74 @@ class ProductCatalogController extends Controller
     }
 
 
-    public function createAssetCategory()
+    public function createProductCategory()
     {
 
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
-            return Inertia::render('ProductCatalog/CreateAssetCategory', []);
+            return Inertia::render('ProductCatalog/CreateProductCategory', []);
         } else {
             return Redirect::route('noAccess');
         }
     }
 
 
-    public function storeAssetCategory()
+    public function storeProductCategory()
     {
 
         // Prevention For Demo Purposes
-        return redirect()->back()->with('error', 'For demo purposes, Add, Edit, and Delete functions of Asset Categories are disabled.');
-
-
+        return redirect()->back()->with('error', 'For demo purposes, Add, Edit, and Delete functions of Product Categories are disabled.');
 
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            AssetCategory::insert(['CATEGORY_NAME' => Request::input('category')]);
+            ProductCategory::insert(['CATEGORY_NAME' => Request::input('category')]);
 
-            return Redirect::route('ProductCatalog.assetCategorySetting')->with('success', 'Asset Category Created.');
+            return Redirect::route('ProductCatalog.productCategorySetting')->with('success', 'Product Category Created.');
         } else {
             return Redirect::route('noAccess');
         }
     }
 
-    public function editAssetCategory($categoryId)
+    public function editProductCategory($categoryId)
     {
 
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            $category = AssetCategory::findOrFail($categoryId);
+            $category = ProductCategory::findOrFail($categoryId);
 
-            return Inertia::render('ProductCatalog/EditAssetCategory', ['category' => $category]);
+            return Inertia::render('ProductCatalog/EditProductCategory', ['category' => $category]);
         } else {
             return Redirect::route('noAccess');
         }
     }
 
-    public function updateAssetCategory($categoryId)
+    public function updateProductCategory($categoryId)
     {
 
-        return Redirect::route('ProductCatalog.assetCategorySetting')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Asset Categories are disabled.');
+        return Redirect::route('ProductCatalog.productCategorySetting')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Product Categories are disabled.');
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            AssetCategory::where('id', $categoryId)->update(['CATEGORY_NAME' => Request::input('category')]);
+            ProductCategory::where('id', $categoryId)->update(['CATEGORY_NAME' => Request::input('category')]);
 
-            return Redirect::route('ProductCatalog.assetCategorySetting')->with('success', 'Asset Category Updated Successfully.');
+            return Redirect::route('ProductCatalog.productCategorySetting')->with('success', 'Product Category Updated Successfully.');
         } else {
             return Redirect::route('noAccess');
         }
     }
 
-    public function deleteAssetCategory($categoryId)
+    public function deleteProductCategory($categoryId)
     {
 
-        return Redirect::route('ProductCatalog.assetCategorySetting')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Asset Categories are disabled.');
+        return Redirect::route('ProductCatalog.productCategorySetting')->with('error', 'For demo purposes, Add, Edit, and Delete functions of Product Categories are disabled.');
 
         if (Gate::allows('AuthorizeAction', ['PRODUCT_CATALOG'])) {
 
-            AssetCategory::where('id', $categoryId)->delete();
+            ProductCategory::where('id', $categoryId)->delete();
 
-            return Redirect::route('ProductCatalog.assetCategorySetting')->with('success', 'Asset Category Deleted Successfully.');
+            return Redirect::route('ProductCatalog.productCategorySetting')->with('success', 'Product Category Deleted Successfully.');
         } else {
             return Redirect::route('noAccess');
         }

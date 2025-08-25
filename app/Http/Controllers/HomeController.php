@@ -4,33 +4,34 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Location;
-use App\Models\AssetTransferHeader;
+use App\Models\ProductTransferHeader;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         $userLocation = Auth::user()->LOCATION_ID;
 
-        $receivedTransfer = AssetTransferHeader::where([
+        $receivedTransfer = ProductTransferHeader::where([
             'TRANSFERED_LOCATION_ID' => $userLocation,
             'TRANSFER_STATUS' => 'RECEIVED'
         ])->count();
 
-        $pendingToReceive = AssetTransferHeader::where([
+        $pendingToReceive = ProductTransferHeader::where([
             'TRANSFERED_LOCATION_ID' => $userLocation,
             'TRANSFER_STATUS' => 'TO RECEIVE'
         ])->count();
 
 
-        $transferedAsset = AssetTransferHeader::where([
+        $transferedProduct = ProductTransferHeader::where([
             'LOCATION_ID' => $userLocation,
             'TRANSFER_STATUS' => 'RECEIVED'
         ])->count();
 
 
-        $pendingTransfer = AssetTransferHeader::where([
+        $pendingTransfer = ProductTransferHeader::where([
             'LOCATION_ID' => $userLocation,
             'TRANSFER_STATUS' => 'TO RECEIVE'
         ])->count();
@@ -40,10 +41,10 @@ class HomeController extends Controller
         $locationID = $getLocations->pluck('LOCATION_ID')->toArray();
 
 
-        return Inertia::render('HomePage/MainPage',[
+        return Inertia::render('HomePage/MainPage', [
             'receivedTransfer' => $receivedTransfer,
             'pendingToReceive' => $pendingToReceive,
-            'transferedAsset' => $transferedAsset,
+            'transferedProduct' => $transferedProduct,
             'pendingTransfer' => $pendingTransfer,
             'locationName' => $locationName,
             'locationID' => $locationID,

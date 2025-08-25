@@ -31,15 +31,15 @@ Route::name('ProductCatalog.')->middleware(['auth', 'verified'])->group(function
     Route::get('/productCatalog', [ProductCatalogController::class, 'index'])->name('index');
     Route::get('/productCatalog/product/create', [ProductCatalogController::class, 'createProduct'])->name('createProduct');
     Route::post('/productCatalog/product/store', [ProductCatalogController::class, 'storeProduct'])->name('storeProduct');
-    Route::get('/productCatalog/product/edit/{assetId}', [ProductCatalogController::class, 'editProduct'])->name('editProduct');
-    Route::post('/productCatalog/product/update/{assetId}', [ProductCatalogController::class, 'updateProduct'])->name('updateProduct');
-    Route::get('/productCatalog/product/delete/{assetId}', [ProductCatalogController::class, 'deleteProduct'])->name('deleteProduct');
-    Route::get('/productCatalog/assetCategorySetting', [ProductCatalogController::class, 'assetCategorySetting'])->name('assetCategorySetting');
-    Route::get('/productCatalog/assetCategorySetting/create', [ProductCatalogController::class, 'createAssetCategory'])->name('createAssetCategory');
-    Route::post('/productCatalog/assetCategorySetting/store', [ProductCatalogController::class, 'storeAssetCategory'])->name('storeAssetCategory');
-    Route::get('/productCatalog/assetCategorySetting/edit/{categoryId}', [ProductCatalogController::class, 'editAssetCategory'])->name('editAssetCategory');
-    Route::put('/productCatalog/assetCategorySetting/update/{categoryId}', [ProductCatalogController::class, 'updateAssetCategory'])->name('updateAssetCategory');
-    Route::get('/productCatalog/assetCategorySetting/delete/{categoryId}', [ProductCatalogController::class, 'deleteAssetCategory'])->name('deleteAssetCategory');
+    Route::get('/productCatalog/product/edit/{productId}', [ProductCatalogController::class, 'editProduct'])->name('editProduct');
+    Route::post('/productCatalog/product/update/{productId}', [ProductCatalogController::class, 'updateProduct'])->name('updateProduct');
+    Route::get('/productCatalog/product/delete/{productId}', [ProductCatalogController::class, 'deleteProduct'])->name('deleteProduct');
+    Route::get('/productCatalog/productCategorySetting', [ProductCatalogController::class, 'productCategorySetting'])->name('productCategorySetting');
+    Route::get('/productCatalog/productCategorySetting/create', [ProductCatalogController::class, 'createProductCategory'])->name('createProductCategory');
+    Route::post('/productCatalog/productCategorySetting/store', [ProductCatalogController::class, 'storeProductCategory'])->name('storeProductCategory');
+    Route::get('/productCatalog/productCategorySetting/edit/{categoryId}', [ProductCatalogController::class, 'editProductCategory'])->name('editProductCategory');
+    Route::put('/productCatalog/productCategorySetting/update/{categoryId}', [ProductCatalogController::class, 'updateProductCategory'])->name('updateProductCategory');
+    Route::get('/productCatalog/productCategorySetting/delete/{categoryId}', [ProductCatalogController::class, 'deleteProductCategory'])->name('deleteProductCategory');
 });
 
 
@@ -47,8 +47,8 @@ Route::name('Inventory.')->middleware(['auth', 'verified'])->group(function () {
 
     Route::name('InventoryList.')->group(function () {
         Route::get('/inventory', [InventoryController::class, 'index'])->name('index');
-        Route::get('/inventory/show/{inventoryID}', [InventoryController::class, 'show'])->name('show');
-
+        Route::get('/inventory/create', [InventoryController::class, 'create'])->name('create');
+        Route::post('/inventory/store', [InventoryController::class, 'store'])->name('store');
     });
 
     Route::name('Receive.')->group(function () {
@@ -58,7 +58,7 @@ Route::name('Inventory.')->middleware(['auth', 'verified'])->group(function () {
         Route::post('/inventory/receive/reject/{assetTransNo}', [ReceiveController::class, 'reject'])->name('reject');
         Route::get('/inventory/receive/history', [ReceiveController::class, 'history'])->name('history');
         Route::get('/inventory/receive/history/show/{assetTransNo}', [ReceiveController::class, 'historyShow'])->name('historyShow');
-       });
+    });
 
     Route::name('AssetTransfer.')->group(function () {
         Route::get('/inventory/asset-transfer', [AssetTransferController::class, 'index'])->name('index');
@@ -66,9 +66,7 @@ Route::name('Inventory.')->middleware(['auth', 'verified'])->group(function () {
         Route::post('/inventory/asset-transfer/store', [AssetTransferController::class, 'store'])->name('store');
         Route::get('/inventory/asset-transfer/show/{assetTransNo}', [AssetTransferController::class, 'show'])->name('show');
         Route::get('/inventory/asset-transfer/history', [AssetTransferController::class, 'history'])->name('history');
-      });
-
-
+    });
 });
 
 
@@ -124,13 +122,7 @@ Route::name('Admin.')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/roleaccess/show/{roleID}', [RoleAccessController::class, 'show'])->name('show');
         Route::put('/admin/roleaccess/update/{roleID}', [RoleAccessController::class, 'update'])->name('update');
     });
-
-
-
-
 });
 
 
-require __DIR__.'/auth.php';
-
-
+require __DIR__ . '/auth.php';

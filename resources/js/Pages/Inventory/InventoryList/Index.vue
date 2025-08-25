@@ -2,12 +2,11 @@
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { defineProps, reactive, ref, watch } from "vue";
-import BreezeNavLink from "@/Components/NavLink.vue";
 import InventorySubNav from "@/Pages/Inventory/InventorySubNav.vue";
 import Pagination from "@/Components/Pagination.vue";
-import SearchFilter from "@/Components/SearchFilter.vue";
 import { Inertia } from "@inertiajs/inertia";
 import ViewButtonLink from "@/Components/Buttons/ViewButtonLink.vue";
+import CreateButtonLink from "@/Components/Buttons/CreateButtonLink.vue";
 import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
@@ -44,7 +43,15 @@ watch(search, (value) => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
-                        <div class="flex justify-end mb-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <CreateButtonLink
+                                :href="route('Inventory.InventoryList.create')"
+                            >
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span> Add Inventory Item</span>
+                                </div>
+                            </CreateButtonLink>
                             <input
                                 v-model="search"
                                 type="text"
@@ -60,28 +67,17 @@ watch(search, (value) => {
                                 <thead class="text-xs text-gray-700 uppercase">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
-                                            View
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Asset id
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Asset Category
+                                            Product Name
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Product Category
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Asset Name
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Asset Tag
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Location
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
                                             Serial No.
+                                        </th>
+
+                                        <th scope="col" class="px-6 py-3">
+                                            Purchase Date
                                         </th>
                                     </tr>
                                 </thead>
@@ -98,45 +94,22 @@ watch(search, (value) => {
                                             :key="inventory.id"
                                             class="bg-white border-b"
                                         >
-                                            <td class="px-6 py-4">
-                                                <ViewButtonLink
-                                                    :href="
-                                                        route(
-                                                            'Inventory.InventoryList.show',
-                                                            {
-                                                                inventoryID:
-                                                                    inventory.INVENTORY_ID,
-                                                            }
-                                                        )
-                                                    "
-                                                >
-                                                    <i class="fas fa-eye"></i>
-                                                </ViewButtonLink>
-                                            </td>
                                             <th
                                                 scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
-                                                {{ inventory.ASSET_ID }}
+                                                {{ inventory.PRODUCT_NAME }}
                                             </th>
                                             <td class="px-6 py-4">
                                                 {{ inventory.CATEGORY_NAME }}
                                             </td>
+
                                             <td class="px-6 py-4">
-                                                {{ inventory.PRODUCT_CATEGORY }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ inventory.ASSET_NAME }}
+                                                {{ inventory.SERIAL_NO }}
                                             </td>
 
                                             <td class="px-6 py-4">
-                                                {{ inventory.ASSET_TAG }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ inventory.LOCATION }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ inventory.SERIAL_NO }}
+                                                {{ inventory.PURCHASE_DATE }}
                                             </td>
                                         </tr>
                                     </template>

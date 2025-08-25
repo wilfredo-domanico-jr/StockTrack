@@ -11,51 +11,6 @@ DROP DATABASE IF EXISTS `stocktrackdb`;
 CREATE DATABASE `stocktrackdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `stocktrackdb`;
 
-DROP TABLE IF EXISTS `asset_category`;
-CREATE TABLE `asset_category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `CATEGORY_NAME` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
-TRUNCATE `asset_category`;
-INSERT INTO `asset_category` (`id`, `CATEGORY_NAME`) VALUES
-(19,	'Computer Parts'),
-(22,	'Test Asset 1'),
-(23,	'Computer Parts'),
-(24,	'Personal Computer'),
-(25,	'Central Processing Unit');
-
-DROP TABLE IF EXISTS `asset_transfer_asset_details`;
-CREATE TABLE `asset_transfer_asset_details` (
-  `ASSET_TRANSFER_NO` varchar(100) NOT NULL,
-  `SERIAL_NO` varchar(100) NOT NULL,
-  PRIMARY KEY (`ASSET_TRANSFER_NO`,`SERIAL_NO`),
-  KEY `ASSET_TRANSFER_NO_SERIAL_NO` (`ASSET_TRANSFER_NO`,`SERIAL_NO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-TRUNCATE `asset_transfer_asset_details`;
-INSERT INTO `asset_transfer_asset_details` (`ASSET_TRANSFER_NO`, `SERIAL_NO`) VALUES
-('ATFN-00000001',	'00000000');
-
-DROP TABLE IF EXISTS `asset_transfer_header`;
-CREATE TABLE `asset_transfer_header` (
-  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `ASSET_TRANSFER_NO` varchar(100) NOT NULL,
-  `TRANSACTION_DATE` date NOT NULL,
-  `TRANSFERED_LOCATION_ID` varchar(100) NOT NULL,
-  `LOCATION_ID` varchar(100) NOT NULL,
-  `DATE_RECEIVED` date DEFAULT NULL,
-  `TRANSFER_STATUS` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ASSET_TRANSFER_NO`),
-  UNIQUE KEY `id` (`id`),
-  KEY `asset_transfer_transfer_details_location_id_foreign` (`LOCATION_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-TRUNCATE `asset_transfer_header`;
-INSERT INTO `asset_transfer_header` (`id`, `ASSET_TRANSFER_NO`, `TRANSACTION_DATE`, `TRANSFERED_LOCATION_ID`, `LOCATION_ID`, `DATE_RECEIVED`, `TRANSFER_STATUS`) VALUES
-(28,	'ATFN-00000001',	'2024-12-21',	'1002',	'10',	'2024-12-21',	'RECEIVED');
-
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -74,34 +29,26 @@ TRUNCATE `failed_jobs`;
 DROP TABLE IF EXISTS `inventory`;
 CREATE TABLE `inventory` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `INVENTORY_ID` varchar(100) NOT NULL,
-  `ASSET_ID` varchar(100) DEFAULT NULL,
-  `ASSET_TAG` varchar(100) NOT NULL,
+  `PRODUCT_ID` varchar(100) NOT NULL,
   `SERIAL_NO` varchar(100) NOT NULL,
   `LOCATION_ID` varchar(100) NOT NULL,
-  `USE_POLICY` varchar(100) NOT NULL,
-  `SERVICE_LEVEL` varchar(100) NOT NULL,
-  `BARCODE` varchar(100) NOT NULL,
-  `PURCHASE_ORDER_NO` varchar(100) NOT NULL,
   `PURCHASE_DATE` date NOT NULL,
-  `IN_SERVICE_DATE` date NOT NULL,
-  `WARRANTY_START_DATE` date NOT NULL,
-  `WARRANTY_EXPIRY` date NOT NULL,
-  `FOR_DISPOSAL` int(1) NOT NULL DEFAULT 0,
-  `IS_DISPOSED` int(11) DEFAULT 0,
   `FOR_TRANSFER` varchar(100) DEFAULT '0',
   `STATUS` varchar(100) DEFAULT 'GOOD',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  PRIMARY KEY (`INVENTORY_ID`),
+  PRIMARY KEY (`PRODUCT_ID`,`SERIAL_NO`),
   UNIQUE KEY `id` (`id`),
-  KEY `ASSET_ID_VENDOR_ID_INVENTORY_ID` (`ASSET_ID`,`INVENTORY_ID`),
+  KEY `ASSET_ID_VENDOR_ID_INVENTORY_ID` (`PRODUCT_ID`),
   KEY `LOCATION_ID` (`LOCATION_ID`),
+  CONSTRAINT `fk_inventory_product` FOREIGN KEY (`PRODUCT_ID`) REFERENCES `product_list` (`PRODUCT_ID`),
   CONSTRAINT `inventory_ibfk_3` FOREIGN KEY (`LOCATION_ID`) REFERENCES `location` (`LOCATION_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inventory_ibfk_9` FOREIGN KEY (`ASSET_ID`) REFERENCES `product_list` (`ASSET_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `inventory_ibfk_9` FOREIGN KEY (`PRODUCT_ID`) REFERENCES `product_list` (`PRODUCT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `inventory`;
+INSERT INTO `inventory` (`id`, `PRODUCT_ID`, `SERIAL_NO`, `LOCATION_ID`, `PURCHASE_DATE`, `FOR_TRANSFER`, `STATUS`, `created_at`, `updated_at`) VALUES
+(9,	'PROD-000002',	'000',	'000001',	'2025-08-25',	'0',	'GOOD',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `inventory_to_receive`;
 CREATE TABLE `inventory_to_receive` (
@@ -147,6 +94,8 @@ CREATE TABLE `inventory_to_receive_delivery_details` (
   PRIMARY KEY (`UNIQUE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+TRUNCATE `inventory_to_receive_delivery_details`;
+
 DROP TABLE IF EXISTS `jobs`;
 CREATE TABLE `jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -190,6 +139,195 @@ CREATE TABLE `logs` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`AUDIT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+TRUNCATE `logs`;
+INSERT INTO `logs` (`AUDIT_ID`, `IP`, `USER_ID`, `USERFULLNAME`, `EVENT`, `MODULE`, `created_at`, `updated_at`) VALUES
+('0000001',	'192.168.25.251',	'00000000',	'JIMAC SENDER',	'LOGGED IN',	'AUTH',	'2024-04-04 00:43:30',	'2024-04-04 00:43:30'),
+('0000002',	'192.168.25.251',	'00000000',	'JIMAC SENDER',	'UPDATE',	'USER',	'2024-04-04 00:46:54',	'2024-04-04 00:46:54'),
+('0000003',	'192.168.25.251',	'00000000',	'JIMAC SENDER',	'LOGGED OUT',	'AUTH',	'2024-04-04 00:47:21',	'2024-04-04 00:47:21'),
+('0000004',	'192.168.25.251',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-04 00:47:26',	'2024-04-04 00:47:26'),
+('0000005',	'192.168.25.251',	'00000001',	'Reene Brigette Beriso',	'LOGGED OUT',	'AUTH',	'2024-04-04 00:47:39',	'2024-04-04 00:47:39'),
+('0000006',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-04 09:14:52',	'2024-04-04 09:14:52'),
+('0000007',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-04 09:42:27',	'2024-04-04 09:42:27'),
+('0000008',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'BULK LOAD',	'2024-04-04 10:19:04',	'2024-04-04 10:19:04'),
+('0000009',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'BULK LOAD',	'2024-04-04 10:48:42',	'2024-04-04 10:48:42'),
+('0000010',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'BULK LOAD',	'2024-04-04 10:51:21',	'2024-04-04 10:51:21'),
+('0000011',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'USER',	'2024-04-04 10:55:13',	'2024-04-04 10:55:13'),
+('0000012',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-04 10:55:33',	'2024-04-04 10:55:33'),
+('0000013',	'192.168.25.20',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-04 10:55:53',	'2024-04-04 10:55:53'),
+('0000014',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'USER',	'2024-04-04 10:58:39',	'2024-04-04 10:58:39'),
+('0000015',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-04 10:58:57',	'2024-04-04 10:58:57'),
+('0000016',	'192.168.25.20',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED OUT',	'AUTH',	'2024-04-04 10:59:12',	'2024-04-04 10:59:12'),
+('0000017',	'192.168.25.20',	'00012855',	'CDI CDO Alvin Jay Magusara',	'LOGGED IN',	'AUTH',	'2024-04-04 10:59:18',	'2024-04-04 10:59:18'),
+('0000018',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-04 14:02:55',	'2024-04-04 14:02:55'),
+('0000019',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'BULK LOAD',	'2024-04-04 14:03:48',	'2024-04-04 14:03:48'),
+('0000020',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-05 04:42:46',	'2024-04-05 04:42:46'),
+('0000021',	'192.168.25.20',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-05 04:44:26',	'2024-04-05 04:44:26'),
+('0000022',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-05 04:58:40',	'2024-04-05 04:58:40'),
+('0000023',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED OUT',	'AUTH',	'2024-04-05 04:59:17',	'2024-04-05 04:59:17'),
+('0000024',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-05 04:59:25',	'2024-04-05 04:59:25'),
+('0000025',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED OUT',	'AUTH',	'2024-04-05 06:25:03',	'2024-04-05 06:25:03'),
+('0000026',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-05 06:26:58',	'2024-04-05 06:26:58'),
+('0000027',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED OUT',	'AUTH',	'2024-04-05 06:54:27',	'2024-04-05 06:54:27'),
+('0000028',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-05 06:56:27',	'2024-04-05 06:56:27'),
+('0000029',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-06 02:00:18',	'2024-04-06 02:00:18'),
+('0000030',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-06 09:09:39',	'2024-04-06 09:09:39'),
+('0000031',	'192.168.1.38',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-06 09:54:16',	'2024-04-06 09:54:16'),
+('0000032',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'LOCATION MANAGEMENT',	'2024-04-06 11:53:24',	'2024-04-06 11:53:24'),
+('0000033',	'192.168.1.38',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-06 12:22:04',	'2024-04-06 12:22:04'),
+('0000034',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-06 13:57:01',	'2024-04-06 13:57:01'),
+('0000035',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-06 13:58:05',	'2024-04-06 13:58:05'),
+('0000036',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-06 14:04:51',	'2024-04-06 14:04:51'),
+('0000037',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-06 14:05:49',	'2024-04-06 14:05:49'),
+('0000038',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-06 14:06:27',	'2024-04-06 14:06:27'),
+('0000039',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-06 14:07:18',	'2024-04-06 14:07:18'),
+('0000040',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-06 14:08:06',	'2024-04-06 14:08:06'),
+('0000041',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-07 23:32:33',	'2024-04-07 23:32:33'),
+('0000042',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-08 02:07:59',	'2024-04-08 02:07:59'),
+('0000043',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-08 06:40:25',	'2024-04-08 06:40:25'),
+('0000044',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-08 06:41:47',	'2024-04-08 06:41:47'),
+('0000045',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-08 06:43:05',	'2024-04-08 06:43:05'),
+('0000046',	'192.168.1.38',	'0012862',	'5L NCR & RIZAL Marjhun Mallapre',	'LOGGED IN',	'AUTH',	'2024-04-08 07:03:08',	'2024-04-08 07:03:08'),
+('0000047',	'10.88.80.11',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-08 07:43:30',	'2024-04-08 07:43:30'),
+('0000048',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-08 08:30:22',	'2024-04-08 08:30:22'),
+('0000049',	'10.88.80.3',	'0012859',	'CDI JENNY\'S Argie Undaloc',	'LOGGED IN',	'AUTH',	'2024-04-08 08:32:55',	'2024-04-08 08:32:55'),
+('0000050',	'10.88.80.3',	'0012859',	'CDI JENNY\'S Argie Undaloc',	'LOGGED IN',	'AUTH',	'2024-04-08 08:49:09',	'2024-04-08 08:49:09'),
+('0000051',	'192.168.25.20',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-08 08:53:36',	'2024-04-08 08:53:36'),
+('0000052',	'192.168.1.38',	'0012862',	'5L NCR & RIZAL Marjhun Mallapre',	'LOGGED IN',	'AUTH',	'2024-04-09 07:20:52',	'2024-04-09 07:20:52'),
+('0000053',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-09 07:25:54',	'2024-04-09 07:25:54'),
+('0000054',	'192.168.1.38',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-09 07:36:42',	'2024-04-09 07:36:42'),
+('0000055',	'192.168.1.38',	'0012862',	'5L NCR & RIZAL Marjhun Mallapre',	'LOGGED IN',	'AUTH',	'2024-04-11 03:55:50',	'2024-04-11 03:55:50'),
+('0000056',	'192.168.1.38',	'0012862',	'5L NCR & RIZAL Marjhun Mallapre',	'LOGGED IN',	'AUTH',	'2024-04-12 04:21:34',	'2024-04-12 04:21:34'),
+('0000057',	'10.88.80.7',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-15 00:55:24',	'2024-04-15 00:55:24'),
+('0000058',	'192.168.1.38',	'0012862',	'5L NCR & RIZAL Marjhun Mallapre',	'LOGGED IN',	'AUTH',	'2024-04-16 03:23:41',	'2024-04-16 03:23:41'),
+('0000059',	'10.88.80.2',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-17 01:15:06',	'2024-04-17 01:15:06'),
+('0000060',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-18 02:22:31',	'2024-04-18 02:22:31'),
+('0000061',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'UPDATE',	'USER',	'2024-04-18 02:29:58',	'2024-04-18 02:29:58'),
+('0000062',	'10.88.80.13',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-18 03:42:40',	'2024-04-18 03:42:40'),
+('0000063',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-18 03:47:36',	'2024-04-18 03:47:36'),
+('0000064',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'RECEIVE',	'2024-04-18 03:51:38',	'2024-04-18 03:51:38'),
+('0000065',	'192.168.25.50',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-18 03:54:34',	'2024-04-18 03:54:34'),
+('0000066',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'RECEIVE',	'2024-04-18 05:28:49',	'2024-04-18 05:28:49'),
+('0000067',	'10.88.80.11',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-18 06:41:17',	'2024-04-18 06:41:17'),
+('0000068',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-19 05:16:43',	'2024-04-19 05:16:43'),
+('0000069',	'10.88.80.13',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-22 02:52:36',	'2024-04-22 02:52:36'),
+('0000070',	'10.88.80.15',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-23 05:12:21',	'2024-04-23 05:12:21'),
+('0000071',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-23 05:13:54',	'2024-04-23 05:13:54'),
+('0000072',	'192.168.25.50',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-23 05:25:57',	'2024-04-23 05:25:57'),
+('0000073',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'RECEIVE',	'2024-04-23 07:24:42',	'2024-04-23 07:24:42'),
+('0000074',	'192.168.25.50',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-23 07:30:20',	'2024-04-23 07:30:20'),
+('0000075',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-23 07:51:20',	'2024-04-23 07:51:20'),
+('0000076',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'RECEIVE',	'2024-04-23 07:54:05',	'2024-04-23 07:54:05'),
+('0000077',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'PRODUCT LIST',	'2024-04-23 08:16:19',	'2024-04-23 08:16:19'),
+('0000078',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'RECEIVE',	'2024-04-23 08:17:46',	'2024-04-23 08:17:46'),
+('0000079',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'RECEIVE',	'2024-04-23 08:50:30',	'2024-04-23 08:50:30'),
+('0000080',	'10.88.80.4',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-23 08:56:40',	'2024-04-23 08:56:40'),
+('0000081',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-24 01:27:47',	'2024-04-24 01:27:47'),
+('0000082',	'10.88.80.14',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-24 05:44:47',	'2024-04-24 05:44:47'),
+('0000083',	'192.168.25.50',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-24 05:51:09',	'2024-04-24 05:51:09'),
+('0000084',	'10.88.80.14',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-24 09:20:34',	'2024-04-24 09:20:34'),
+('0000085',	'10.88.80.12',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-25 05:14:24',	'2024-04-25 05:14:24'),
+('0000086',	'192.168.25.50',	'00012577',	'IMPEXTIC PASIG Ayen Garcia',	'LOGGED IN',	'AUTH',	'2024-04-25 10:52:45',	'2024-04-25 10:52:45'),
+('0000087',	'192.168.25.251',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-29 02:31:01',	'2024-04-29 02:31:01'),
+('0000088',	'192.168.1.201',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-29 07:36:14',	'2024-04-29 07:36:14'),
+('0000089',	'192.168.1.201',	'00000001',	'Reene Brigette Beriso',	'CREATE',	'USER',	'2024-04-29 07:44:18',	'2024-04-29 07:44:18'),
+('0000090',	'192.168.1.201',	'00000001',	'Reene Brigette Beriso',	'LOGGED OUT',	'AUTH',	'2024-04-29 07:44:21',	'2024-04-29 07:44:21'),
+('0000091',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 07:44:25',	'2024-04-29 07:44:25'),
+('0000092',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 07:44:43',	'2024-04-29 07:44:43'),
+('0000093',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 07:49:19',	'2024-04-29 07:49:19'),
+('0000094',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 07:49:24',	'2024-04-29 07:49:24'),
+('0000095',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 07:49:27',	'2024-04-29 07:49:27'),
+('0000096',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 07:51:00',	'2024-04-29 07:51:00'),
+('0000097',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 07:51:06',	'2024-04-29 07:51:06'),
+('0000098',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 07:51:38',	'2024-04-29 07:51:38'),
+('0000099',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 07:51:43',	'2024-04-29 07:51:43'),
+('0000100',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 08:03:13',	'2024-04-29 08:03:13'),
+('0000101',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 08:03:19',	'2024-04-29 08:03:19'),
+('0000102',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 08:11:18',	'2024-04-29 08:11:18'),
+('0000103',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 08:11:24',	'2024-04-29 08:11:24'),
+('0000104',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 08:11:55',	'2024-04-29 08:11:55'),
+('0000105',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 08:12:02',	'2024-04-29 08:12:02'),
+('0000106',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-29 08:12:52',	'2024-04-29 08:12:52'),
+('0000107',	'192.168.1.201',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-04-29 08:12:59',	'2024-04-29 08:12:59'),
+('0000108',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 08:16:39',	'2024-04-29 08:16:39'),
+('0000109',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 08:16:45',	'2024-04-29 08:16:45'),
+('0000110',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 09:02:46',	'2024-04-29 09:02:46'),
+('0000111',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 09:02:52',	'2024-04-29 09:02:52'),
+('0000112',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 09:05:07',	'2024-04-29 09:05:07'),
+('0000113',	'192.168.1.140',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-04-29 09:05:14',	'2024-04-29 09:05:14'),
+('0000114',	'192.168.1.201',	'00000001',	'Reene Brigette Beriso',	'LOGGED OUT',	'AUTH',	'2024-04-29 09:10:31',	'2024-04-29 09:10:31'),
+('0000115',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 09:10:34',	'2024-04-29 09:10:34'),
+('0000116',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 09:57:07',	'2024-04-29 09:57:07'),
+('0000117',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 09:59:20',	'2024-04-29 09:59:20'),
+('0000118',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 10:02:00',	'2024-04-29 10:02:00'),
+('0000119',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 10:03:02',	'2024-04-29 10:03:02'),
+('0000120',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 10:03:36',	'2024-04-29 10:03:36'),
+('0000121',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 10:04:06',	'2024-04-29 10:04:06'),
+('0000122',	'192.168.1.140',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-29 10:06:42',	'2024-04-29 10:06:42'),
+('0000123',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 03:14:24',	'2024-04-30 03:14:24'),
+('0000124',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 05:35:58',	'2024-04-30 05:35:58'),
+('0000125',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-30 05:53:04',	'2024-04-30 05:53:04'),
+('0000126',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 05:53:21',	'2024-04-30 05:53:21'),
+('0000127',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-30 05:54:47',	'2024-04-30 05:54:47'),
+('0000128',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 05:55:04',	'2024-04-30 05:55:04'),
+('0000129',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-30 05:57:08',	'2024-04-30 05:57:08'),
+('0000130',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 06:12:02',	'2024-04-30 06:12:02'),
+('0000131',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 06:18:27',	'2024-04-30 06:18:27'),
+('0000132',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-30 06:18:57',	'2024-04-30 06:18:57'),
+('0000133',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 06:24:34',	'2024-04-30 06:24:34'),
+('0000134',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-30 06:31:10',	'2024-04-30 06:31:10'),
+('0000135',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 06:31:30',	'2024-04-30 06:31:30'),
+('0000136',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-30 06:55:23',	'2024-04-30 06:55:23'),
+('0000137',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 06:55:46',	'2024-04-30 06:55:46'),
+('0000138',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-30 06:56:15',	'2024-04-30 06:56:15'),
+('0000139',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 07:07:29',	'2024-04-30 07:07:29'),
+('0000140',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 08:00:36',	'2024-04-30 08:00:36'),
+('0000141',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 08:00:48',	'2024-04-30 08:00:48'),
+('0000142',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-04-30 08:52:37',	'2024-04-30 08:52:37'),
+('0000143',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-04-30 08:52:40',	'2024-04-30 08:52:40'),
+('0000144',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-02 00:25:40',	'2024-05-02 00:25:40'),
+('0000145',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-02 00:49:27',	'2024-05-02 00:49:27'),
+('0000146',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-02 00:50:55',	'2024-05-02 00:50:55'),
+('0000147',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-02 01:05:12',	'2024-05-02 01:05:12'),
+('0000148',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-02 05:03:17',	'2024-05-02 05:03:17'),
+('0000149',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-02 05:56:10',	'2024-05-02 05:56:10'),
+('0000150',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED OUT',	'AUTH',	'2024-05-02 09:26:56',	'2024-05-02 09:26:56'),
+('0000151',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-02 09:27:01',	'2024-05-02 09:27:01'),
+('0000152',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-03 00:27:44',	'2024-05-03 00:27:44'),
+('0000153',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-03 09:55:48',	'2024-05-03 09:55:48'),
+('0000154',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-06 02:33:15',	'2024-05-06 02:33:15'),
+('0000155',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-06 06:11:02',	'2024-05-06 06:11:02'),
+('0000156',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-08 00:40:59',	'2024-05-08 00:40:59'),
+('0000157',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-08 00:44:43',	'2024-05-08 00:44:43'),
+('0000158',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-08 03:36:26',	'2024-05-08 03:36:26'),
+('0000159',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-09 00:14:38',	'2024-05-09 00:14:38'),
+('0000160',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-10 07:15:34',	'2024-05-10 07:15:34'),
+('0000161',	'192.168.1.201',	'00012869',	'TEST TEST',	'CREATE',	'SOFTWARE LICENSE',	'2024-05-10 08:01:53',	'2024-05-10 08:01:53'),
+('0000162',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:11:38',	'2024-05-10 09:11:38'),
+('0000163',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:12:06',	'2024-05-10 09:12:06'),
+('0000164',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:12:43',	'2024-05-10 09:12:43'),
+('0000165',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:12:56',	'2024-05-10 09:12:56'),
+('0000166',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:14:04',	'2024-05-10 09:14:04'),
+('0000167',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:14:41',	'2024-05-10 09:14:41'),
+('0000168',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:15:51',	'2024-05-10 09:15:51'),
+('0000169',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:15:55',	'2024-05-10 09:15:55'),
+('0000170',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:20:28',	'2024-05-10 09:20:28'),
+('0000171',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:20:53',	'2024-05-10 09:20:53'),
+('0000172',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:21:13',	'2024-05-10 09:21:13'),
+('0000173',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:27:22',	'2024-05-10 09:27:22'),
+('0000174',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:28:25',	'2024-05-10 09:28:25'),
+('0000175',	'192.168.1.201',	'00012869',	'TEST TEST',	'CREATE',	'SOFTWARE LICENSE',	'2024-05-10 09:31:51',	'2024-05-10 09:31:51'),
+('0000176',	'192.168.1.201',	'00012869',	'TEST TEST',	'CREATE',	'SOFTWARE LICENSE',	'2024-05-10 09:32:11',	'2024-05-10 09:32:11'),
+('0000177',	'192.168.1.201',	'00012869',	'TEST TEST',	'UPDATE',	'SOFTWARE LICENSE',	'2024-05-10 09:32:19',	'2024-05-10 09:32:19'),
+('0000178',	'192.168.1.201',	'00012869',	'TEST TEST',	'CREATE',	'PRODUCT LIST',	'2024-05-10 09:34:45',	'2024-05-10 09:34:45'),
+('0000179',	'192.168.1.201',	'00012869',	'TEST TEST',	'LOGGED IN',	'AUTH',	'2024-05-13 09:28:17',	'2024-05-13 09:28:17'),
+('0000180',	'192.168.1.201',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-05-14 02:34:20',	'2024-05-14 02:34:20'),
+('0000181',	'192.168.1.201',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-05-14 02:49:58',	'2024-05-14 02:49:58'),
+('0000182',	'192.168.1.201',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-05-14 03:22:56',	'2024-05-14 03:22:56'),
+('0000183',	'127.0.0.1',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-05-14 07:02:53',	'2024-05-14 07:02:53'),
+('0000184',	'127.0.0.1',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-05-14 07:42:18',	'2024-05-14 07:42:18'),
+('0000185',	'127.0.0.1',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-05-14 08:18:50',	'2024-05-14 08:18:50'),
+('0000186',	'127.0.0.1',	'00000001',	'Reene Brigette Beriso',	'LOGGED IN',	'AUTH',	'2024-05-15 02:39:16',	'2024-05-15 02:39:16');
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -260,6 +398,18 @@ CREATE TABLE `notifications` (
   KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+TRUNCATE `notifications`;
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('23fe4182-58d8-422a-9165-bdaf7c5bcb94',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	12869,	'{\"message\":\"New Asset Transfer was pending to be Approve!\",\"url\":\"http:\\/\\/192.168.1.201:8005\\/StockManagement\\/AssetTransferApproval\"}',	NULL,	'2024-04-30 08:02:30',	'2024-04-30 08:02:30'),
+('7275617d-661d-46d3-8f18-0fef1897ef8d',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	12862,	'{\"message\":\"New Asset Transfer was pending to be Approve!\",\"url\":\"http:\\/\\/192.168.25.251:8000\\/StockManagement\\/AssetTransferApproval\"}',	'2024-04-12 04:22:26',	'2024-04-12 04:22:21',	'2024-04-12 04:22:26'),
+('7a8b6c25-7528-45c0-9399-3c33213cb7ea',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	12577,	'{\"message\":\"New Asset Transfer was pending to be Approve!\",\"url\":\"http:\\/\\/192.168.1.201:8005\\/StockManagement\\/AssetTransferApproval\"}',	NULL,	'2024-04-29 10:12:17',	'2024-04-29 10:12:17'),
+('8e9c4d97-bad0-4742-bd7b-931b5607f9d7',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	12577,	'{\"message\":\"New Asset Transfer was pending to be Approve!\",\"url\":\"http:\\/\\/192.168.1.201:8005\\/StockManagement\\/AssetTransferApproval\"}',	NULL,	'2024-04-29 10:11:37',	'2024-04-29 10:11:37'),
+('b48335b1-a8a5-42ba-b106-a09c998e2dc4',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	1708,	'{\"message\":\"You have an item that is pending to receive\",\"url\":\"http:\\/\\/192.168.25.251:8000\\/StockManagement\\/AssetTransferReceiving\"}',	NULL,	'2024-04-12 04:49:48',	'2024-04-12 04:49:48'),
+('c6a69ad7-5cc8-4013-b604-e78a4166e177',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	29,	'{\"message\":\"You have an item that is pending to receive\",\"url\":\"http:\\/\\/192.168.25.251:8000\\/StockManagement\\/AssetTransferReceiving\"}',	NULL,	'2024-04-09 07:40:09',	'2024-04-09 07:40:09'),
+('e92d60d3-4c1b-412e-b6e7-be528555afc8',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	12869,	'{\"message\":\"New Asset Transfer was pending to be Approve!\",\"url\":\"http:\\/\\/192.168.1.201:8005\\/StockManagement\\/AssetTransferApproval\"}',	NULL,	'2024-04-29 10:12:17',	'2024-04-29 10:12:17'),
+('ece902a6-41a7-4987-b17c-ae7be7f813ad',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	12869,	'{\"message\":\"New Asset Transfer was pending to be Approve!\",\"url\":\"http:\\/\\/192.168.1.201:8005\\/StockManagement\\/AssetTransferApproval\"}',	NULL,	'2024-04-29 10:11:37',	'2024-04-29 10:11:37'),
+('ffcbf7e4-9dad-4b74-9d3f-7b1202c35195',	'App\\Notifications\\AssetMovementNotification',	'App\\Models\\User',	12577,	'{\"message\":\"New Asset Transfer was pending to be Approve!\",\"url\":\"http:\\/\\/192.168.1.201:8005\\/StockManagement\\/AssetTransferApproval\"}',	NULL,	'2024-04-30 08:02:30',	'2024-04-30 08:02:30');
+
 DROP TABLE IF EXISTS `password_reset_temp`;
 CREATE TABLE `password_reset_temp` (
   `email` varchar(250) NOT NULL,
@@ -303,47 +453,103 @@ CREATE TABLE `personal_access_tokens` (
 
 TRUNCATE `personal_access_tokens`;
 
+DROP TABLE IF EXISTS `product_category`;
+CREATE TABLE `product_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `CATEGORY_NAME` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+TRUNCATE `product_category`;
+INSERT INTO `product_category` (`id`, `CATEGORY_NAME`) VALUES
+(19,	'Processors (CPU)'),
+(25,	'Memory (RAM)'),
+(27,	'Storage Devices'),
+(28,	'Motherboards'),
+(29,	'Power Supply Units (PSU)'),
+(30,	'Computer Cases / Chassis'),
+(31,	'Monitors & Displays'),
+(32,	'Keyboards & Input Devices'),
+(33,	'Cables & Adapters'),
+(34,	'Printers & Scanners');
+
 DROP TABLE IF EXISTS `product_list`;
 CREATE TABLE `product_list` (
   `INDEX_ID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ASSET_ID` varchar(100) NOT NULL,
-  `ASSET_CATEGORY` int(10) NOT NULL,
-  `ASSET_NAME` varchar(100) NOT NULL,
-  `ASSET_SUB_TYPE` varchar(100) NOT NULL,
+  `PRODUCT_ID` varchar(100) NOT NULL,
+  `PRODUCT_CATEGORY` int(10) NOT NULL,
+  `PRODUCT_NAME` varchar(100) NOT NULL,
   `EQUIPMENT_MODEL` varchar(100) DEFAULT NULL,
-  `ASSET_DESCRIPTION` varchar(100) DEFAULT NULL,
+  `PRODUCT_DESCRIPTION` varchar(100) DEFAULT NULL,
   `COLOR` varchar(100) DEFAULT NULL,
   `WEIGHT` varchar(100) DEFAULT NULL,
   `DIMENSION` varchar(100) DEFAULT NULL,
   `LOGO` varchar(100) DEFAULT NULL,
-  `PRODUCT_CATEGORY` varchar(100) NOT NULL,
   `MANUFACTURER` varchar(100) NOT NULL,
   `VENDOR_ID` varchar(100) NOT NULL,
-  `COST` varchar(100) DEFAULT NULL,
-  `WARRANTY_TERMS` varchar(100) NOT NULL,
   `USEFUL_LIFE` varchar(100) NOT NULL,
   `STATUS` varchar(100) NOT NULL,
   `FROM_DATE` date NOT NULL,
-  `ASSET_CONDITION` varchar(100) NOT NULL,
+  `PRODUCT_CONDITION` varchar(100) NOT NULL,
   `DELETED` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`ASSET_ID`),
+  PRIMARY KEY (`PRODUCT_ID`),
   UNIQUE KEY `INDEX_ID` (`INDEX_ID`),
   KEY `product_list_vendor_id_foreign` (`VENDOR_ID`),
-  KEY `ASSET_CATEGORY` (`ASSET_CATEGORY`),
-  KEY `ASSET_ID` (`ASSET_ID`),
+  KEY `ASSET_CATEGORY` (`PRODUCT_CATEGORY`),
+  KEY `ASSET_ID` (`PRODUCT_ID`),
   CONSTRAINT `product_list_ibfk_4` FOREIGN KEY (`VENDOR_ID`) REFERENCES `supplier` (`SUPPLIER_ID`) ON UPDATE NO ACTION,
-  CONSTRAINT `product_list_ibfk_5` FOREIGN KEY (`ASSET_CATEGORY`) REFERENCES `asset_category` (`id`) ON UPDATE NO ACTION
+  CONSTRAINT `product_list_ibfk_5` FOREIGN KEY (`PRODUCT_CATEGORY`) REFERENCES `product_category` (`id`) ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `product_list`;
-INSERT INTO `product_list` (`INDEX_ID`, `ASSET_ID`, `ASSET_CATEGORY`, `ASSET_NAME`, `ASSET_SUB_TYPE`, `EQUIPMENT_MODEL`, `ASSET_DESCRIPTION`, `COLOR`, `WEIGHT`, `DIMENSION`, `LOGO`, `PRODUCT_CATEGORY`, `MANUFACTURER`, `VENDOR_ID`, `COST`, `WARRANTY_TERMS`, `USEFUL_LIFE`, `STATUS`, `FROM_DATE`, `ASSET_CONDITION`, `DELETED`) VALUES
-(112,	'AST-00112',	19,	'A320M Pro4',	'Computer Desktop PC',	'A320M Pro4',	NULL,	NULL,	NULL,	NULL,	'',	'Hardware',	'ASRock',	'VR-0000134',	NULL,	'12 Months',	'12',	'In-Stock',	'2024-12-21',	'New',	1),
-(113,	'AST-00113',	19,	'123',	'Laptop',	'123',	'N/A3',	'N/A',	'N/A',	'N/A',	NULL,	'Hardware',	'123',	'VR-0000134',	'N/A',	'132',	'123',	'In-Stock',	'2025-07-26',	'123',	1),
-(114,	'AST-00114',	19,	'Test',	'Computer Desktop PC',	'1',	NULL,	NULL,	NULL,	NULL,	'',	'Software',	'1',	'VR-0000134',	NULL,	'1',	'1',	'Out of Stock',	'2025-07-26',	'11',	0),
-(115,	'AST-00115',	19,	'asd',	'Laptop',	'dsa',	NULL,	'asd',	'asd',	NULL,	'',	'Hardware',	'asd',	'VR-0000134',	'asd',	'asd',	'1',	'In-Stock',	'2025-08-03',	'asd',	0),
-(116,	'AST-00116',	19,	'12',	'Laptop',	'3',	NULL,	'3',	NULL,	NULL,	'',	'Hardware',	'3',	'VR-0000134',	'3',	'3',	'2',	'Out of Stock',	'2025-08-03',	'3',	0),
-(117,	'AST-00117',	19,	'122',	'Computer Desktop PC',	'12',	NULL,	NULL,	NULL,	NULL,	'',	'Hardware',	'2',	'VR-0000134',	NULL,	'12',	'2',	'In-Stock',	'2025-08-03',	'12',	0),
-(118,	'AST-00118',	19,	'32',	'Computer Desktop PC',	'2',	NULL,	NULL,	NULL,	NULL,	'',	'Hardware',	'23',	'VR-0000134',	NULL,	'23',	'3',	'In-Stock',	'2025-08-03',	'23',	0);
+INSERT INTO `product_list` (`INDEX_ID`, `PRODUCT_ID`, `PRODUCT_CATEGORY`, `PRODUCT_NAME`, `EQUIPMENT_MODEL`, `PRODUCT_DESCRIPTION`, `COLOR`, `WEIGHT`, `DIMENSION`, `LOGO`, `MANUFACTURER`, `VENDOR_ID`, `USEFUL_LIFE`, `STATUS`, `FROM_DATE`, `PRODUCT_CONDITION`, `DELETED`) VALUES
+(130,	'PROD-000001',	19,	'Intel Core i7',	'i7-12700K',	'12th Gen Intel Processor',	'Silver',	'100g',	'37.5 x 37.5 mm',	NULL,	'Intel',	'VR-0000001',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(131,	'PROD-000002',	25,	'Corsair Vengeance RAM',	'CMW16GX4M2C3200C16',	'DDR4 Memory 16GB Kit',	'Black',	'50g',	'133.35 x 34.04 mm',	NULL,	'Corsair',	'VR-0000002',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(132,	'PROD-000003',	27,	'Samsung SSD 1TB',	'870 EVO',	'Solid State Drive',	'Black',	'45g',	'100 x 70 x 7 mm',	NULL,	'Samsung',	'VR-0000003',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(133,	'PROD-000004',	28,	'ASUS Prime Motherboard',	'Z690-A',	'Intel 12th Gen Motherboard',	'Black/White',	'1.5kg',	'305 x 244 mm',	NULL,	'ASUS',	'VR-0000004',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(134,	'PROD-000005',	29,	'Corsair PSU',	'RM750x',	'750W Fully Modular Power Supply',	'Black',	'2kg',	'160 x 150 x 86 mm',	NULL,	'Corsair',	'VR-0000005',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(135,	'PROD-000006',	30,	'NZXT H510 Case',	'H510',	'Mid Tower Case',	'White/Black',	'6.6kg',	'210 x 460 x 428 mm',	NULL,	'NZXT',	'VR-0000006',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(136,	'PROD-000007',	31,	'Dell Monitor',	'U2720Q',	'27\" 4K UHD Monitor',	'Black',	'4.5kg',	'611.3 x 185 x 410.2 mm',	NULL,	'Dell',	'VR-0000007',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(137,	'PROD-000008',	32,	'Logitech Keyboard',	'G213',	'RGB Gaming Keyboard',	'Black',	'1kg',	'452 x 218 x 33 mm',	NULL,	'Logitech',	'VR-0000008',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(138,	'PROD-000009',	33,	'HDMI Cable',	'2.0 High Speed',	'2m HDMI Cable',	'Black',	'200g',	'2m',	NULL,	'Generic',	'VR-0000009',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(139,	'PROD-000010',	34,	'HP LaserJet Printer',	'M404dn',	'Monochrome Laser Printer',	'White',	'8kg',	'381 x 357 x 216 mm',	NULL,	'HP',	'VR-0000010',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(140,	'PROD-000011',	19,	'AMD Ryzen 9',	'5900X',	'12-Core Processor',	'Silver',	'90g',	'40 x 40 mm',	NULL,	'AMD',	'VR-0000002',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(141,	'PROD-000012',	25,	'Kingston Fury RAM',	'KF432C16BBK2/16',	'DDR4 16GB Kit',	'Black',	'48g',	'133 x 32 mm',	NULL,	'Kingston',	'VR-0000003',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(142,	'PROD-000013',	27,	'WD Blue HDD 2TB',	'WD20EZAZ',	'7200 RPM Hard Disk Drive',	'Blue',	'600g',	'147 x 101.6 x 26.1 mm',	NULL,	'Western Digital',	'VR-0000004',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(143,	'PROD-000014',	28,	'MSI MAG Motherboard',	'B550 TOMAHAWK',	'AMD AM4 ATX Motherboard',	'Black/Grey',	'1.4kg',	'305 x 244 mm',	NULL,	'MSI',	'VR-0000005',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(144,	'PROD-000015',	29,	'Seasonic Focus PSU',	'GX-650',	'650W Gold Modular PSU',	'Black',	'1.8kg',	'150 x 140 x 86 mm',	NULL,	'Seasonic',	'VR-0000006',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(145,	'PROD-000016',	30,	'Cooler Master Case',	'MasterBox NR600',	'ATX Mid Tower Case',	'Black',	'6kg',	'209 x 478 x 473 mm',	NULL,	'Cooler Master',	'VR-0000007',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(146,	'PROD-000017',	31,	'LG UltraGear Monitor',	'27GN950-B',	'27\" 4K Nano IPS Gaming Monitor',	'Black/Red',	'6.5kg',	'609 x 291 x 574 mm',	NULL,	'LG',	'VR-0000008',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(147,	'PROD-000018',	32,	'Razer Gaming Mouse',	'DeathAdder V2',	'Ergonomic Wired Gaming Mouse',	'Black/Green',	'82g',	'127 x 61.7 x 42.7 mm',	NULL,	'Razer',	'VR-0000009',	'60',	'In-Stock',	'2025-08-22',	'New',	0),
+(148,	'PROD-000019',	33,	'USB-C Adapter',	'UC-A1',	'USB-C to HDMI Adapter',	'Gray',	'30g',	'60 x 20 x 10 mm',	NULL,	'Anker',	'VR-0000010',	'36',	'In-Stock',	'2025-08-22',	'New',	0),
+(149,	'PROD-000020',	34,	'Canon Inkjet Printer',	'PIXMA G3010',	'Wireless All-in-One Ink Tank Printer',	'Black',	'6.4kg',	'445 x 330 x 163 mm',	NULL,	'Canon',	'VR-0000001',	'60',	'In-Stock',	'2025-08-22',	'New',	0);
+
+DROP TABLE IF EXISTS `product_transfer_header`;
+CREATE TABLE `product_transfer_header` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `PRODUCT_TRANSFER_NO` varchar(100) NOT NULL,
+  `TRANSACTION_DATE` date NOT NULL,
+  `TRANSFERED_LOCATION_ID` varchar(100) NOT NULL,
+  `LOCATION_ID` varchar(100) NOT NULL,
+  `DATE_RECEIVED` date DEFAULT NULL,
+  `TRANSFER_STATUS` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`PRODUCT_TRANSFER_NO`),
+  UNIQUE KEY `id` (`id`),
+  KEY `asset_transfer_transfer_details_location_id_foreign` (`LOCATION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+TRUNCATE `product_transfer_header`;
+
+DROP TABLE IF EXISTS `product_transfer_product_details`;
+CREATE TABLE `product_transfer_product_details` (
+  `PRODUCT_TRANSFER_NO` varchar(100) NOT NULL,
+  `SERIAL_NO` varchar(100) NOT NULL,
+  PRIMARY KEY (`PRODUCT_TRANSFER_NO`,`SERIAL_NO`),
+  KEY `ASSET_TRANSFER_NO_SERIAL_NO` (`PRODUCT_TRANSFER_NO`,`SERIAL_NO`),
+  CONSTRAINT `product_transfer_product_details_ibfk_1` FOREIGN KEY (`PRODUCT_TRANSFER_NO`) REFERENCES `product_transfer_header` (`PRODUCT_TRANSFER_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+TRUNCATE `product_transfer_product_details`;
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -378,13 +584,16 @@ CREATE TABLE `supplier` (
 
 TRUNCATE `supplier`;
 INSERT INTO `supplier` (`UNIQUE_ID`, `SUPPLIER_ID`, `SUPP_NAME`, `TYPE`, `CONTACT_NAME`, `EMAIL`, `CONTACT_NO`, `ADDRESS`, `UPDATED_BY`, `DELETED`) VALUES
-(132,	'VR-0000001',	'SUPPLIER 1',	'INTERNAL',	'SUPP',	'supplier@1.testing',	'1',	'supplieraddress1',	'Reene Brigette Beriso',	1),
-(133,	'VR-0000133',	'o',	'lhj',	'kjk',	'wilfredo@gmail.com',	'kjjk',	'kj',	'Wilfredo Domanico',	1),
-(134,	'VR-0000134',	'AMD',	'VENDOR',	'AMD HEAD',	'amd@test.com',	'09552347698',	'This is a random address',	'Admin Account',	0),
-(135,	'VR-0000135',	'12',	'INTERNAL',	'12',	'12@sadas',	'12',	'1233',	'Admin Account',	0),
-(136,	'VR-0000136',	'123',	'PROVIDER-MAINTENANCE',	'123',	'123@asdas',	'23',	'23',	'Admin Account',	0),
-(137,	'VR-0000137',	'1',	'VENDOR',	'13',	'1313@asdsa',	'13',	'13',	'Admin Account',	0),
-(138,	'VR-0000138',	'2323',	'SERVICE PROVIDER-WAREHOUSE',	'2323',	'asddads@asdas',	'2323',	'2323',	'Admin Account',	0);
+(1,	'VR-0000001',	'TechSource Distributors Inc.',	'Distributor',	'Maria Santos',	'maria.santos@techsource.com',	'+63 917 123 4567',	'12th Floor, Tech Tower, Makati City',	'Admin Account',	0),
+(140,	'VR-0000002',	'Global IT Solutions Co.',	'Reseller',	'John Dela Cruz',	'john.delacruz@gitsolutions.ph',	'+63 918 234 5678',	'Ortigas Center, Pasig City',	'system',	0),
+(141,	'VR-0000003',	'MicroHub Electronics',	'Retailer',	'Anna Lim',	'anna.lim@microhub.ph',	'+63 917 345 6789',	'SM North EDSA, Quezon City',	'system',	0),
+(142,	'VR-0000004',	'NextGen Computer Supplies',	'Distributor',	'Robert Tan',	'robert.tan@nextgen.com.ph',	'+63 917 456 7890',	'Cebu Business Park, Cebu City',	'system',	0),
+(143,	'VR-0000005',	'Pacific Digital Traders',	'Wholesaler',	'Sarah Mendoza',	'sarah.mendoza@pacificdt.ph',	'+63 918 567 8901',	'J.P. Laurel Ave, Davao City',	'system',	0),
+(144,	'VR-0000006',	'Silverline Hardware & Peripherals',	'Retailer',	'James Ong',	'james.ong@silverline.com',	'+63 917 678 9012',	'Ayala Malls, Makati City',	'system',	0),
+(145,	'VR-0000007',	'PrimeTech Components',	'Manufacturer',	'Karen Reyes',	'karen.reyes@primetech.com.ph',	'+63 918 789 0123',	'Carmelray Industrial Park, Laguna',	'system',	0),
+(146,	'VR-0000008',	'Evergreen Systems Supply',	'Distributor',	'Michael Cruz',	'michael.cruz@evergreensupply.ph',	'+63 917 890 1234',	'Clark Freeport Zone, Pampanga',	'system',	0),
+(147,	'VR-0000009',	'Infinity Gadgets & Parts',	'Reseller',	'Patricia Gomez',	'patricia.gomez@infinitygadgets.ph',	'+63 918 901 2345',	'Robinsons Place, Manila',	'system',	0),
+(148,	'VR-0000010',	'Vertex Technology Distributors',	'Distributor',	'Daniel Navarro',	'daniel.navarro@vertextech.ph',	'+63 917 012 3456',	'IT Park, Lahug, Cebu City',	'system',	0);
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -409,9 +618,9 @@ CREATE TABLE `users` (
 
 TRUNCATE `users`;
 INSERT INTO `users` (`id`, `USER_ID`, `FIRST_NAME`, `LAST_NAME`, `email`, `password`, `PROFILE_PICTURE`, `ACC_STATUS`, `LOCATION_ID`, `ROLE_ID`, `remember_token`, `DELETED`) VALUES
-(1,	'0000000',	'Admin',	'Account',	'admin@gmail.com',	'$2y$10$dWETG0bU4AA98kS7rxPSd.HFcNjZVBEtW0Yy3PeTtyCL34/X2GTgu',	NULL,	'ACTIVE',	'000000',	'1',	NULL,	0),
-(2,	'0000001',	'Default User',	'Account 1',	'defaultuser1@gmail.com',	'$2y$10$oAhnUgEP2GaOeqX5tqmZF.o1XywQKMOc1N47Yai5slhdaX14fPQzu',	NULL,	'ACTIVE',	'000001',	'2',	NULL,	0),
-(3,	'0000002',	'Default User',	'Account 2',	'defaultuser2@gmail.com',	'$2y$10$oAhnUgEP2GaOeqX5tqmZF.o1XywQKMOc1N47Yai5slhdaX14fPQzu',	NULL,	'ACTIVE',	'000002',	'2',	NULL,	0);
+(1,	'0000000',	'Admin',	'Account',	'admin@gmail.com',	'$2y$10$dWETG0bU4AA98kS7rxPSd.HFcNjZVBEtW0Yy3PeTtyCL34/X2GTgu',	NULL,	'Active',	'000000',	'1',	NULL,	0),
+(2,	'0000001',	'Default User',	'Account 1',	'defaultuser1@gmail.com',	'$2y$10$oAhnUgEP2GaOeqX5tqmZF.o1XywQKMOc1N47Yai5slhdaX14fPQzu',	NULL,	'Active',	'000001',	'2',	NULL,	0),
+(3,	'0000002',	'Default User',	'Account 2',	'defaultuser2@gmail.com',	'$2y$10$oAhnUgEP2GaOeqX5tqmZF.o1XywQKMOc1N47Yai5slhdaX14fPQzu',	NULL,	'Active',	'000002',	'2',	NULL,	0);
 
 DROP TABLE IF EXISTS `user_role_permission`;
 CREATE TABLE `user_role_permission` (
@@ -420,12 +629,12 @@ CREATE TABLE `user_role_permission` (
   `ADD_PRODUCT` tinyint(1) NOT NULL DEFAULT 0,
   `EDIT_PRODUCT` tinyint(1) NOT NULL DEFAULT 0,
   `DELETE_PRODUCT` tinyint(1) NOT NULL DEFAULT 0,
-  `ADD_ASSET_CATEGORY` tinyint(1) NOT NULL DEFAULT 0,
-  `EDIT_ASSET_CATEGORY` tinyint(1) NOT NULL DEFAULT 0,
-  `DELETE_ASSET_CATEGORY` tinyint(1) NOT NULL DEFAULT 0,
+  `ADD_PRODUCT_CATEGORY` tinyint(1) NOT NULL DEFAULT 0,
+  `EDIT_PRODUCT_CATEGORY` tinyint(1) NOT NULL DEFAULT 0,
+  `DELETE_PRODUCT_CATEGORY` tinyint(1) NOT NULL DEFAULT 0,
   `INVENTORY` tinyint(1) NOT NULL DEFAULT 0,
-  `CREATE_ASSET_TRANSFER` tinyint(1) NOT NULL DEFAULT 0,
-  `RECEIVE_ASSET_TRANSFER` tinyint(1) NOT NULL DEFAULT 0,
+  `CREATE_PRODUCT_TRANSFER` tinyint(1) NOT NULL DEFAULT 0,
+  `RECEIVE_PRODUCT_TRANSFER` tinyint(1) NOT NULL DEFAULT 0,
   `SUPPLIER` tinyint(1) NOT NULL DEFAULT 0,
   `ADD_SUPPLIER` tinyint(1) NOT NULL DEFAULT 0,
   `EDIT_SUPPLIER` tinyint(1) NOT NULL DEFAULT 0,
@@ -439,11 +648,6 @@ CREATE TABLE `user_role_permission` (
   `ADD_ROLE` tinyint(1) NOT NULL DEFAULT 0,
   `EDIT_ROLE` tinyint(1) NOT NULL DEFAULT 0,
   `DELETE_ROLE` tinyint(1) NOT NULL DEFAULT 0,
-  `BULKLOAD_USER` tinyint(1) NOT NULL DEFAULT 0,
-  `BULKLOAD_INVENTORY` tinyint(1) NOT NULL DEFAULT 0,
-  `BULKLOAD_PRODUCT` tinyint(1) NOT NULL DEFAULT 0,
-  `BULKLOAD_SUPPLIER` tinyint(1) NOT NULL DEFAULT 0,
-  `BULKLOAD_LOCATION` tinyint(1) NOT NULL DEFAULT 0,
   `MANAGE_ROLE_ACCESS` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`ROLE_ID`),
   KEY `user_role_permission_role_id_foreign` (`ROLE_ID`),
@@ -451,8 +655,8 @@ CREATE TABLE `user_role_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 TRUNCATE `user_role_permission`;
-INSERT INTO `user_role_permission` (`ROLE_ID`, `PRODUCT_CATALOG`, `ADD_PRODUCT`, `EDIT_PRODUCT`, `DELETE_PRODUCT`, `ADD_ASSET_CATEGORY`, `EDIT_ASSET_CATEGORY`, `DELETE_ASSET_CATEGORY`, `INVENTORY`, `CREATE_ASSET_TRANSFER`, `RECEIVE_ASSET_TRANSFER`, `SUPPLIER`, `ADD_SUPPLIER`, `EDIT_SUPPLIER`, `DELETE_SUPPLIER`, `ADMIN`, `ADD_USER`, `DELETE_USER`, `ADD_LOCATION`, `EDIT_LOCATION`, `DELETE_LOCATION`, `ADD_ROLE`, `EDIT_ROLE`, `DELETE_ROLE`, `BULKLOAD_USER`, `BULKLOAD_INVENTORY`, `BULKLOAD_PRODUCT`, `BULKLOAD_SUPPLIER`, `BULKLOAD_LOCATION`, `MANAGE_ROLE_ACCESS`) VALUES
-(1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1),
-(2,	1,	0,	0,	0,	0,	0,	0,	1,	1,	1,	1,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	0);
+INSERT INTO `user_role_permission` (`ROLE_ID`, `PRODUCT_CATALOG`, `ADD_PRODUCT`, `EDIT_PRODUCT`, `DELETE_PRODUCT`, `ADD_PRODUCT_CATEGORY`, `EDIT_PRODUCT_CATEGORY`, `DELETE_PRODUCT_CATEGORY`, `INVENTORY`, `CREATE_PRODUCT_TRANSFER`, `RECEIVE_PRODUCT_TRANSFER`, `SUPPLIER`, `ADD_SUPPLIER`, `EDIT_SUPPLIER`, `DELETE_SUPPLIER`, `ADMIN`, `ADD_USER`, `DELETE_USER`, `ADD_LOCATION`, `EDIT_LOCATION`, `DELETE_LOCATION`, `ADD_ROLE`, `EDIT_ROLE`, `DELETE_ROLE`, `MANAGE_ROLE_ACCESS`) VALUES
+(1,	1,	1,	1,	1,	1,	1,	1,	0,	0,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1),
+(2,	1,	0,	0,	0,	0,	0,	0,	1,	1,	1,	1,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0);
 
--- 2025-08-03 07:45:09
+-- 2025-08-25 07:28:22

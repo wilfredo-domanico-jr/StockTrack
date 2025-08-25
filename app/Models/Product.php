@@ -10,14 +10,14 @@ class Product extends Model
     use HasFactory;
 
     protected $table = "product_list";
-    protected $primaryKey = 'ASSET_ID';
+    protected $primaryKey = 'PRODUCT_ID';
     public $timestamps = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'ASSET_ID',
-        'ASSET_CATEGORY',
-        'ASSET_NAME',
-        'ASSET_DESCRIPTION',
+        'PRODUCT_ID',
+        'PRODUCT_CATEGORY',
+        'PRODUCT_NAME',
+        'PRODUCT_DESCRIPTION',
         'COLOR',
         'WEIGHT',
         'DIMENSION',
@@ -31,7 +31,7 @@ class Product extends Model
         'FROM_DATE',
         'REMARKS',
         'EQUIPMENT_MODEL',
-        'ASSET_CONDITION',
+        'PRODUCT_CONDITION',
         'DELETED'
     ];
 
@@ -39,7 +39,7 @@ class Product extends Model
 
     public function findOne()
     {
-        return $this->belongsTo(AssetCategory::class, 'ASSET_CATEGORY', 'id');
+        return $this->belongsTo(ProductCategory::class, 'PRODUCT_CATEGORY', 'id');
     }
 
 
@@ -48,8 +48,8 @@ class Product extends Model
         self::insert($dataToInsert);
     }
 
-    public function assetCategory()
+    public function productCategory()
     {
-        return $this->belongsTo(AssetCategory::class, 'ASSET_CATEGORY');
+        return $this->belongsTo(ProductCategory::class, 'PRODUCT_CATEGORY');
     }
 }

@@ -8,7 +8,7 @@ import { ref, onMounted, defineProps } from "vue";
 const props = defineProps({
     receivedTransfer: Number,
     pendingToReceive: Number,
-    transferedAsset: Number,
+    transferedProduct: Number,
     pendingTransfer: Number,
     locationName: Array,
     locationID: Array,
@@ -29,8 +29,8 @@ const status = ref([
         class: "bg-blue-400 border border-gray-200",
     },
     {
-        count: props.transferedAsset,
-        label: "TRANSFERED ASSET",
+        count: props.transferedProduct,
+        label: "TRANSFERED PRODUCT",
         class: "bg-violet-400 border border-gray-200",
     },
     {

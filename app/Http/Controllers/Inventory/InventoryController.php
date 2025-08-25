@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Inventory;
 
 use Inertia\Inertia;
+use App\Models\Product;
 use App\Models\Inventory;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request as HttpRequest;
 
 class InventoryController extends Controller
 {
@@ -19,30 +22,23 @@ class InventoryController extends Controller
     {
 
         if (Gate::allows('AuthorizeAction', ['INVENTORY'])) {
-            $inventories = Inventory::leftJoin('product_list', 'inventory.ASSET_ID', 'product_list.ASSET_ID')
-                ->leftJoin('asset_category', 'product_list.ASSET_CATEGORY', 'asset_category.id')
+            $inventories = Inventory::leftJoin('product_list', 'inventory.PRODUCT_ID', 'product_list.PRODUCT_ID')
+                ->leftJoin('product_category', 'product_list.PRODUCT_CATEGORY', 'product_category.id')
                 ->leftJoin('location', 'inventory.LOCATION_ID', 'location.LOCATION_ID')
-                ->where('inventory.IS_DISPOSED', 0)
                 ->select(
-                    'inventory.INVENTORY_ID',
-                    'inventory.ASSET_ID',
-                    'asset_category.CATEGORY_NAME',
-                    'product_list.PRODUCT_CATEGORY',
-                    'product_list.ASSET_NAME',
-                    'inventory.ASSET_TAG',
-                    'location.LOCATION',
+                    'inventory.id',
+                    'inventory.PRODUCT_ID',
+                    'product_category.CATEGORY_NAME',
+                    'product_list.PRODUCT_NAME',
                     'inventory.SERIAL_NO',
+                    'inventory.PURCHASE_DATE',
                     DB::raw('DATE_FORMAT(inventory.created_at, "%Y-%m-%d") as DATE_CREATED')
                 )
                 ->when(Request::input('search'), function ($query, $search) {
-                    $query->where('inventory.ASSET_ID', 'like', "%{$search}%")
-                        ->orWhere('asset_category.CATEGORY_NAME', 'like', "%{$search}%")
-                        ->orWhere('product_list.PRODUCT_CATEGORY', 'like', "%{$search}%")
-                        ->orWhere('product_list.ASSET_NAME', 'like', "%{$search}%")
-                        ->orWhere('inventory.ASSET_TAG', 'like', "%{$search}%")
-                        ->orWhere('location.LOCATION', 'like', "%{$search}%")
-                        ->orWhere('inventory.SERIAL_NO', 'like', "%{$search}%")
-                        ->orWhere('inventory.created_at', 'like', "%{$search}%");
+                    $query->where('product_category.CATEGORY_NAME', 'like', "%{$search}%")
+                        ->orWhere('product_list.PRODUCT_NAME', 'like', "%{$search}%")
+                        ->orWhere('inventory.PURCHASE_DATE', 'like', "%{$search}%")
+                        ->orWhere('inventory.SERIAL_NO', 'like', "%{$search}%");
                 });
 
 
@@ -60,16 +56,60 @@ class InventoryController extends Controller
     }
 
 
-    public function show($inventoryID)
+    public function create()
     {
+
 
         if (Gate::allows('AuthorizeAction', ['INVENTORY'])) {
 
-            $inventoryData = Inventory::with('product.assetCategory')->findOrFail($inventoryID);
+            $products = Product::all();
+            return Inertia::render('Inventory/InventoryList/Create', [
+                'products' => $products
 
-            return Inertia::render('Inventory/InventoryList/Show', ['inventoryData' => $inventoryData]);
+            ]);
         } else {
             return Redirect::route('noAccess');
         }
     }
+
+    public function store(HttpRequest $request)
+    {
+
+
+
+        if (Gate::allows('AuthorizeAction', ['INVENTORY'])) {
+
+
+            // Validate if Serial No is already existing.
+
+
+            try {
+                // Begin transaction
+                DB::beginTransaction();
+
+                Inventory::insert([
+                    'PRODUCT_ID' => $request->productId,
+                    'SERIAL_NO' => $request->serialNo,
+                    'PURCHASE_DATE' => $request->purchaseDate,
+                    'LOCATION_ID' => getUserLocation()
+                ]);
+
+                // Commit transaction
+                DB::commit();
+
+                return Redirect::route('Inventory.InventoryList.index')->with('success', 'Inventory Inserted Successfully.');
+            } catch (\Exception $e) {
+                // Rollback transaction if an exception occurred
+                DB::rollBack();
+                // Log the error
+                Log::error('Error occurred during database transaction: ' . $e->getMessage());
+
+                return Redirect::back()->with('error', 'An Error Occur.');
+            }
+        } else {
+            return Redirect::route('noAccess');
+        }
+    }
+
+  
 }

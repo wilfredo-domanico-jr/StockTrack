@@ -33,15 +33,15 @@ class AxiosApiController extends Controller
 
                         // Check if it reserved for transfer
                         if($data->FOR_TRANSFER == 1){
-                                return response()->json(['message' => 'Could not select. Asset already reserved for transfer.'], 404);
+                                return response()->json(['message' => 'Could not select. Product already reserved for transfer.'], 404);
                         }
 
                         if($data->FOR_DISPOSAL == 1){
-                                return response()->json(['message' => 'Could not select. Asset already reserved for disposal.'], 404);
+                                return response()->json(['message' => 'Could not select. Product already reserved for disposal.'], 404);
                         }
 
                         if($data->IS_DISPOSED == 1){
-                                return response()->json(['message' => 'Could not select. Asset already disposed.'], 404);
+                                return response()->json(['message' => 'Could not select. Product already disposed.'], 404);
                         }
 
                         // If data is found and theres no problem, return the data

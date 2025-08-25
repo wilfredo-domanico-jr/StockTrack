@@ -9,6 +9,7 @@ import { Head, usePage, Link } from "@inertiajs/inertia-vue3";
 import { ref, reactive, getCurrentInstance } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import PageHeader from "@/Components/PageHeader.vue";
+import FlashMessage from "@/Components/FlashMessage.vue";
 
 defineProps({
     productDetail: Object,
@@ -39,16 +40,9 @@ const statusList = [
     { id: 6, STATUS: "Obsolete" },
 ];
 
-const productCategories = [
-    { id: 1, PRODUCT_CATEGORY: "Hardware" },
-    { id: 2, PRODUCT_CATEGORY: "Software" },
-    { id: 3, PRODUCT_CATEGORY: "Consumables" },
-    { id: 4, PRODUCT_CATEGORY: "Bundle" },
-];
-
 let form = reactive({
-    assetName: productDetailData.ASSET_NAME,
-    assetCategory: productDetailData.ASSET_CATEGORY,
+    productName: productDetailData.PRODUCT_NAME,
+    productCategory: productDetailData.PRODUCT_CATEGORY,
     equipmentModel: productDetailData.EQUIPMENT_MODEL,
     manufacturer: productDetailData.MANUFACTURER,
     color: productDetailData.COLOR ? productDetailData.COLOR : "N/A",
@@ -57,11 +51,11 @@ let form = reactive({
         ? productDetailData.DIMENSION
         : "N/A",
     usefulLife: productDetailData.USEFUL_LIFE,
-    assetCondition: productDetailData.ASSET_CONDITION,
+    condition: productDetailData.PRODUCT_CONDITION,
     status: productDetailData.STATUS,
     vendor: productDetailData.VENDOR_ID,
-    description: productDetailData.ASSET_DESCRIPTION
-        ? productDetailData.ASSET_DESCRIPTION
+    description: productDetailData.PRODUCT_DESCRIPTION
+        ? productDetailData.PRODUCT_DESCRIPTION
         : "N/A",
     old_image: productDetailData.LOGO,
     image: null,
@@ -72,7 +66,7 @@ const submit = () => {
 
     Inertia.post(
         route("ProductCatalog.updateProduct", {
-            assetId: productDetailData.ASSET_ID,
+            productId: productDetailData.PRODUCT_ID,
         }),
         form,
         {
@@ -92,7 +86,7 @@ const submit = () => {
     <AuthenticatedLayout>
         <template #header>
             <PageHeader
-                label=" Product Catalog ( Asset Category Setting - Edit )"
+                label=" Product Catalog ( Product Category Setting - Edit )"
             />
         </template>
 
@@ -108,6 +102,7 @@ const submit = () => {
                             @submit.prevent="submit"
                             class="max-w-full mx-auto"
                         >
+                            <FlashMessage />
                             <div
                                 class="flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50"
                                 role="alert"
@@ -137,13 +132,13 @@ const submit = () => {
                             <div class="grid grid-cols-4 gap-4 mb-2">
                                 <div class="mb-2">
                                     <Label
-                                        value="Asset Name"
+                                        value="Product Name"
                                         important="true"
                                     />
                                     <TextInput
                                         type="text"
                                         class="mt-1 block w-full"
-                                        v-model="form.assetName"
+                                        v-model="form.productName"
                                         required
                                         autofocus
                                     />
@@ -151,12 +146,12 @@ const submit = () => {
 
                                 <div class="mb-2">
                                     <Label
-                                        value="Asset Category"
+                                        value="Product Category"
                                         important="true"
                                     />
 
                                     <SelectInput
-                                        v-model="form.assetCategory"
+                                        v-model="form.productCategory"
                                         required
                                     >
                                         <option value="" selected disabled>
@@ -252,14 +247,11 @@ const submit = () => {
                                 </div>
 
                                 <div class="mb-2">
-                                    <Label
-                                        value="Asset Condition"
-                                        important="true"
-                                    />
+                                    <Label value="Condition" important="true" />
                                     <TextInput
                                         type="text"
                                         class="mt-1 block w-full"
-                                        v-model="form.assetCondition"
+                                        v-model="form.condition"
                                         required
                                     />
                                 </div>
@@ -297,7 +289,7 @@ const submit = () => {
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="col-span-2">
                                     <div class="mb-5">
-                                        <Label value="Asset Description" />
+                                        <Label value="Product Description" />
                                         <textarea
                                             v-model="form.description"
                                             id="message"
@@ -313,7 +305,7 @@ const submit = () => {
                                     <div class="mb-5">
                                         <Label
                                             for="category"
-                                            value="Asset Image"
+                                            value="Product Image"
                                         />
 
                                         <div class="mb-4 p-1">
@@ -325,7 +317,9 @@ const submit = () => {
                                                 />
                                             </template>
                                             <template v-else>
-                                                <p>No asset image available.</p>
+                                                <p>
+                                                    No product image available.
+                                                </p>
                                             </template>
                                         </div>
 

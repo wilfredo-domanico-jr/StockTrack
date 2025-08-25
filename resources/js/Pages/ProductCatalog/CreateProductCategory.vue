@@ -14,7 +14,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("ProductCatalog.storeAssetCategory"), {
+    form.post(route("ProductCatalog.storeProductCategory"), {
         onFinish: () => (form.category = ""),
     });
 };
@@ -26,7 +26,7 @@ const submit = () => {
     <BreezeAuthenticatedLayout>
         <template #header>
             <PageHeader
-                label=" Product Catalog ( Asset Category Setting - Create )"
+                label=" Product Catalog ( Product Category Setting - Create )"
             />
         </template>
 
@@ -41,7 +41,7 @@ const submit = () => {
                             <div class="mb-5">
                                 <BreezeLabel
                                     for="category"
-                                    value="Asset Category"
+                                    value="Product Category"
                                 />
                                 <BreezeInput
                                     id="category"
@@ -60,7 +60,7 @@ const submit = () => {
                                 </SubmitButton>
 
                                 <Link
-                                    href="/productCatalog/assetCategorySetting"
+                                    href="/productCatalog/productCategorySetting"
                                     class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                                 >
                                     <i class="fa-solid fa-ban"></i> Cancel</Link

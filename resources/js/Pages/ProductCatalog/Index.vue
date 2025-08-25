@@ -86,13 +86,13 @@ const authority = page.props.value.autorization;
                                 <thead class="text-xs uppercase">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
-                                            Asset id
+                                            Product id
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Asset Category
+                                            Product Category
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Asset Name
+                                            Product Name
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Supplier
@@ -132,13 +132,13 @@ const authority = page.props.value.autorization;
                                                 scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                             >
-                                                {{ product.ASSET_ID }}
+                                                {{ product.PRODUCT_ID }}
                                             </th>
                                             <td class="px-6 py-4">
                                                 {{ product.CATEGORY_NAME }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ product.ASSET_NAME }}
+                                                {{ product.PRODUCT_NAME }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 {{ product.SUPP_NAME }}
@@ -152,8 +152,8 @@ const authority = page.props.value.autorization;
                                                         route(
                                                             'ProductCatalog.editProduct',
                                                             {
-                                                                assetId:
-                                                                    product.ASSET_ID,
+                                                                productId:
+                                                                    product.PRODUCT_ID,
                                                             }
                                                         )
                                                     "
@@ -174,8 +174,8 @@ const authority = page.props.value.autorization;
                                                         route(
                                                             'ProductCatalog.deleteProduct',
                                                             {
-                                                                assetId:
-                                                                    product.ASSET_ID,
+                                                                productId:
+                                                                    product.PRODUCT_ID,
                                                             }
                                                         )
                                                     "
