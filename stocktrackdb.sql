@@ -96,6 +96,34 @@ CREATE TABLE `inventory_to_receive_delivery_details` (
 
 TRUNCATE `inventory_to_receive_delivery_details`;
 
+DROP TABLE IF EXISTS `inventory_transfer_header`;
+CREATE TABLE `inventory_transfer_header` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `INVENTORY_TRANSFER_NO` varchar(100) NOT NULL,
+  `TRANSACTION_DATE` date NOT NULL,
+  `TRANSFERED_LOCATION_ID` varchar(100) NOT NULL,
+  `LOCATION_ID` varchar(100) NOT NULL,
+  `DATE_RECEIVED` date DEFAULT NULL,
+  `TRANSFER_STATUS` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`INVENTORY_TRANSFER_NO`),
+  UNIQUE KEY `id` (`id`),
+  KEY `asset_transfer_transfer_details_location_id_foreign` (`LOCATION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+TRUNCATE `inventory_transfer_header`;
+
+DROP TABLE IF EXISTS `inventory_transfer_product_details`;
+CREATE TABLE `inventory_transfer_product_details` (
+  `INVENTORY_TRANSFER_NO` varchar(100) NOT NULL,
+  `SERIAL_NO` varchar(100) NOT NULL,
+  PRIMARY KEY (`INVENTORY_TRANSFER_NO`,`SERIAL_NO`),
+  KEY `ASSET_TRANSFER_NO_SERIAL_NO` (`INVENTORY_TRANSFER_NO`,`SERIAL_NO`),
+  CONSTRAINT `fk_inventory_transfer_no` FOREIGN KEY (`INVENTORY_TRANSFER_NO`) REFERENCES `inventory_transfer_header` (`INVENTORY_TRANSFER_NO`),
+  CONSTRAINT `inventory_transfer_product_details_ibfk_1` FOREIGN KEY (`INVENTORY_TRANSFER_NO`) REFERENCES `inventory_transfer_header` (`INVENTORY_TRANSFER_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+TRUNCATE `inventory_transfer_product_details`;
+
 DROP TABLE IF EXISTS `jobs`;
 CREATE TABLE `jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -524,33 +552,6 @@ INSERT INTO `product_list` (`INDEX_ID`, `PRODUCT_ID`, `PRODUCT_CATEGORY`, `PRODU
 (148,	'PROD-000019',	33,	'USB-C Adapter',	'UC-A1',	'USB-C to HDMI Adapter',	'Gray',	'30g',	'60 x 20 x 10 mm',	NULL,	'Anker',	'VR-0000010',	'36',	'In-Stock',	'2025-08-22',	'New',	0),
 (149,	'PROD-000020',	34,	'Canon Inkjet Printer',	'PIXMA G3010',	'Wireless All-in-One Ink Tank Printer',	'Black',	'6.4kg',	'445 x 330 x 163 mm',	NULL,	'Canon',	'VR-0000001',	'60',	'In-Stock',	'2025-08-22',	'New',	0);
 
-DROP TABLE IF EXISTS `product_transfer_header`;
-CREATE TABLE `product_transfer_header` (
-  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `PRODUCT_TRANSFER_NO` varchar(100) NOT NULL,
-  `TRANSACTION_DATE` date NOT NULL,
-  `TRANSFERED_LOCATION_ID` varchar(100) NOT NULL,
-  `LOCATION_ID` varchar(100) NOT NULL,
-  `DATE_RECEIVED` date DEFAULT NULL,
-  `TRANSFER_STATUS` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`PRODUCT_TRANSFER_NO`),
-  UNIQUE KEY `id` (`id`),
-  KEY `asset_transfer_transfer_details_location_id_foreign` (`LOCATION_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-TRUNCATE `product_transfer_header`;
-
-DROP TABLE IF EXISTS `product_transfer_product_details`;
-CREATE TABLE `product_transfer_product_details` (
-  `PRODUCT_TRANSFER_NO` varchar(100) NOT NULL,
-  `SERIAL_NO` varchar(100) NOT NULL,
-  PRIMARY KEY (`PRODUCT_TRANSFER_NO`,`SERIAL_NO`),
-  KEY `ASSET_TRANSFER_NO_SERIAL_NO` (`PRODUCT_TRANSFER_NO`,`SERIAL_NO`),
-  CONSTRAINT `product_transfer_product_details_ibfk_1` FOREIGN KEY (`PRODUCT_TRANSFER_NO`) REFERENCES `product_transfer_header` (`PRODUCT_TRANSFER_NO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-TRUNCATE `product_transfer_product_details`;
-
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -659,4 +660,4 @@ INSERT INTO `user_role_permission` (`ROLE_ID`, `PRODUCT_CATALOG`, `ADD_PRODUCT`,
 (1,	1,	1,	1,	1,	1,	1,	1,	0,	0,	0,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1,	1),
 (2,	1,	0,	0,	0,	0,	0,	0,	1,	1,	1,	1,	0,	0,	0,	1,	0,	0,	0,	0,	0,	0,	0,	0,	0);
 
--- 2025-08-25 07:28:22
+-- 2025-08-31 12:48:24
