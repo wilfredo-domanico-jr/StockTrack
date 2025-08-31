@@ -906,9 +906,6 @@ select {
 .h-60 {
   height: 15rem;
 }
-.h-64 {
-  height: 16rem;
-}
 .h-8 {
   height: 2rem;
 }
@@ -947,9 +944,6 @@ select {
 }
 .w-8 {
   width: 2rem;
-}
-.w-96 {
-  width: 24rem;
 }
 .w-\[250px\] {
   width: 250px;

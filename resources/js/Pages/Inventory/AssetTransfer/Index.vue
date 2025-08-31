@@ -110,7 +110,7 @@ const authority = page.props.value.autorization;
                                             View
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Asset Transfer No.
+                                            Inventory Transfer No.
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Transaction Date

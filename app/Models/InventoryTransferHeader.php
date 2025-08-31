@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductTransferHeader extends Model
+class InventoryTransferHeader extends Model
 {
     use HasFactory;
 
-    protected $table ="product_transfer_header";
-    protected $primaryKey = 'PRODUCT_TRANSFER_NO';
+    protected $table = "inventory_transfer_header";
+    protected $primaryKey = 'INVENTORY_TRANSFER_NO';
     public $timestamps = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'PRODUCT_TRANSFER_NO',
+        'INVENTORY_TRANSFER_NO',
         'TRANSACTION_DATE',
         'TRANSFERED_LOCATION_ID',
         'LOCATION_ID',
@@ -23,15 +23,13 @@ class ProductTransferHeader extends Model
     ];
 
 
-    public function productTransferProductDetails()
+    public function inventoryTransferProductDetails()
     {
-        return $this->hasMany(ProductTransferProductDetail::class,'PRODUCT_TRANSFER_NO');
+        return $this->hasMany(InventoryTransferProductDetail::class, 'INVENTORY_TRANSFER_NO');
     }
 
     public function location()
     {
         return $this->belongsTo(Location::class, 'TRANSFERED_LOCATION_ID', 'LOCATION_ID');
     }
-
-
 }
