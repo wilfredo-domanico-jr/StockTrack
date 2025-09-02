@@ -80,8 +80,16 @@ class InventoryController extends Controller
         if (Gate::allows('AuthorizeAction', ['INVENTORY'])) {
 
 
-            // Validate if Serial No is already existing.
+            // Validate if Serial No for selected product is already existing.
 
+            $isSerialExisting = Inventory::where([
+                'SERIAL_NO' => $request->serialNo
+            ])->exists();
+
+
+            if ($isSerialExisting) {
+                return Redirect::back()->with('error', "Product with serial number '{$request->serialNo}' already exist in the system.");
+            }
 
             try {
                 // Begin transaction
@@ -110,6 +118,4 @@ class InventoryController extends Controller
             return Redirect::route('noAccess');
         }
     }
-
-  
 }

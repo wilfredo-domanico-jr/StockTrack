@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InventoryTransferHeader;
 use Inertia\Inertia;
 use App\Models\Location;
-use App\Models\ProductTransferHeader;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -14,24 +14,24 @@ class HomeController extends Controller
 
         $userLocation = Auth::user()->LOCATION_ID;
 
-        $receivedTransfer = ProductTransferHeader::where([
+        $receivedTransfer = InventoryTransferHeader::where([
             'TRANSFERED_LOCATION_ID' => $userLocation,
             'TRANSFER_STATUS' => 'RECEIVED'
         ])->count();
 
-        $pendingToReceive = ProductTransferHeader::where([
+        $pendingToReceive = InventoryTransferHeader::where([
             'TRANSFERED_LOCATION_ID' => $userLocation,
             'TRANSFER_STATUS' => 'TO RECEIVE'
         ])->count();
 
 
-        $transferedProduct = ProductTransferHeader::where([
+        $transferedProduct = InventoryTransferHeader::where([
             'LOCATION_ID' => $userLocation,
             'TRANSFER_STATUS' => 'RECEIVED'
         ])->count();
 
 
-        $pendingTransfer = ProductTransferHeader::where([
+        $pendingTransfer = InventoryTransferHeader::where([
             'LOCATION_ID' => $userLocation,
             'TRANSFER_STATUS' => 'TO RECEIVE'
         ])->count();

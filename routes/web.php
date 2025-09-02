@@ -11,7 +11,7 @@ use App\Http\Controllers\Inventory\ReceiveController;
 use App\Http\Controllers\Inventory\InventoryController;
 use App\Http\Controllers\Admin\RoleManagementController;
 use App\Http\Controllers\Admin\UserManagementController;
-use App\Http\Controllers\Inventory\AssetTransferController;
+use App\Http\Controllers\Inventory\InventoryTransferController;
 use App\Http\Controllers\Admin\LocationManagementController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -60,12 +60,12 @@ Route::name('Inventory.')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/inventory/receive/history/show/{assetTransNo}', [ReceiveController::class, 'historyShow'])->name('historyShow');
     });
 
-    Route::name('AssetTransfer.')->group(function () {
-        Route::get('/inventory/asset-transfer', [AssetTransferController::class, 'index'])->name('index');
-        Route::get('/inventory/asset-transfer/create', [AssetTransferController::class, 'create'])->name('create');
-        Route::post('/inventory/asset-transfer/store', [AssetTransferController::class, 'store'])->name('store');
-        Route::get('/inventory/asset-transfer/show/{assetTransNo}', [AssetTransferController::class, 'show'])->name('show');
-        Route::get('/inventory/asset-transfer/history', [AssetTransferController::class, 'history'])->name('history');
+    Route::name('InventoryTransfer.')->group(function () {
+        Route::get('/inventory/inventory-transfer', [InventoryTransferController::class, 'index'])->name('index');
+        Route::get('/inventory/inventory-transfer/create', [InventoryTransferController::class, 'create'])->name('create');
+        Route::post('/inventory/inventory-transfer/store', [InventoryTransferController::class, 'store'])->name('store');
+        Route::get('/inventory/inventory-transfer/show/{inventoryTransNo}', [InventoryTransferController::class, 'show'])->name('show');
+        Route::get('/inventory/inventory-transfer/history', [InventoryTransferController::class, 'history'])->name('history');
     });
 });
 

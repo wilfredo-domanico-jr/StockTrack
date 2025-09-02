@@ -24,8 +24,8 @@ class RolePermission extends Model
         'EDIT_PRODUCT_CATEGORY',
         'DELETE_PRODUCT_CATEGORY',
         'INVENTORY',
-        'CREATE_PRODUCT_TRANSFER',
-        'RECEIVE_PRODUCT_TRANSFER',
+        'CREATE_INVENTORY_TRANSFER',
+        'RECEIVE_INVENTORY_TRANSFER',
         'SUPPLIER',
         'ADD_SUPPLIER',
         'EDIT_SUPPLIER',
@@ -42,6 +42,4 @@ class RolePermission extends Model
         'MANAGE_ROLE_ACCESS',
 
     ];
-
-
 }

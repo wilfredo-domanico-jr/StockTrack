@@ -2,7 +2,6 @@
 // import { defineProps,reactive, ref, watch } from "vue";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import { defineProps } from "vue";
-import SearchFilter from "@/Components/SearchFilter.vue";
 import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import InventorySubNav from "@/Pages/Inventory/InventorySubNav.vue";
 import Input from "@/Components/Input.vue";
@@ -10,7 +9,7 @@ import Label from "@/Components/Label.vue";
 import PageHeader from "@/Components/PageHeader.vue";
 
 defineProps({
-    assetTransfer: Object,
+    inventoryTransfer: Object,
 });
 </script>
 
@@ -41,7 +40,7 @@ defineProps({
                                         type="text"
                                         class="mt-1 block w-full text-center"
                                         v-model="
-                                            assetTransfer.ASSET_TRANSFER_NO
+                                            inventoryTransfer.ASSET_TRANSFER_NO
                                         "
                                         disabled
                                     />
@@ -53,7 +52,7 @@ defineProps({
                                         type="text"
                                         class="mt-1 block w-full text-center"
                                         v-model="
-                                            assetTransfer.location.LOCATION
+                                            inventoryTransfer.location.LOCATION
                                         "
                                         disabled
                                     />
@@ -65,8 +64,8 @@ defineProps({
                                         type="text"
                                         class="mt-1 block w-full text-center"
                                         v-model="
-                                            assetTransfer
-                                                .asset_transfer_asset_details
+                                            inventoryTransfer
+                                                .inventory_transfer_product_details
                                                 .length
                                         "
                                         disabled
@@ -78,7 +77,9 @@ defineProps({
                                     <Input
                                         type="text"
                                         class="mt-1 block w-full text-center"
-                                        v-model="assetTransfer.TRANSFER_STATUS"
+                                        v-model="
+                                            inventoryTransfer.TRANSFER_STATUS
+                                        "
                                         disabled
                                     />
                                 </div>

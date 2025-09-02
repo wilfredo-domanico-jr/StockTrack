@@ -27,8 +27,8 @@ class Inventory extends Model
     }
 
 
-    public function productTransferProductDetails()
+    public function inventoryTransferProductDetails()
     {
-        return $this->hasMany(ProductTransferProductDetail::class, 'SERIAL_NO', 'SERIAL_NO');
+        return $this->hasMany(InventoryTransferProductDetail::class, 'SERIAL_NO', 'SERIAL_NO');
     }
 }

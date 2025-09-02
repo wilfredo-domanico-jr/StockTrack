@@ -11,9 +11,6 @@ import Label from "@/Components/Label.vue";
 import SelectInput from "@/Components/Select.vue";
 import PageHeader from "@/Components/PageHeader.vue";
 
-const token =
-    "w4SK5hO3uZvA6Fi3Bj4nfI36-7JRyf6FGqYFVtZcK03rrU5pRt-DuullFo5l2nlo6ZlvTb_a07wOAvpeWaoHzi";
-
 const page = usePage();
 
 const userLocation = page.props.value.auth.user.LOCATION_ID;
@@ -35,23 +32,28 @@ const getInventory = (serialNo, index) => {
         });
 
         form.serialNo[index].number = "";
-        form.serialNo[index].assetName = "";
-        form.serialNo[index].assetSubtype = "";
-        form.serialNo[index].assetTag = "";
-        form.serialNo[index].assetCondition = "";
+        form.serialNo[index].productName = "";
+        form.serialNo[index].productCategory = "";
+        form.serialNo[index].productCondition = "";
         return;
     }
 
     axios
-        .post(route("Axios.getInventoryItem", { serialNo, userLocation }))
+        .post(
+            route("Axios.getInventoryItem", {
+                serialNo: serialNo,
+                userLocation: userLocation,
+            })
+        )
         .then((response) => {
             // Assuming response.data contains the asset details.
-            const asset = response.data;
-            form.serialNo[index].number = asset.SERIAL_NO;
-            form.serialNo[index].assetName = asset.product.ASSET_NAME;
-            form.serialNo[index].assetSubtype = asset.product.ASSET_SUB_TYPE;
-            form.serialNo[index].assetTag = asset.ASSET_TAG;
-            form.serialNo[index].assetCondition = asset.STATUS;
+            const product = response.data;
+            form.serialNo[index].number = product.SERIAL_NO;
+            form.serialNo[index].productName = product.product.PRODUCT_NAME;
+            form.serialNo[index].productCategory =
+                product.product.product_category.CATEGORY_NAME;
+            form.serialNo[index].productCondition =
+                product.product.PRODUCT_CONDITION;
         })
         .catch((error) => {
             if (error.response && error.response.status === 404) {
@@ -64,10 +66,9 @@ const getInventory = (serialNo, index) => {
                 });
 
                 form.serialNo[index].number = "";
-                form.serialNo[index].assetName = "";
-                form.serialNo[index].assetSubtype = "";
-                form.serialNo[index].assetTag = "";
-                form.serialNo[index].assetCondition = "";
+                form.serialNo[index].productName = "";
+                form.serialNo[index].productCategory = "";
+                form.serialNo[index].productCondition = "";
             } else {
                 console.error(error);
             }
@@ -83,16 +84,15 @@ const form = useForm({
     serialNo: [
         {
             number: "",
-            assetName: "",
-            assetSubtype: "",
-            assetTag: "",
-            assetCondition: "",
+            productName: "",
+            productCategory: "",
+            productCondition: "",
         },
     ],
 });
 
 const submit = () => {
-    form.post(route("Inventory.AssetTransfer.store"), {
+    form.post(route("Inventory.InventoryTransfer.store"), {
         onSuccess: () => {
             form.reset();
         },
@@ -109,10 +109,9 @@ const updateTotalRow = (event) => {
         while (form.serialNo.length < value) {
             form.serialNo.push({
                 number: "",
-                assetName: "",
-                assetSubtype: "",
-                assetTag: "",
-                assetCondition: "",
+                productName: "",
+                productCategory: "",
+                productCondition: "",
             });
         }
     } else if (form.serialNo.length > value) {
@@ -122,11 +121,11 @@ const updateTotalRow = (event) => {
 </script>
 
 <template>
-    <Head title="Asset Transfer" />
+    <Head title="Inventory Transfer" />
 
     <AuthenticatedLayout>
         <template #header>
-            <PageHeader label="Inventory ( Asset Transfer - Create )" />
+            <PageHeader label="Inventory ( Inventory Transfer - Create )" />
         </template>
 
         <InventorySubNav />
@@ -220,16 +219,13 @@ const updateTotalRow = (event) => {
                                                 Serial No.
                                             </th>
                                             <th scope="col" class="px-6 py-3">
-                                                Asset Name
+                                                Product Name (Auto-fill)
                                             </th>
                                             <th scope="col" class="px-6 py-3">
-                                                Asset Subtype
+                                                Product Category (Auto-fill)
                                             </th>
                                             <th scope="col" class="px-6 py-3">
-                                                Asset Tag No.
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Asset Condition
+                                                Product Condition (Auto-fill)
                                             </th>
                                         </tr>
                                     </thead>
@@ -265,7 +261,7 @@ const updateTotalRow = (event) => {
                                                     class="mt-1 block w-full text-center"
                                                     v-model="
                                                         form.serialNo[index]
-                                                            .assetName
+                                                            .productName
                                                     "
                                                     disabled
                                                 />
@@ -276,7 +272,7 @@ const updateTotalRow = (event) => {
                                                     class="mt-1 block w-full text-center"
                                                     v-model="
                                                         form.serialNo[index]
-                                                            .assetSubtype
+                                                            .productCategory
                                                     "
                                                     disabled
                                                 />
@@ -287,18 +283,7 @@ const updateTotalRow = (event) => {
                                                     class="mt-1 block w-full text-center"
                                                     v-model="
                                                         form.serialNo[index]
-                                                            .assetTag
-                                                    "
-                                                    disabled
-                                                />
-                                            </td>
-                                            <td class="px-2">
-                                                <Input
-                                                    type="text"
-                                                    class="mt-1 block w-full text-center"
-                                                    v-model="
-                                                        form.serialNo[index]
-                                                            .assetCondition
+                                                            .productCondition
                                                     "
                                                     disabled
                                                 />
@@ -318,7 +303,9 @@ const updateTotalRow = (event) => {
 
                                 <Link
                                     :href="
-                                        route('Inventory.AssetTransfer.index')
+                                        route(
+                                            'Inventory.InventoryTransfer.index'
+                                        )
                                     "
                                     class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                                 >

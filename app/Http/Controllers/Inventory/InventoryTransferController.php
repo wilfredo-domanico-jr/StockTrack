@@ -16,7 +16,7 @@ use App\Models\InventoryTransferProductDetail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request as HttpRequest;
 
-class AssetTransferController extends Controller
+class InventoryTransferController extends Controller
 {
 
     public function index()
@@ -26,7 +26,7 @@ class AssetTransferController extends Controller
         if (Gate::allows('AuthorizeAction', ['INVENTORY'])) {
 
             $search = Request::input('search');
-            $assetTransfers = InventoryTransferHeader::select(
+            $inventoryTransfers = InventoryTransferHeader::select(
                 'INVENTORY_TRANSFER_NO',
                 'TRANSACTION_DATE',
                 'TRANSFERED_LOCATION_ID',
@@ -49,8 +49,8 @@ class AssetTransferController extends Controller
                 })
                 ->paginate(10)->withQueryString();
 
-            return Inertia::render('Inventory/AssetTransfer/Index', [
-                'assetTransfers' => $assetTransfers,
+            return Inertia::render('Inventory/InventoryTransfer/Index', [
+                'inventoryTransfers' => $inventoryTransfers,
                 'filters' => Request::only(['search']),
             ]);
         } else {
@@ -100,9 +100,13 @@ class AssetTransferController extends Controller
     {
 
         if (Gate::allows('AuthorizeAction', ['INVENTORY'])) {
-            $locations = Location::all();
+
             $userLocation = Auth::user()->LOCATION_ID;
-            return Inertia::render('Inventory/AssetTransfer/Create', [
+            $locations = Location::where('LOCATION_ID', '!=', '000000')
+                ->where('LOCATION_ID', '!=', $userLocation)
+                ->get();
+
+            return Inertia::render('Inventory/InventoryTransfer/Create', [
                 'locations' => $locations,
                 'userLocation' => $userLocation
             ]);
@@ -124,7 +128,7 @@ class AssetTransferController extends Controller
     }
 
 
-    public function insertTransferAssetDetails($assetTransferNo, $serialNumbers)
+    public function insertTransferProductDetails($assetTransferNo, $serialNumbers)
     {
 
 
@@ -162,12 +166,12 @@ class AssetTransferController extends Controller
                 DB::beginTransaction();
 
                 $this->insertTransferHeader($assetTransferNo, $dateNow, $transferTo);
-                $this->insertTransferAssetDetails($assetTransferNo, $serialNumbers);
+                $this->insertTransferProductDetails($assetTransferNo, $serialNumbers);
 
                 // Commit transaction
                 DB::commit();
 
-                return Redirect::route('Inventory.AssetTransfer.index')->with('success', 'Asset Transfer Transaction Created Successfully.');
+                return Redirect::route('Inventory.InventoryTransfer.index')->with('success', 'Inventory Transfer Transaction Created Successfully.');
             } catch (\Exception $e) {
                 // Rollback transaction if an exception occurred
                 DB::rollBack();
@@ -183,25 +187,23 @@ class AssetTransferController extends Controller
 
 
 
-    public function show($assetTransNo)
+    public function show($inventoryTransNo)
     {
 
         if (Gate::allows('AuthorizeAction', ['INVENTORY'])) {
 
-            $assetTransfer = InventoryTransferHeader::where([
-                'INVENTORY_TRANSFER_NO' => $assetTransNo,
+            $inventoryTransfer = InventoryTransferHeader::where([
+                'INVENTORY_TRANSFER_NO' => $inventoryTransNo,
                 'LOCATION_ID' => Auth::user()->LOCATION_ID
-            ])->with('assetTransferAssetDetails.inventory.product', 'location')->first();
+            ])->with('inventoryTransferProductDetails.inventory.product', 'location')->first();
 
-            if (!$assetTransfer) {
-                // No related assetTransferAssetDetails
+            if (!$inventoryTransfer) {
                 return Inertia::render('Errors/FindOrFail', [
                     'statusTitle' => "Could not be Found",
-                    'paragraph' => "Asset Transfer Number Could not be found!"
+                    'paragraph' => "Inventory Transfer Number Could not be found!"
                 ]);
             } else {
-                // Related assetTransferAssetDetails exist
-                return Inertia::render('Inventory/AssetTransfer/Show', ['assetTransfer' => $assetTransfer]);
+                return Inertia::render('Inventory/InventoryTransfer/Show', ['inventoryTransfer' => $inventoryTransfer]);
             }
         } else {
             return Redirect::route('noAccess');

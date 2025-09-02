@@ -1,10 +1,8 @@
 <script setup>
 import { Inertia } from "@inertiajs/inertia";
-import NavLink from "@/Components/NavLink.vue";
 import Pagination from "@/Components/Pagination.vue";
 import { defineProps, reactive, ref, watch } from "vue";
 import { Head, usePage } from "@inertiajs/inertia-vue3";
-import SearchFilter from "@/Components/SearchFilter.vue";
 import FlashMessage from "@/Components/FlashMessage.vue";
 import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import InventorySubNav from "@/Pages/Inventory/InventorySubNav.vue";
@@ -13,7 +11,7 @@ import ViewButtonLink from "@/Components/Buttons/ViewButtonLink.vue";
 import PageHeader from "@/Components/PageHeader.vue";
 
 const props = defineProps({
-    assetTransfers: Object,
+    inventoryTransfers: Object,
     filters: Object,
 });
 
@@ -41,11 +39,11 @@ const authority = page.props.value.autorization;
 </script>
 
 <template>
-    <Head title="Asset Transfer" />
+    <Head title="Inventory Transfer" />
 
     <AuthenticatedLayout>
         <template #header>
-            <PageHeader label="Inventory ( Asset Transfer )" />
+            <PageHeader label="Inventory ( Inventory Transfer )" />
         </template>
 
         <InventorySubNav />
@@ -57,28 +55,32 @@ const authority = page.props.value.autorization;
                         <div
                             :class="{
                                 'flex items-center justify-between mb-6':
-                                    authority.CREATE_ASSET_TRANSFER,
+                                    authority.CREATE_INVENTORY_TRANSFER,
                                 'flex items-end justify-end mb-6':
-                                    !authority.CREATE_ASSET_TRANSFER,
+                                    !authority.CREATE_INVENTORY_TRANSFER,
                             }"
                         >
                             <div class="flex gap-4">
                                 <CreateButtonLink
-                                    v-show="authority.CREATE_ASSET_TRANSFER"
+                                    v-show="authority.CREATE_INVENTORY_TRANSFER"
                                     :href="
-                                        route('Inventory.AssetTransfer.create')
+                                        route(
+                                            'Inventory.InventoryTransfer.create'
+                                        )
                                     "
                                 >
                                     <div class="flex items-center gap-2">
                                         <i class="fa-solid fa-plus"></i>
-                                        <span>Create Asset Transfer</span>
+                                        <span>Create Inventory Transfer</span>
                                     </div>
                                 </CreateButtonLink>
 
                                 <CreateButtonLink
-                                    v-show="authority.CREATE_ASSET_TRANSFER"
+                                    v-show="authority.CREATE_INVENTORY_TRANSFER"
                                     :href="
-                                        route('Inventory.AssetTransfer.history')
+                                        route(
+                                            'Inventory.InventoryTransfer.history'
+                                        )
                                     "
                                 >
                                     <div class="flex items-center gap-2">
@@ -130,15 +132,15 @@ const authority = page.props.value.autorization;
                                     <!-- Check if products.data array is empty -->
                                     <template
                                         v-if="
-                                            assetTransfers.data &&
-                                            assetTransfers.data.length > 0
+                                            inventoryTransfers.data &&
+                                            inventoryTransfers.data.length > 0
                                         "
                                     >
-                                        <!-- Loop through assetTransfers.data array -->
+                                        <!-- Loop through inventoryTransfers.data array -->
                                         <tr
-                                            v-for="assetTransfer in assetTransfers.data"
-                                            :key="assetTransfer.INDEX_ID"
-                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                            v-for="inventoryTransfer in inventoryTransfers.data"
+                                            :key="inventoryTransfer.INDEX_ID"
+                                            class="bg-white border-b"
                                         >
                                             <!-- Table data -->
                                             <th
@@ -148,10 +150,10 @@ const authority = page.props.value.autorization;
                                                 <ViewButtonLink
                                                     :href="
                                                         route(
-                                                            'Inventory.AssetTransfer.show',
+                                                            'Inventory.InventoryTransfer.show',
                                                             {
-                                                                assetTransNo:
-                                                                    assetTransfer.ASSET_TRANSFER_NO,
+                                                                inventoryTransNo:
+                                                                    inventoryTransfer.INVENTORY_TRANSFER_NO,
                                                             }
                                                         )
                                                     "
@@ -161,38 +163,38 @@ const authority = page.props.value.autorization;
                                             </th>
                                             <td class="px-6 py-4">
                                                 {{
-                                                    assetTransfer.ASSET_TRANSFER_NO
+                                                    inventoryTransfer.INVENTORY_TRANSFER_NO
                                                 }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 {{
-                                                    assetTransfer.TRANSACTION_DATE
+                                                    inventoryTransfer.TRANSACTION_DATE
                                                 }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 {{
-                                                    assetTransfer.TRANSFERED_LOCATION_ID
+                                                    inventoryTransfer.TRANSFERED_LOCATION_ID
                                                 }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 {{
-                                                    assetTransfer.DATE_RECEIVED ??
+                                                    inventoryTransfer.DATE_RECEIVED ??
                                                     "NOT AVAILABLE"
                                                 }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 {{
-                                                    assetTransfer.TRANSFER_STATUS
+                                                    inventoryTransfer.TRANSFER_STATUS
                                                 }}
                                             </td>
                                         </tr>
                                     </template>
                                     <template v-else>
-                                        <!-- Display a message when assetTransfers.data is empty -->
+                                        <!-- Display a message when inventoryTransfers.data is empty -->
                                         <tr>
                                             <td
                                                 colspan="6"
-                                                class="px-6 py-4 text-center text-gray-500 dark:text-gray-400"
+                                                class="px-6 py-4 text-center text-gray-500"
                                             >
                                                 No data available
                                             </td>
@@ -203,7 +205,7 @@ const authority = page.props.value.autorization;
                         </div>
                         <pagination
                             class="mt-6"
-                            :links="assetTransfers.links"
+                            :links="inventoryTransfers.links"
                         />
                     </div>
                 </div>
